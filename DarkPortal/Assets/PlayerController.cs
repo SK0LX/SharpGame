@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Searcher;
@@ -21,25 +22,32 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void FixedUpdate() // тут в основном как ходит чубрик
     {
         moveInput = Input.GetAxis("Horizontal");
         transform.position += new Vector3(moveInput, 0, 0) * speed * Time.deltaTime;
         var horizontalMove = Input.GetAxis("Horizontal") * speed;
         Animator.SetFloat("HorizontalMove", Mathf.Abs(horizontalMove));
-        if (facingRight == false && moveInput > 0)
+        switch (facingRight)
         {
-            Flip();
-        }
-        else if (facingRight == true && moveInput < 0)
-        {
-            Flip();
+            case false when moveInput > 0:
+            case true when moveInput < 0:
+                Flip();
+                break;
         }
         if (Input.GetKey(KeyCode.Space) && Mathf.Abs(rb.velocity.y) < 0.1f)
         {
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         }
         sr.flipX = moveInput < 0;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Fight"))
+        {
+            speed = 0;
+        }
     }
 
 
