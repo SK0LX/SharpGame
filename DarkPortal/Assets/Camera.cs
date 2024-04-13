@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +6,7 @@ using UnityEngine;
 public class FollowPlayer : MonoBehaviour
 {
     public Transform player;
-
-    public Vector2 offset;
+    private bool fight;
     
     void Start()
     {
@@ -15,11 +15,8 @@ public class FollowPlayer : MonoBehaviour
     
     void LateUpdate()
     {
-        var temp = transform.position;
-        temp.x = player.position.x;
-        temp.y = player.position.y;
-
-        transform.position = temp;
+        if (fight == false)
+            transform.position = new Vector3(player.position.x + 30, player.position.y, -5);
     }
 }
 
