@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Searcher;
 using UnityEngine;
 
@@ -8,11 +9,11 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 1f;
     private Rigidbody2D rb;
-    public float jumpForce;
     private SpriteRenderer sr;
     public Animator Animator;
     private bool facingRight = true;
     private float moveInput;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -35,11 +36,17 @@ public class PlayerController : MonoBehaviour
                 Flip();
                 break;
         }
-        if (Input.GetKey(KeyCode.Space) && Mathf.Abs(rb.velocity.y) < 0.1f)
+
+        if (Input.GetKeyDown(KeyCode.Z))
         {
-            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            StartCoroutine(Attack());
         }
         sr.flipX = moveInput < 0;
+    }
+    
+    public void OnButtonClick()
+    {
+        StartCoroutine(Attack());
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -56,5 +63,40 @@ public class PlayerController : MonoBehaviour
         facingRight = !facingRight;
         var Scalar = transform.localScale;
         Scalar.x *= -1;
+    }
+    
+    void FlipForFight()
+    {
+        facingRight = !facingRight;
+        var Scalar = transform.localScale;
+        Scalar.x *= -1;
+        transform.localScale = Scalar;
+    }
+
+    IEnumerator Attack()
+    {
+        var geolocationNow = transform.position.x;
+        var moveSpeed = 50f; // Скорость движения
+        
+        Animator.SetTrigger("run");
+        while (transform.position.x < geolocationNow + 70)
+        {
+            transform.position += new Vector3(moveSpeed * Time.deltaTime, 0, 0);
+            yield return null;
+        }
+
+        Animator.SetTrigger("attack");
+        yield return new WaitForSeconds(1f);
+        FlipForFight();
+        
+        Animator.SetTrigger("run");
+        while (transform.position.x > geolocationNow)
+        {
+            transform.position -= new Vector3(moveSpeed * Time.deltaTime, 0, 0);
+            yield return null;
+        }
+        
+        FlipForFight();
+        Animator.SetTrigger("default");
     }
 }

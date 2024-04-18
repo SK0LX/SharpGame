@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a11f2b654e6a3e944a6144e449f0c92b
+guid: d484d5df426a5e542bc8149bab50973c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -160,133 +160,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: Run+Attack_0
-      rect:
-        serializedVersion: 2
-        x: 11
-        y: 0
-        width: 56
-        height: 75
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6cb800e1a806b0346ab21a5c21ae96e3
-      internalID: 1086721784
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Run+Attack_1
-      rect:
-        serializedVersion: 2
-        x: 79
-        y: 0
-        width: 60
-        height: 69
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 32fd996fa985c204f882b73265a514cf
-      internalID: 346597608
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Run+Attack_2
-      rect:
-        serializedVersion: 2
-        x: 151
-        y: 0
-        width: 57
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0e998c2e7a862624c9ddd69fa709122f
-      internalID: -622360671
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Run+Attack_3
-      rect:
-        serializedVersion: 2
-        x: 220
-        y: 0
-        width: 65
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0c6453dc3c093764f9b65c7d95b60a26
-      internalID: -239128191
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Run+Attack_4
-      rect:
-        serializedVersion: 2
-        x: 297
-        y: 0
-        width: 64
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0c2df78c363807b47b8fc95550f644ff
-      internalID: -594182475
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Run+Attack_5
-      rect:
-        serializedVersion: 2
-        x: 373
-        y: 0
-        width: 68
-        height: 58
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4a0279baacf95d54e81a8b3a16fcae07
-      internalID: 1217123977
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
@@ -297,13 +171,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      Run+Attack_0: 1086721784
-      Run+Attack_1: 346597608
-      Run+Attack_2: -622360671
-      Run+Attack_3: -239128191
-      Run+Attack_4: -594182475
-      Run+Attack_5: 1217123977
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

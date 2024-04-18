@@ -11,5 +11,6 @@ public class TriggetTest : MonoBehaviour
     {
         Thread.Sleep(500);
         canvas.enabled = !canvas.enabled;
+        transform.position += new Vector3(0, 50, 0);
     }
 }
