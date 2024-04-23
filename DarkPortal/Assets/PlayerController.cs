@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -11,8 +12,6 @@ public class PlayerController : MonoBehaviour
     private float moveInput;
     private int hp;
     private int dexterity;
-    
-    
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -22,9 +21,8 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         CallEvent(); // в основном - проверка, какие кнопки мы нажали
-
-        movementPlayer(); // хождение чубрика
         
+        movementPlayer(); // хождение чубрика
     }
 
     private void CallEvent()

@@ -14,6 +14,8 @@ public class Health : MonoBehaviour
     {
         health -= damage;
 
+        gameObject.GetComponent<HealthBar>().fill = (float)health / maxHealth;
+        
         if (health < 0)
         {
             StartCoroutine(Death());
