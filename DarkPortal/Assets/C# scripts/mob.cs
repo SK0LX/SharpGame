@@ -1,50 +1,49 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace C__scripts
 {
-    [RequireComponent(typeof(NavMeshAgent))]
-    public class mob : MonoBehaviour
+    public class Enemy : MonoBehaviour
     {
-        [SerializeField] private Transform target;
-        private float distance;
-
-        public NavMeshAgent myAgent;
+        public Transform spawnPosition;
+        public float radius;
+        public float speed;
         public Animator animator;
+        
+        private float position;
+        private bool isMoveRight = true;
+        private static readonly int Go = Animator.StringToHash("go");
+
         // Start is called before the first frame update
         void Start()
         {
-            myAgent = GetComponent<NavMeshAgent>();
             animator = GetComponent<Animator>();
         }
 
         // Update is called once per frame
         void Update()
         {
-            distance = Vector3.Distance(transform.position, target.transform.position);
-            if (distance > 10)
+            position = transform.position.x;
+            var vector = Vector2.right * (speed * Time.deltaTime);
+            
+            if (position + vector.x < spawnPosition.position.x + radius && isMoveRight)
             {
-                myAgent.enabled = false;
-                animator.SetBool("Idle", true);
-                animator.SetBool("Run", false);
-                animator.SetBool("Attack", false);
+                transform.Translate(vector);
             }
-            if (distance <= 10 & distance > 1.5f)
+            else if (position - vector.x > spawnPosition.position.x - radius)
             {
-                myAgent.enabled = true;
-                myAgent.SetDestination(target.transform.position);
-                animator.SetBool("Idle", false);
-                animator.SetBool("Run", true);
-                animator.SetBool("Attack", false);
+                isMoveRight = false;
+                transform.eulerAngles = new Vector3(0, -180, 0);
+                transform.Translate(vector);
             }
-            if (distance <= 1.5f)
+            else
             {
-                myAgent.enabled = false;
-                animator.SetBool("Idle", false);
-                animator.SetBool("Run", false);
-                animator.SetBool("Attack", true);
+                isMoveRight = true;
+                transform.eulerAngles = new Vector3(0, 0, 0);
             }
             
+            animator.SetTrigger(Go);
         }
     }
 }
