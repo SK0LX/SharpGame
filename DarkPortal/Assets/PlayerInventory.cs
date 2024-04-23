@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    private Entity _basicEntity = new Entity(100, 20);
     private int stone;
     
     public TextMeshProUGUI textStone;
@@ -19,8 +18,6 @@ public class PlayerInventory : MonoBehaviour
     
     void Update()
     {
-        textStone.text = "Монет: " + _basicEntity.Dexterity;
-        textHP.text = "Воды: " + _basicEntity.Health;
         textDexterity.text = "Еды: " + stone;
     }
 }
