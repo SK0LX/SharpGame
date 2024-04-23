@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         CallEvent(); // в основном - проверка, какие кнопки мы нажали
-
+        
         movementPlayer(); // хождение чубрика
         
     }
@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void movementPlayer()
-    {
+    {й
         moveInput = Input.GetAxis("Horizontal");
         transform.position += new Vector3(moveInput, 0, 0) * speed * Time.deltaTime;
         var horizontalMove = Input.GetAxis("Horizontal") * speed;
