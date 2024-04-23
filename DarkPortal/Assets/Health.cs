@@ -13,7 +13,7 @@ public class Health : MonoBehaviour
     public void TakeHit(int damage)
     {
         health -= damage;
-
+        gameObject.GetComponent<HealthBar>().fill = (float)health / maxHealth;
         if (health < 0)
         {
             StartCoroutine(Death());
