@@ -17,12 +17,13 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
     }
-    
+        
     void FixedUpdate()
     {
-        CallEvent(); // в основном - проверка, какие кнопки мы нажали
+        if (TriggetTest.fight)
+            CallEvent(); // в основном - проверка, какие кнопки мы нажали
         
-        movementPlayer(); // хождение чубрика
+        StartCoroutine(movementPlayer()); // хождение чубрика
     }
 
     private void CallEvent()
@@ -39,20 +40,29 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void movementPlayer()
+    private IEnumerator movementPlayer()
     {
-        moveInput = Input.GetAxis("Horizontal");
-        transform.position += new Vector3(moveInput, 0, 0) * speed * Time.deltaTime;
         var horizontalMove = Input.GetAxis("Horizontal") * speed;
-        Animator.SetFloat("HorizontalMove", Mathf.Abs(horizontalMove));
-        if (moveInput  < 0)
+        if (!TriggetTest.fight)
         {
-            sr.flipX = true;
-        }
+            moveInput = Input.GetAxis("Horizontal");
+            transform.position += new Vector3(moveInput, 0, 0) * speed * Time.deltaTime;
+            Animator.SetFloat("HorizontalMove", Mathf.Abs(horizontalMove));
 
-        if (moveInput > 0)
+            if (moveInput < 0)
+            {
+                sr.flipX = true;
+            }
+
+            if (moveInput > 0)
+            {
+                sr.flipX = false;
+            }
+        }
+        else
         {
-            sr.flipX = false;
+            Animator.SetFloat("HorizontalMove", 0);
+            yield return new WaitForSeconds(1f);
         }
     }
 
