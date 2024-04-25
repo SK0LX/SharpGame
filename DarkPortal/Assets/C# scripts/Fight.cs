@@ -13,22 +13,27 @@ enum EntityForFight
 }
 public class Fight : MonoBehaviour
 {
-    public GameObject mob;
     public GameObject player;
+    private bool facingRight;
     
     private bool isPlayerTurn = true;
+    
+    private Animator animator;
 
     
     // Start is called before the first frame update
     void Start()
     {
+        animator = player.GetComponent<Animator>();
         RandomFight();
     }
 
     // Update is called once per frame
     void Update()
     { 
-        RandomMashine();
+        if (TriggetTest.fight)
+            StartCoroutine(RandomMashine());
+        
     }
 
 
@@ -39,20 +44,79 @@ public class Fight : MonoBehaviour
     }
 
 
-    private void RandomMashine()
+    private IEnumerator RandomMashine()
     {
         if (isPlayerTurn)
         {
-            // Логика действий игрока
             Debug.Log("Ход игрока");
-        }
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                StartCoroutine(Attack());
+                
+                yield return StartCoroutine(Attack());
+                
+                isPlayerTurn = !isPlayerTurn;
+            }
+        }   
         else
         {
-            // Логика действий противника
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                // Атака Моба
+                isPlayerTurn = !isPlayerTurn;
+            }
             Debug.Log("Ход противника");
+        } 
+    }
+    
+    
+    IEnumerator Attack()
+    {
+        var geolocationNow = player.transform.position.x;
+        var moveSpeed = 30f; // Скорость движения
+        
+        animator.SetTrigger("runForAttack1");
+        while (player.transform.position.x < geolocationNow + 70)
+        {
+            player.transform.position += new Vector3(moveSpeed * Time.deltaTime, 0, 0);
+            yield return null;
         }
 
-        isPlayerTurn = !isPlayerTurn; // Переключение хода
+        animator.SetTrigger("attack1"); 
+        yield return new WaitForSeconds(1f);
+        
+        Flip();
+        
+        animator.SetTrigger("runForAttack1");
+        
+        while (player.transform.position.x > geolocationNow)
+        {
+            player.transform.position -= new Vector3(moveSpeed * Time.deltaTime, 0, 0);
+            yield return null;
+        }
+        
+        animator.SetTrigger("default");
+    }
+    
+    
+    
+    public void OnButtonClick()
+    {
+        StartCoroutine(Attack());
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            player.GetComponent<PlayerController>().speed = 0;
+        }
     }
 
+    void Flip()
+    {
+        var spriteRenderer = player.GetComponent<SpriteRenderer>();
+        spriteRenderer.flipX = !spriteRenderer.flipX;
+    }
 }
+    
