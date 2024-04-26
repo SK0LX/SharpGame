@@ -90,10 +90,10 @@ public class PlayerController : MonoBehaviour
     IEnumerator Attack()
     {
         var geolocationNow = transform.position.x;
-        var moveSpeed = 50f; // Скорость движения
+        var moveSpeed = 25f; // Скорость движения
         
         Animator.SetTrigger("runForAttack1");
-        while (transform.position.x < geolocationNow + 70)
+        while (transform.position.x < geolocationNow + 10)
         {
             transform.position += new Vector3(moveSpeed * Time.deltaTime, 0, 0);
             yield return null;

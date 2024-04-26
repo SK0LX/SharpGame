@@ -16,7 +16,7 @@ public class FollowPlayer : MonoBehaviour
     void LateUpdate()
     {
         if (fight == false)
-            transform.position = new Vector3(player.position.x + 30, player.position.y, -5);
+            transform.position = new Vector3(player.position.x + 10, player.position.y + 2, -5);
     }
 }
 
