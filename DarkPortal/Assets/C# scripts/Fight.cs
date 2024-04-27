@@ -73,10 +73,10 @@ public class Fight : MonoBehaviour
     IEnumerator Attack()
     {
         var geolocationNow = player.transform.position.x;
-        var moveSpeed = 30f; // Скорость движения
+        var moveSpeed = 7f; // Скорость движения
         
         animator.SetTrigger("runForAttack1");
-        while (player.transform.position.x < geolocationNow + 70)
+        while (player.transform.position.x < geolocationNow + 10)
         {
             player.transform.position += new Vector3(moveSpeed * Time.deltaTime, 0, 0);
             yield return null;

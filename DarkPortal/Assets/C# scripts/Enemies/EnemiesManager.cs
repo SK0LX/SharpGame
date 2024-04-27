@@ -1,35 +1,55 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Cinemachine.Examples;
 using UnityEngine;
+using Vector2 = System.Numerics.Vector2;
 
 namespace C__scripts.Enemies
 {
-    public class EnemiesManager
+    public class EnemiesManager : MonoBehaviour
     {
-        private readonly Enemy[] enemies;
-        private readonly Transform[] spawnPoints;
+        [SerializeField] private GameObject enemyPrefab;
+        [SerializeField] private GameObject player;
+        [SerializeField] private Transform[] spawnPoints;
+        [SerializeField] private Canvas canvasFight;
+        
+        [SerializeField] private float radius;
+        [SerializeField] private float speed;
+        
+        private GameObject[] enemies;
+        private List<GameObject> liveEnemies = new();
 
         private int currentSpawnPoint;
         private int size;
 
-        public EnemiesManager(GameObject prefabEnemy, Transform[] spawnPoints, float radius, float speed)
+        public void Start()
         {
             size = spawnPoints.Length;
-            this.spawnPoints = spawnPoints;
-            enemies = new Enemy[size]
-                .Zip(spawnPoints, (_, spawnPoint) => new Enemy(prefabEnemy, radius, speed, spawnPoint))
-                .ToArray();
+            enemies = new GameObject[size];
+            for (var i = 0; i < size; i++)
+            {
+                var e = Instantiate(enemyPrefab);
+                var comp = e.GetComponent<Enemy>();
+                comp.Init(e, radius, speed, spawnPoints[i], player);
+                enemies[i] = e;
+            }
+            liveEnemies = new();
         }
 
-        public void Update(Vector2 playerPosition)
+        public void Update()
         {
-            if (currentSpawnPoint > size) return;
-            if (currentSpawnPoint != size && 
-                Vector2.Distance(spawnPoints[currentSpawnPoint].position, playerPosition) < 150f)
+            foreach (var enemy in liveEnemies)
+                if (enemy.GetComponent<Enemy>().State is EnemyState.Die)
+                    liveEnemies.Remove(enemy);
+            
+            if (currentSpawnPoint >= size) return;
+            
+            if (enemies?[currentSpawnPoint].GetComponent<Enemy>().State is EnemyState.None &&
+                Vector3.Distance(spawnPoints[currentSpawnPoint].position, player.transform.position) < 50f)
             {
-                enemies[currentSpawnPoint].Born();
+                liveEnemies.Add(enemies[currentSpawnPoint]);
                 currentSpawnPoint++;
             }
-            else if (currentSpawnPoint > 0 && currentSpawnPoint <= size) enemies[currentSpawnPoint - 1].Update();
         }
     }
 }

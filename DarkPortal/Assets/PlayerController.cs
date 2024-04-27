@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Fight"))
+        if (other.CompareTag("Enemy"))
         {
             speed = 0;
         }

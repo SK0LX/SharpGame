@@ -1,67 +1,119 @@
+using System;
 using UnityEngine;
 
 namespace C__scripts.Enemies
 {
-    public class Enemy
+    public class Enemy : MonoBehaviour
     {
-        private readonly Animator animator;
-        private readonly GameObject gameObject;
-        private readonly Transform transform;
-        private readonly Transform spawnPosition;
+        private Animator animator;
+        private new GameObject gameObject;
+        private new Transform transform;
+        private GameObject prefab;
+        private Transform spawnPosition;
+        private GameObject player;
         
-        private readonly float radius;
-        private readonly float speed;
+        private float radius;
+        private float speed;
 
         private float position;
+        private bool isMoveRight = true;
         private static readonly int Go = Animator.StringToHash("go");
+        private static readonly int AttackAnimation = Animator.StringToHash("attack");
+        private static readonly int Idle = Animator.StringToHash("idle");
 
         public EnemyState State { get; private set; }
 
-        public Enemy(GameObject prefab, float radius, float speed, Transform spawnPosition)
+        public void Init(GameObject gameObject, float radius, float speed, Transform spawnPosition, GameObject player)
         {
-            gameObject = GameObject.Instantiate(prefab);
-            transform = gameObject.transform;
+            this.gameObject = gameObject;
+            position = spawnPosition.position.x;
             animator = gameObject.GetComponent<Animator>();
-            State = EnemyState.None;
             this.radius = radius;
             this.speed = speed;
             this.spawnPosition = spawnPosition;
+            this.player = player;
+            transform = gameObject.transform;
+            State = EnemyState.Born;
+        }
+        
+        public void EnemyTurn()
+        {
+            State = EnemyState.Attack;
         }
 
-        public void Born()
+        public void PlayerTurn()
         {
-            State = EnemyState.Born;
-            transform.position = spawnPosition.position;
-            gameObject.SetActive(true);
+            State = EnemyState.Wait;
         }
         
         public void Update()
         {
-            if (State == EnemyState.None) 
-                return;
-            if (State == EnemyState.Born)
-                State = EnemyState.MoveRight;
-            
+            if (gameObject is null) return;
+            switch (State)
+            {
+                case EnemyState.None:
+                    return;
+                case EnemyState.Born:
+                    State = EnemyState.Move;
+                    return;
+                case EnemyState.Move:
+                    Move();
+                    return;
+                case EnemyState.PrepareToFight:
+                    transform.eulerAngles = new Vector3(0, -180, 0);
+                    return;
+                case EnemyState.Attack:
+                    Attack();
+                    return;
+                case EnemyState.Wait:
+                    return;
+                case EnemyState.Die:
+                    Die();
+                    return;
+            }
+        }
+
+        private void Move()
+        {
             position = transform.position.x;
             var vector = Vector2.right * (speed * Time.deltaTime);
             
-            if (position + vector.x < spawnPosition.position.x + radius && State is EnemyState.MoveRight)
+            if (position + vector.x < spawnPosition.position.x + radius && isMoveRight)
             {
                 transform.Translate(vector);
             }
             else if (position - vector.x > spawnPosition.position.x - radius)
             {
-                State = EnemyState.MoveLeft;
+                isMoveRight = false;
                 transform.eulerAngles = new Vector3(0, -180, 0);
                 transform.Translate(vector);
             }
             else
             {
-                State = EnemyState.MoveRight;
+                isMoveRight = true;
                 transform.eulerAngles = new Vector3(0, 0, 0);
             }
             
             animator.SetTrigger(Go);
+        }
+
+        private void Attack()
+        {
+            animator.SetTrigger(AttackAnimation);
+            animator.SetTrigger(Idle);
+            State = EnemyState.Wait;
+        }
+
+        private void Die()
+        {
+            State = EnemyState.Die;
+            Destroy(gameObject);
+        }
+
+        public void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("Player"))
+                State = EnemyState.PrepareToFight;
         }
     }
 }
