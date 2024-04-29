@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4ade4167924da0c448ca72ef0f9b02e4
+guid: 5dd695c2266d94b49a2a68cbed346a00
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -107,7 +107,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: Android
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -120,7 +120,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: WebGL
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -145,30 +145,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: tvOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: crow_idle_0
+      name: a129c5bc9e54d0c9_0
       rect:
         serializedVersion: 2
-        x: 22
-        y: 16
-        width: 20
-        height: 28
+        x: 48
+        y: 100
+        width: 161
+        height: 176
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -176,20 +163,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e47c93a987e87f44a638e69572e762a
-      internalID: 492642976
+      spriteID: e4c4d760d2a008c49aae7968dc4370c2
+      internalID: -570352013
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: crow_idle_1
+      name: a129c5bc9e54d0c9_1
       rect:
         serializedVersion: 2
-        x: 86
-        y: 16
-        width: 20
-        height: 29
+        x: 256
+        y: 101
+        width: 161
+        height: 178
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -197,20 +184,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f5494876f85051946bffef7e145fc995
-      internalID: 1093426067
+      spriteID: 0aac4252f05f08c4bb2c43dd4eab9bf5
+      internalID: -922597476
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: crow_idle_2
+      name: a129c5bc9e54d0c9_2
       rect:
         serializedVersion: 2
-        x: 150
-        y: 16
-        width: 20
-        height: 30
+        x: 462
+        y: 101
+        width: 161
+        height: 180
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -218,20 +205,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d9d26f6c6f06b95469fd1301f901152e
-      internalID: -581602994
+      spriteID: ca7d9ad1b5e7c0c44b69785601d6b81e
+      internalID: 2145487315
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: crow_idle_3
+      name: a129c5bc9e54d0c9_3
       rect:
         serializedVersion: 2
-        x: 214
-        y: 16
-        width: 20
-        height: 29
+        x: 663
+        y: 102
+        width: 166
+        height: 164
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -239,8 +226,113 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d14e3c2c9f6a4824cb1619c16d7d3e91
-      internalID: -402034342
+      spriteID: 58ed80d42ba4b894da7a285c953989b7
+      internalID: 784437611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a129c5bc9e54d0c9_4
+      rect:
+        serializedVersion: 2
+        x: 871
+        y: 98
+        width: 168
+        height: 168
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 971303dd157b65c47a9425ce3b4ace2d
+      internalID: 1106196180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a129c5bc9e54d0c9_5
+      rect:
+        serializedVersion: 2
+        x: 1075
+        y: 104
+        width: 170
+        height: 166
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a947ff9c837c76149ae37b3fc6aba692
+      internalID: -1268429021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a129c5bc9e54d0c9_6
+      rect:
+        serializedVersion: 2
+        x: 1281
+        y: 103
+        width: 163
+        height: 166
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01c1f51ebb1eead44b1d3f607637b6df
+      internalID: -2040804488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a129c5bc9e54d0c9_7
+      rect:
+        serializedVersion: 2
+        x: 1488
+        y: 97
+        width: 164
+        height: 177
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b65992c3d12ccf469ec523d9f6c9d4e
+      internalID: -1173497216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a129c5bc9e54d0c9_8
+      rect:
+        serializedVersion: 2
+        x: 1694
+        y: 56
+        width: 226
+        height: 659
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e9a2daf7dae9e141b3c8734095d3eea
+      internalID: 1451900680
       vertices: []
       indices: 
       edges: []
@@ -249,17 +341,22 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      crow_idle_0: 492642976
-      crow_idle_1: 1093426067
-      crow_idle_2: -581602994
-      crow_idle_3: -402034342
+      a129c5bc9e54d0c9_0: -570352013
+      a129c5bc9e54d0c9_1: -922597476
+      a129c5bc9e54d0c9_2: 2145487315
+      a129c5bc9e54d0c9_3: 784437611
+      a129c5bc9e54d0c9_4: 1106196180
+      a129c5bc9e54d0c9_5: -1268429021
+      a129c5bc9e54d0c9_6: -2040804488
+      a129c5bc9e54d0c9_7: -1173497216
+      a129c5bc9e54d0c9_8: 1451900680
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

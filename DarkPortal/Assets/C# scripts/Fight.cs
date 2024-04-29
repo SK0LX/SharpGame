@@ -1,122 +1,75 @@
 using System.Collections;
-using System.Collections.Generic;
-using C__scripts;
 using UnityEngine;
-using System;
 using Random = System.Random;
 
 
-enum EntityForFight
-{
-    Mob = 1,
-    Player = 2
-}
 public class Fight : MonoBehaviour
 {
     public GameObject player;
     private bool facingRight;
     
     private bool isPlayerTurn = true;
-    
+    private bool buttonClick;
     private Animator animator;
+    public Canvas canvas;
 
     
-    // Start is called before the first frame update
     void Start()
     {
         animator = player.GetComponent<Animator>();
-        RandomFight();
+        ChooseRandomMove();
     }
-
-    // Update is called once per frame
+    
     void Update()
     { 
-        if (TriggetTest.fight)
-            StartCoroutine(RandomMashine());
-        
+        if (player.GetComponent<Player>().fight)
+            StartCoroutine(CoreFight());
     }
 
 
-    private void RandomFight()
+    private void ChooseRandomMove() // типо монетку подбрасываем в начале файта
     {
         var rnd = new Random();
         isPlayerTurn = rnd.Next(1, 3) == 1;
     }
 
 
-    private IEnumerator RandomMashine()
+    private IEnumerator CoreFight() //сам весь процесс файта (очереди)
     {
         if (isPlayerTurn)
         {
             Debug.Log("Ход игрока");
-            if (Input.GetKeyDown(KeyCode.Z))
+            if (!buttonClick && Input.GetKeyDown(KeyCode.Z))
             {
-                StartCoroutine(Attack());
-                
-                yield return StartCoroutine(Attack());
-                
+                buttonClick = true;
+                yield return StartCoroutine(player.GetComponent<Player>().Attack());
                 isPlayerTurn = !isPlayerTurn;
+                buttonClick = false;
             }
         }   
         else
         {
             if (Input.GetKeyDown(KeyCode.X))
             {
-                // Атака Моба
+                
+                //TODO Катя, здесь жолжна быть логика моба, что он делает во время файта
+                //я сделал корутину в корутине для того, чтобы мы ждали анимации, пока они выполнются
+                //(так писали в инете + gpt)
+                
                 isPlayerTurn = !isPlayerTurn;
             }
             Debug.Log("Ход противника");
         } 
     }
     
-    
-    IEnumerator Attack()
-    {
-        var geolocationNow = player.transform.position.x;
-        var moveSpeed = 7f; // Скорость движения
-        
-        animator.SetTrigger("runForAttack1");
-        while (player.transform.position.x < geolocationNow + 10)
-        {
-            player.transform.position += new Vector3(moveSpeed * Time.deltaTime, 0, 0);
-            yield return null;
-        }
-
-        animator.SetTrigger("attack1"); 
-        yield return new WaitForSeconds(1f);
-        
-        Flip();
-        
-        animator.SetTrigger("runForAttack1");
-        
-        while (player.transform.position.x > geolocationNow)
-        {
-            player.transform.position -= new Vector3(moveSpeed * Time.deltaTime, 0, 0);
-            yield return null;
-        }
-        
-        animator.SetTrigger("default");
-    }
-    
-    
-    
-    public void OnButtonClick()
-    {
-        StartCoroutine(Attack());
-    }
-    
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)//триггер
     {
         if (other.CompareTag("Player"))
         {
-            player.GetComponent<PlayerController>().speed = 0;
+            player.GetComponent<Player>().speed = 0;
+            player.GetComponent<Player>().fight = true;
+            canvas.enabled = !canvas.enabled;
         }
-    }
-
-    void Flip()
-    {
-        var spriteRenderer = player.GetComponent<SpriteRenderer>();
-        spriteRenderer.flipX = !spriteRenderer.flipX;
     }
 }
     
