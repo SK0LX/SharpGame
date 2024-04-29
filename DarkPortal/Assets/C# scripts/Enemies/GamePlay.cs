@@ -7,19 +7,18 @@ namespace C__scripts.Enemies
         [SerializeField] private GameObject enemyPrefab;
         [SerializeField] private GameObject player;
         [SerializeField] private Transform[] spawnPoints;
+        [SerializeField] private Canvas canvasFight;
         
         [SerializeField] private float radius;
         [SerializeField] private float speed;
+        
         private EnemiesManager enemiesManager;
+        private Fight fight;
 
         void Start()
         {
-            enemiesManager = new EnemiesManager(enemyPrefab, spawnPoints, radius, speed);
+            
         }
-
-        private void Update()
-        {
-            enemiesManager.Update(player.transform.position);
-        }
+        
     }
 }

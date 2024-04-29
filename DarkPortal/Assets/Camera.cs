@@ -10,7 +10,7 @@ public class FollowPlayer : MonoBehaviour
     
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
     
     void LateUpdate()

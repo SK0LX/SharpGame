@@ -9,7 +9,10 @@ public class TriggetTest : MonoBehaviour
     public static bool fight;
     private void OnTriggerEnter2D(Collider2D other)
     {
-        canvas.enabled = !canvas.enabled;
-        fight = true;
+        if (other.CompareTag("Player"))
+        {
+            canvas.enabled = !canvas.enabled;
+            fight = true;
+        }
     }
 }

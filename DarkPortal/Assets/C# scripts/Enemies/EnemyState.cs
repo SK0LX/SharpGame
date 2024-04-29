@@ -4,10 +4,10 @@
     {
         None,
         Born,
-        MoveLeft,
-        MoveRight,
+        Move,
+        PrepareToFight,
         Attack,
-        WaitPlayerTurn,
+        Wait,
         Die
     }
 }
