@@ -2,7 +2,7 @@ using System.Collections;
 using System.Threading;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public float speed = 1f;
     private Rigidbody2D rb;
@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private float moveInput;
     private int hp;
     private int dexterity;
+    public bool fight;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -20,53 +21,36 @@ public class PlayerController : MonoBehaviour
         
     void FixedUpdate()
     {
-        if (TriggetTest.fight)
-            CallEvent(); // в основном - проверка, какие кнопки мы нажали
-        
-        StartCoroutine(movementPlayer()); // хождение чубрика
+        movementPlayer(); 
     }
+    
 
-    private void CallEvent()
-    {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            StartCoroutine(Attack());
-        }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            var health = gameObject.GetComponent<Health>();
-            health.TakeHit(10);
-        }
-    }
-
-    private IEnumerator movementPlayer()
+    private void movementPlayer() // хождение чубрика на AD
     {
         var horizontalMove = Input.GetAxis("Horizontal") * speed;
-        if (!TriggetTest.fight)
+        if (!fight)
         {
             moveInput = Input.GetAxis("Horizontal");
             transform.position += new Vector3(moveInput, 0, 0) * speed * Time.deltaTime;
             Animator.SetFloat("HorizontalMove", Mathf.Abs(horizontalMove));
 
-            if (moveInput < 0)
+            switch (moveInput)
             {
-                sr.flipX = true;
-            }
-
-            if (moveInput > 0)
-            {
-                sr.flipX = false;
+                case < 0:
+                    sr.flipX = true;
+                    break;
+                case > 0:
+                    sr.flipX = false;
+                    break;
             }
         }
         else
         {
             Animator.SetFloat("HorizontalMove", 0);
-            yield return new WaitForSeconds(1f);
         }
     }
 
-    public void OnButtonClick()
+    public void OnButtonClick() //кнопка на интерфейсе(TODO настроить)
     {
         StartCoroutine(Attack());
     }
@@ -87,10 +71,10 @@ public class PlayerController : MonoBehaviour
         transform.localScale = Scalar;
     }
 
-    IEnumerator Attack()
+    public IEnumerator Attack()
     {
         var geolocationNow = transform.position.x;
-        var moveSpeed = 25f; // Скорость движения
+        var moveSpeed = 7f; // Скорость движения
         
         Animator.SetTrigger("runForAttack1");
         while (transform.position.x < geolocationNow + 10)
