@@ -18,8 +18,6 @@ public class Health : MonoBehaviour
         hpBar.text = $"{health}/{maxHealth}";
         gameObject.GetComponent<HealthBar>().fill = (float)health / maxHealth;
         
-        
-        
         if (health <= 0)
         {
             StartCoroutine(Death());

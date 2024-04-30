@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using C__scripts.Enemies;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = System.Random;
 
 
@@ -16,6 +18,7 @@ public class Fight : MonoBehaviour
     private bool buttonClick;
     private Animator animator;
     public Canvas canvas;
+    public bool critDamage;
 
     public void Init(GameObject player, Canvas canvas, GameObject enemy)
     {
@@ -40,11 +43,25 @@ public class Fight : MonoBehaviour
     private void ChooseRandomMove() // типо монетку подбрасываем в начале файта
     {
         var rnd = new Random();
-        //isPlayerTurn = rnd.Next(1, 3) == 1;
+        isPlayerTurn = rnd.Next(1, 3) == 1;
         isPlayerTurn = false;
     }
 
+    private int ChooseRandomDamage(int downDamage, int upDamage) // машина по рандомизированному урона(крит 20%)
+    {
+        if (upDamage - downDamage < 0)
+            throw new ArgumentException("Верхний предел урона не может быть ниже нижнего предела урона");
+        var rnd = new Random();
+        var damage = rnd.Next(downDamage,upDamage + 1);
+        if (rnd.Next(0, 101) < 20)
+        {
+            damage += (upDamage-damage) / 2;
+            critDamage = true;
+        }
 
+        return damage;
+    }
+    
     private IEnumerator CoreFight() //сам весь процесс файта (очереди)
     {
         if (isPlayerTurn)
@@ -78,6 +95,17 @@ public class Fight : MonoBehaviour
                 buttonClick = false;
             }
         } 
+    }
+    
+    IEnumerator ProtectionFromAttack()
+    {
+        if (GetComponent<Fight>().critDamage)
+        {
+            player.Animator.SetTrigger("CritDamage");
+        }
+        player.Animator.SetTrigger("Defend");
+        yield return 1f;
+        player.Animator.SetTrigger("default");
     }
 }
     
