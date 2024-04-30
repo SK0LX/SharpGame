@@ -13,7 +13,6 @@ namespace C__scripts.Enemies
         [SerializeField] private float speed;
         
         private EnemiesManager enemiesManager;
-        private Fight fight;
 
         void Start()
         {

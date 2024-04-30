@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 
 namespace C__scripts.Enemies
@@ -11,6 +11,9 @@ namespace C__scripts.Enemies
         private GameObject prefab;
         private Transform spawnPosition;
         private GameObject player;
+        private Canvas canvas;
+        private Fight fight;
+        
         
         private float radius;
         private float speed;
@@ -23,7 +26,7 @@ namespace C__scripts.Enemies
 
         public EnemyState State { get; private set; }
 
-        public void Init(GameObject gameObject, float radius, float speed, Transform spawnPosition, GameObject player)
+        public void Init(GameObject gameObject, float radius, float speed, Transform spawnPosition, GameObject player, Canvas canvas, Fight fight)
         {
             this.gameObject = gameObject;
             position = spawnPosition.position.x;
@@ -34,38 +37,20 @@ namespace C__scripts.Enemies
             this.player = player;
             transform = gameObject.transform;
             State = EnemyState.Born;
+            this.canvas = canvas;
+            this.fight = fight;
         }
         
-        public void EnemyTurn()
-        {
-            State = EnemyState.Attack;
-        }
-
-        public void PlayerTurn()
-        {
-            State = EnemyState.Wait;
-        }
-        
-        public void Update()
+        public void FixedUpdate()
         {
             if (gameObject is null) return;
             switch (State)
             {
-                case EnemyState.None:
-                    return;
                 case EnemyState.Born:
                     State = EnemyState.Move;
                     return;
                 case EnemyState.Move:
                     Move();
-                    return;
-                case EnemyState.PrepareToFight:
-                    transform.eulerAngles = new Vector3(0, -180, 0);
-                    return;
-                case EnemyState.Attack:
-                    Attack();
-                    return;
-                case EnemyState.Wait:
                     return;
                 case EnemyState.Die:
                     Die();
@@ -97,11 +82,34 @@ namespace C__scripts.Enemies
             animator.SetTrigger(Go);
         }
 
-        private void Attack()
+        public IEnumerator Attack()
         {
+            var geolocationNow = transform.position.x;
+            var geolocationPlayer = player.transform.position.x;
+            
+            yield return 3f;
+            
+            animator.SetTrigger(Go);
+            transform.eulerAngles = new Vector3(0, -180, 0);
+            while (transform.position.x > geolocationPlayer + 2)
+            {
+                transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);
+                yield return null;
+            }
+            
             animator.SetTrigger(AttackAnimation);
+            yield return new WaitForSeconds(0.6f);
+            
+            animator.SetTrigger(Go);
+            transform.eulerAngles = new Vector3(0, 0, 0);
+            while (transform.position.x < geolocationNow)
+            {
+                transform.position += new Vector3(speed * Time.deltaTime, 0, 0);
+                yield return null;
+            }
+            transform.eulerAngles = new Vector3(0, -180, 0);
+            
             animator.SetTrigger(Idle);
-            State = EnemyState.Wait;
         }
 
         private void Die()
@@ -112,15 +120,14 @@ namespace C__scripts.Enemies
 
         public void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("Player") && State is not EnemyState.Fight)
             {
-                State = EnemyState.PrepareToFight;
+                transform.position += new Vector3(1f, 0);
+                State = EnemyState.Fight;
                 player.GetComponent<Player>().speed = 0;
                 player.GetComponent<Player>().fight = true;
-                //TODO протащить сюда канвас, чтобы он отображался canvas.enabled = !canvas.enabled;
-                //canvas.enabled = !canvas.enabled;
+                Instantiate(fight).Init(player, canvas, gameObject);
             }
-                
         }
     }
 }

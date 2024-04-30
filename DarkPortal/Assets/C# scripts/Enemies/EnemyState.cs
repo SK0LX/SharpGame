@@ -5,9 +5,7 @@
         None,
         Born,
         Move,
-        PrepareToFight,
-        Attack,
-        Wait,
+        Fight,
         Die
     }
 }

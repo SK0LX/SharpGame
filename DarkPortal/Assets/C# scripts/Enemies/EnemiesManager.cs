@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Cinemachine.Examples;
 using UnityEngine;
-using Vector2 = System.Numerics.Vector2;
 
 namespace C__scripts.Enemies
 {
@@ -12,6 +9,7 @@ namespace C__scripts.Enemies
         [SerializeField] private GameObject player;
         [SerializeField] private Transform[] spawnPoints;
         [SerializeField] private Canvas canvasFight;
+        [SerializeField] private Fight fight;
         
         [SerializeField] private float radius;
         [SerializeField] private float speed;
@@ -30,7 +28,7 @@ namespace C__scripts.Enemies
             {
                 var e = Instantiate(enemyPrefab);
                 var comp = e.GetComponent<Enemy>();
-                comp.Init(e, radius, speed, spawnPoints[i], player);
+                comp.Init(e, radius, speed, spawnPoints[i], player, canvasFight, fight);
                 enemies[i] = e;
             }
             liveEnemies = new();
