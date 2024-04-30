@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Threading;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Player : MonoBehaviour
