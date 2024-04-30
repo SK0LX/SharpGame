@@ -30,12 +30,13 @@ public class Health : MonoBehaviour
 
     public void SetHealth(int bonusHealth)
     {
-        hpBar.text = $"{health}/{maxHealth}";
         health += bonusHealth;
         if (maxHealth < health)
         {
             health = maxHealth;
         }
+        hpBar.text = $"{health}/{maxHealth}";
+        gameObject.GetComponent<HealthBar>().fill = (float)health / maxHealth;
     }
 
 

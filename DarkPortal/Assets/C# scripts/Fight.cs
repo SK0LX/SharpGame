@@ -7,13 +7,12 @@ public class Fight : MonoBehaviour
 {
     public GameObject player;
     private bool facingRight;
-    
     private bool isPlayerTurn = true;
     private bool buttonClick;
     private Animator animator;
     public Canvas canvas;
 
-    
+        
     void Start()
     {
         animator = player.GetComponent<Animator>();
@@ -21,9 +20,12 @@ public class Fight : MonoBehaviour
     }
     
     void Update()
-    { 
+    {
         if (player.GetComponent<Player>().fight)
+        {
+            canvas.enabled = true;
             StartCoroutine(CoreFight());
+        }
     }
 
 
@@ -46,6 +48,14 @@ public class Fight : MonoBehaviour
                 isPlayerTurn = !isPlayerTurn;
                 buttonClick = false;
             }
+            
+            if (!buttonClick && Input.GetKeyDown(KeyCode.X))
+            {
+                buttonClick = true;
+                yield return StartCoroutine(player.GetComponent<Player>().HealingPlayer());
+                isPlayerTurn = !isPlayerTurn;
+                buttonClick = false;
+            }
         }   
         else
         {
@@ -55,21 +65,11 @@ public class Fight : MonoBehaviour
                 //TODO Катя, здесь жолжна быть логика моба, что он делает во время файта
                 //я сделал корутину в корутине для того, чтобы мы ждали анимации, пока они выполнются
                 //(так писали в инете + gpt)
-                
+                player.GetComponent<Health>().TakeHit(10); // это для удара
                 isPlayerTurn = !isPlayerTurn;
             }
             Debug.Log("Ход противника");
         } 
-    }
-    
-    private void OnTriggerEnter2D(Collider2D other)//триггер
-    {
-        if (other.CompareTag("Player"))
-        {
-            player.GetComponent<Player>().speed = 0;
-            player.GetComponent<Player>().fight = true;
-            canvas.enabled = !canvas.enabled;
-        }
     }
 }
     
