@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
         if (!fight)
         {
             moveInput = Input.GetAxis("Horizontal");
-            transform.position += new Vector3(moveInput, 0, 0) * speed * Time.deltaTime;
+            transform.position += new Vector3(moveInput, 0, 0) * (speed * Time.deltaTime);
             Animator.SetFloat("HorizontalMove", Mathf.Abs(horizontalMove));
 
             switch (moveInput)
@@ -76,10 +76,10 @@ public class Player : MonoBehaviour
     public IEnumerator Attack()
     {
         var geolocationNow = transform.position.x;
-        var moveSpeed = 7f; // Скорость движения
+        var moveSpeed = 3f; // Скорость движения
         
         Animator.SetTrigger("runForAttack1");
-        while (transform.position.x < geolocationNow + 10)
+        while (transform.position.x < geolocationNow + 1)
         {
             transform.position += new Vector3(moveSpeed * Time.deltaTime, 0, 0);
             yield return null;
