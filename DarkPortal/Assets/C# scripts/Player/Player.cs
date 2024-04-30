@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     public Animator Animator;
+    public Health HP;
     private bool facingRight = true;
     private float moveInput;
     private int hp;
@@ -96,6 +97,15 @@ public class Player : MonoBehaviour
         }
         
         FlipForFight();
+        Animator.SetTrigger("default");
+    }
+
+    public IEnumerator HealingPlayer()
+    {
+        Animator.SetTrigger("HealthPlayer");
+        yield return new WaitForSeconds(1.5f);
+        gameObject.GetComponent<Health>().SetHealth(5);
+        yield return new WaitForSeconds(1f);
         Animator.SetTrigger("default");
     }
 }

@@ -113,7 +113,14 @@ namespace C__scripts.Enemies
         public void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Player"))
+            {
                 State = EnemyState.PrepareToFight;
+                player.GetComponent<Player>().speed = 0;
+                player.GetComponent<Player>().fight = true;
+                //TODO протащить сюда канвас, чтобы он отображался canvas.enabled = !canvas.enabled;
+                //canvas.enabled = !canvas.enabled;
+            }
+                
         }
     }
 }

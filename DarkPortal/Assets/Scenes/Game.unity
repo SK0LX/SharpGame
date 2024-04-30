@@ -1185,7 +1185,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 7.417082
+  orthographic size: 3.4343586
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1210,7 +1210,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -47, y: -23.27, z: -5}
+  m_LocalPosition: {x: -45.92, y: -27.72, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1752,6 +1752,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   Animator: {fileID: 808264150}
+  HP: {fileID: 0}
   fight: 0
 --- !u!61 &808264153
 BoxCollider2D:
@@ -2838,12 +2839,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eaa0091808f4bdba22fce35931ab052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 0}
-  player: {fileID: 0}
-  spawnPoints: []
-  canvasFight: {fileID: 0}
-  radius: 0
-  speed: 0
+  enemyPrefab: {fileID: 6359945531233908887, guid: 04afa5c07f4969c459ed03a983a0992f, type: 3}
+  player: {fileID: 808264148}
+  spawnPoints:
+  - {fileID: 118430566}
+  canvasFight: {fileID: 1407398964}
+  radius: 3
+  speed: 5
 --- !u!1 &1826001178
 GameObject:
   m_ObjectHideFlags: 0
@@ -28169,7 +28171,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a815cac5a3d3e66429380b739b15a381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 1407398964}
 --- !u!50 &1937338767
 Rigidbody2D:
   serializedVersion: 4
