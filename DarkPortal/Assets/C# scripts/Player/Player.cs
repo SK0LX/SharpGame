@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float speed = 1f;
+    public float speed = 5f;
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     public Animator Animator;
@@ -63,9 +63,7 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Enemy"))
-        {
-            speed = 0;
-        }
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
     }
     
     void FlipForFight()
@@ -111,5 +109,12 @@ public class Player : MonoBehaviour
         gameObject.GetComponent<Health>().SetHealth(5);
         yield return new WaitForSeconds(1f);
         Animator.SetTrigger("default");
+    }
+    
+    public void EndFight()
+    {
+        fight = false;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        speed = 5f;
     }
 }
