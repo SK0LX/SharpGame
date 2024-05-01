@@ -36,6 +36,7 @@ namespace C__scripts.Enemies
             this.spawnPosition = spawnPosition;
             this.player = player;
             transform = gameObject.transform;
+            transform.position = spawnPosition.transform.position;
             State = EnemyState.Born;
             this.canvas = canvas;
             this.fight = fight;
@@ -51,9 +52,6 @@ namespace C__scripts.Enemies
                     return;
                 case EnemyState.Move:
                     Move();
-                    return;
-                case EnemyState.Die:
-                    Die();
                     return;
             }
         }
@@ -112,15 +110,16 @@ namespace C__scripts.Enemies
             animator.SetTrigger(Idle);
         }
 
-        private void Die()
+        public IEnumerator Die()
         {
-            State = EnemyState.Die;
+            animator.SetTrigger("die");
+            yield return 1f;
             Destroy(gameObject);
         }
 
         public void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.CompareTag("Player") && State is not EnemyState.Fight)
+            if (other.CompareTag("Player") && State is EnemyState.Move)
             {
                 transform.position += new Vector3(1f, 0);
                 State = EnemyState.Fight;

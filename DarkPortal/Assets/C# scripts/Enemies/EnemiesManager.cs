@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace C__scripts.Enemies
@@ -15,7 +16,6 @@ namespace C__scripts.Enemies
         [SerializeField] private float speed;
         
         private GameObject[] enemies;
-        private List<GameObject> liveEnemies = new();
 
         private int currentSpawnPoint;
         private int size;
@@ -24,29 +24,19 @@ namespace C__scripts.Enemies
         {
             size = spawnPoints.Length;
             enemies = new GameObject[size];
-            for (var i = 0; i < size; i++)
-            {
-                var e = Instantiate(enemyPrefab);
-                var comp = e.GetComponent<Enemy>();
-                comp.Init(e, radius, speed, spawnPoints[i], player, canvasFight, fight);
-                enemies[i] = e;
-            }
-            liveEnemies = new();
         }
 
         public void Update()
         {
-            foreach (var enemy in liveEnemies)
-                if (enemy.GetComponent<Enemy>().State is EnemyState.Die)
-                    liveEnemies.Remove(enemy);
-            
-            if (currentSpawnPoint >= size) return;
-            
-            if (enemies?[currentSpawnPoint].GetComponent<Enemy>().State is EnemyState.None &&
-                Vector3.Distance(spawnPoints[currentSpawnPoint].position, player.transform.position) < 50f)
+            if (Vector3.Distance(spawnPoints[currentSpawnPoint].position, player.transform.position) < 20f)
             {
-                liveEnemies.Add(enemies[currentSpawnPoint]);
-                currentSpawnPoint++;
+                var e = Instantiate(enemyPrefab);
+                e.GetComponent<Enemy>()
+                    .Init(e, radius, speed, spawnPoints[currentSpawnPoint], player, canvasFight, fight);
+                enemies[currentSpawnPoint++] = e;
+                
+                if (currentSpawnPoint >= size) 
+                    Destroy(gameObject);
             }
         }
     }

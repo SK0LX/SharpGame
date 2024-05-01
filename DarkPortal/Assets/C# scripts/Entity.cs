@@ -1,29 +1,51 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
-namespace Entity
+public class Entity: MonoBehaviour
 {
-    public class Entity
+    [SerializeField] public int health;
+    [SerializeField] public int dexterity;
+    [SerializeField] public int power;
+    
+    private GameObject obj;
+    // public List<int> InventoryForWeapons;
+    public List<Skills> SkillsList;
+    public List<PlayerInventory> InventoryList; 
+
+    public void Start()
     {
-        public int Health;
+        // InventoryForWeapons = new List<int>();
+        SkillsList = new List<Skills>(); // через .GetComponent
+        InventoryList = new List<PlayerInventory>();
+    }
 
-        public int Dexterity;
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+    }
 
-        public List<int> Skils; //для скилов нужно будет отдельно все сделать (класс Item)
-        public List<int> InventoryForWeapons; // специально нужно будет сделать класс для оружия
-        public List<int> Inventory; // инвентарь 
+    public bool IsDead()
+    {
+        return health <= 0;
+    }
+    
+    public void UseSkills(Skills skill, Entity entity)
+    {
+        skill.BuffHeal(entity, 20); // 
+        skill.BuffDexterity(entity, 10);
+        skill.BuffPower(entity, 10);
+        skill.SomeDamage(entity, entity.power);
+        skill.AllDamage(entity);
+    }
 
-        public Entity(int health, int dexterity)
-        {
-            if (health < 0)
-                throw new ArgumentException("Жизней не может быть меньше 0");
-            this.Health = health;
-            if (dexterity < 0)
-                throw new ArgumentException("Ловкость не может быть меньше 0");
-            this.Dexterity = dexterity;
-            Skils = new List<int>();
-            InventoryForWeapons = new List<int>();
-            Inventory = new List<int>();
-        }
+    public void AddToInventory(PlayerInventory item)
+    {
+        InventoryList.Add(item);
+    }
+
+    public void RemoveFromInventory(PlayerInventory item)
+    {
+        InventoryList.Remove(item);
     }
 }

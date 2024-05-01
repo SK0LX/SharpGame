@@ -12,11 +12,11 @@ public class Fight : MonoBehaviour
     public Player player;
     private Health playerHealth;
     private Enemy enemy;
+    private Entity enemyComponent;
     
     private bool facingRight;
     private bool isPlayerTurn;
     private bool buttonClick;
-    private Animator animator;
     public Canvas canvas;
     public bool critDamage;
 
@@ -25,8 +25,8 @@ public class Fight : MonoBehaviour
         this.player = player.GetComponent<Player>();
         this.canvas = canvas;
         this.enemy = enemy.GetComponent<Enemy>();
+        enemyComponent = enemy.GetComponent<Entity>();
         playerHealth = this.player.GetComponent<Health>();
-        animator = player.GetComponent<Animator>();
         ChooseRandomMove();
     }
     
@@ -66,11 +66,19 @@ public class Fight : MonoBehaviour
     {
         if (isPlayerTurn)
         {
-            Debug.Log("Ход игрока");
             if (!buttonClick && Input.GetKeyDown(KeyCode.Z))
             {
                 buttonClick = true;
                 yield return StartCoroutine(player.Attack());
+                enemyComponent.TakeDamage(ChooseRandomDamage(10, 15));
+                if (enemyComponent.IsDead())
+                {
+                    yield return StartCoroutine(enemy.Die());
+                    yield return 1f;
+                    player.EndFight();
+                    canvas.enabled = false;
+                    Destroy(gameObject);
+                }
                 isPlayerTurn = false;
                 buttonClick = false;
             }
@@ -85,12 +93,13 @@ public class Fight : MonoBehaviour
         }   
         else
         {
-            Debug.Log("Ход противника");
             if (!buttonClick)
             {
+                Debug.Log($"{enemyComponent.health}");
                 buttonClick = true;
                 yield return StartCoroutine(enemy.Attack());
-                playerHealth.TakeHit(10); 
+                var damage = ChooseRandomDamage(enemyComponent.power - 2, enemyComponent.power + 2);
+                playerHealth.TakeHit(damage); 
                 isPlayerTurn = true;
                 buttonClick = false;
             }
@@ -99,11 +108,10 @@ public class Fight : MonoBehaviour
     
     IEnumerator ProtectionFromAttack()
     {
-        if (GetComponent<Fight>().critDamage)
-        {
+        if (critDamage)
             player.Animator.SetTrigger("CritDamage");
-        }
-        player.Animator.SetTrigger("Defend");
+        else
+            player.Animator.SetTrigger("Defend");
         yield return 1f;
         player.Animator.SetTrigger("default");
     }
