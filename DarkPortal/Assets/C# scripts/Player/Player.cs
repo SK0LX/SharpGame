@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Threading;
 using Unity.Mathematics;
 using UnityEngine;
+using Random = System.Random;
 
 public class Player : MonoBehaviour
 {
@@ -106,9 +108,23 @@ public class Player : MonoBehaviour
     {
         Animator.SetTrigger("HealthPlayer");
         yield return new WaitForSeconds(1.5f);
-        gameObject.GetComponent<Health>().SetHealth(5);
+        gameObject.GetComponent<Health>().SetHealth(ChooseRandomHealth(3, 7));
         yield return new WaitForSeconds(1f);
         Animator.SetTrigger("default");
+    }
+    
+    private int ChooseRandomHealth(int downHealth, int upHealth) // машина по рандомизированному хп(крит 20%)
+    {
+        if (upHealth - downHealth < 0)
+            throw new ArgumentException("Верхний предел урона не может быть ниже нижнего предела урона");
+        var rnd = new Random();
+        var health = rnd.Next(downHealth,upHealth + 1);
+        if (rnd.Next(0, 101) < 20)
+        {
+            health += (upHealth-downHealth) / 2;
+        }
+
+        return health;
     }
     
     public void EndFight()

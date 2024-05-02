@@ -11,11 +11,13 @@ public class Health : MonoBehaviour
     public int maxHealth;
     public Animator Animator;
     public TextMeshProUGUI hpBar;
+    public TextMeshProUGUI hpBarDefault;
 
     public void TakeHit(int damage)
     {
         health -= damage;
         hpBar.text = $"{health}/{maxHealth}";
+        hpBarDefault.text = $"{health}/{maxHealth}";
         gameObject.GetComponent<HealthBar>().fill = (float)health / maxHealth;
         
         if (health <= 0)
@@ -34,6 +36,7 @@ public class Health : MonoBehaviour
             health = maxHealth;
         }
         hpBar.text = $"{health}/{maxHealth}";
+        hpBarDefault.text = $"{health}/{maxHealth}";
         gameObject.GetComponent<HealthBar>().fill = (float)health / maxHealth;
     }
 
