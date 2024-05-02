@@ -44,7 +44,6 @@ public class Fight : MonoBehaviour
     {
         var rnd = new Random();
         isPlayerTurn = rnd.Next(1, 3) == 1;
-        isPlayerTurn = false;
     }
 
     private int ChooseRandomDamage(int downDamage, int upDamage) // машина по рандомизированному урона(крит 20%)
@@ -55,7 +54,7 @@ public class Fight : MonoBehaviour
         var damage = rnd.Next(downDamage,upDamage + 1);
         if (rnd.Next(0, 101) < 20)
         {
-            damage += (upDamage-damage) / 2;
+            damage += (upDamage-downDamage) / 2;
             critDamage = true;
         }
 

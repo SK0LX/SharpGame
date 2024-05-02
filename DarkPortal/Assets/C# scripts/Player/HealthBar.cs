@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     public Image bar;
+    public Image barForDefault;
     public float fill;
     void Start()
     {
@@ -17,5 +18,6 @@ public class HealthBar : MonoBehaviour
     void Update()
     {
         bar.fillAmount = fill;
+        barForDefault.fillAmount = fill;
     }
 }
