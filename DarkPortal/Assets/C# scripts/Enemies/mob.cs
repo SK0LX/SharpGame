@@ -113,7 +113,7 @@ namespace C__scripts.Enemies
         public IEnumerator Die()
         {
             animator.SetTrigger("die");
-            yield return 1f;
+            yield return new WaitForSeconds(0.35f);
             Destroy(gameObject);
         }
 
