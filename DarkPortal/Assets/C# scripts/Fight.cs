@@ -105,14 +105,10 @@ public class Fight : MonoBehaviour
         } 
     }
     
-    IEnumerator ProtectionFromAttack()
+    void ProtectionFromAttack()
     {
         if (critDamage)
             player.Animator.SetTrigger("CritDamage");
-        else
-            player.Animator.SetTrigger("Defend");
-        yield return 1f;
-        player.Animator.SetTrigger("default");
     }
 }
     

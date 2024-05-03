@@ -85,7 +85,7 @@ namespace C__scripts.Enemies
             var geolocationNow = transform.position.x;
             var geolocationPlayer = player.transform.position.x;
             
-            yield return 3f;
+            yield return new WaitForSeconds(1f);
             
             animator.SetTrigger(Go);
             transform.eulerAngles = new Vector3(0, -180, 0);

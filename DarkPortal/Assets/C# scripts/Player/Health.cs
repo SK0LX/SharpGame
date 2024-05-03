@@ -16,8 +16,6 @@ public class Health : MonoBehaviour
     public void TakeHit(int damage)
     {
         health -= damage;
-        hpBar.text = $"{health}/{maxHealth}";
-        hpBarDefault.text = $"{health}/{maxHealth}";
         gameObject.GetComponent<HealthBar>().fill = (float)health / maxHealth;
         
         if (health <= 0)
@@ -25,7 +23,8 @@ public class Health : MonoBehaviour
             StartCoroutine(Death());
             health = 0;
         }
-        
+        hpBar.text = $"{health}/{maxHealth}";
+        hpBarDefault.text = $"{health}/{maxHealth}";
     }
 
     public void SetHealth(int bonusHealth)
