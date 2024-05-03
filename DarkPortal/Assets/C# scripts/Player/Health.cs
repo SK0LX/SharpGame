@@ -12,10 +12,14 @@ public class Health : MonoBehaviour
     public Animator Animator;
     public TextMeshProUGUI hpBar;
     public TextMeshProUGUI hpBarDefault;
+    [SerializeField] private AudioSource hit;
+    [SerializeField] private AudioSource deathYourHeroIsDead;
+    [SerializeField] private AudioSource screamDeath;
 
     public void TakeHit(int damage)
     {
         health -= damage;
+        hit.Play();
         gameObject.GetComponent<HealthBar>().fill = (float)health / maxHealth;
         
         if (health <= 0)
@@ -43,6 +47,8 @@ public class Health : MonoBehaviour
     IEnumerator Death()
     {
         Animator.SetTrigger("death");
+        screamDeath.Play();
         yield return new WaitForSeconds(1f);
+        deathYourHeroIsDead.Play();
     }
 }

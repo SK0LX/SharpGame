@@ -17,6 +17,9 @@ public class Player : MonoBehaviour
     private int hp;
     private int dexterity;
     public bool fight;
+    [SerializeField] private AudioSource step;
+    [SerializeField] private AudioSource damageMob;
+    [SerializeField] private AudioSource heal;
 
     public int coins;
     
@@ -28,7 +31,8 @@ public class Player : MonoBehaviour
         
     void FixedUpdate()
     {
-        movementPlayer(); 
+        movementPlayer();
+        step.Play();
     }
     
 
@@ -91,7 +95,7 @@ public class Player : MonoBehaviour
         Animator.SetTrigger("attack1");
         yield return new WaitForSeconds(1f);
         FlipForFight();
-        
+        damageMob.Play();
         Animator.SetTrigger("runForAttack1");
         
         while (transform.position.x > geolocationNow)
@@ -111,6 +115,7 @@ public class Player : MonoBehaviour
         gameObject.GetComponent<Health>().SetHealth(ChooseRandomHealth(3, 7));
         yield return new WaitForSeconds(1f);
         Animator.SetTrigger("default");
+        heal.Play();
     }
     
     private int ChooseRandomHealth(int downHealth, int upHealth) // машина по рандомизированному хп(крит 20%)
