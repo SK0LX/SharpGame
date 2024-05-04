@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     private int hp;
     private int dexterity;
     public bool fight;
+    public PlayerInventory inventory;
     [SerializeField] private AudioSource step;
     [SerializeField] private AudioSource damageMob;
     [SerializeField] private AudioSource heal;

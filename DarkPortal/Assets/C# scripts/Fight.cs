@@ -69,7 +69,7 @@ public class Fight : MonoBehaviour
             {
                 buttonClick = true;
                 yield return StartCoroutine(player.Attack());
-                enemyComponent.TakeDamage(ChooseRandomDamage(10, 15));
+                enemyComponent.TakeDamage(ChooseRandomDamage(10 + player.inventory.knifeDamage, 15 + player.inventory.knifeDamage));
                 if (enemyComponent.IsDead())
                 {
                     yield return StartCoroutine(enemy.Die());
