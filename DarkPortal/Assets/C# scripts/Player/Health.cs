@@ -47,6 +47,7 @@ public class Health : MonoBehaviour
     IEnumerator Death()
     {
         Animator.SetTrigger("death");
+        yield return new WaitForSeconds(0.2f);
         screamDeath.Play();
         yield return new WaitForSeconds(1f);
         deathYourHeroIsDead.Play();

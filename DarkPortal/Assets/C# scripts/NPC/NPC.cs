@@ -9,7 +9,7 @@ public class NPC : MonoBehaviour
 {
     public Button button;
     public Button buttonInShop;
-    public GameObject player;
+    public Player player;
     private bool triggeringPlayer;
     private bool shopEnabled;
     public Canvas canvasForButtonShop;
@@ -55,5 +55,6 @@ public class NPC : MonoBehaviour
     public void TaskOnClick()
     {
         shopEnabled = !shopEnabled;
+        player.speed = shopEnabled ? 0 : 5f;
     }
 }
