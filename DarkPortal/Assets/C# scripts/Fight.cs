@@ -70,7 +70,7 @@ public class Fight : MonoBehaviour
                 buttonClick = true;
                 yield return StartCoroutine(player.Attack());
                 enemyComponent.TakeDamage(ChooseRandomDamage(10, 15));
-                if (enemyComponent.IsDead())
+                if (enemyComponent.IsDead)
                 {
                     yield return StartCoroutine(enemy.Die());
                     yield return new WaitForSeconds(1f);
@@ -94,7 +94,6 @@ public class Fight : MonoBehaviour
         {
             if (!buttonClick)
             {
-                Debug.Log($"{enemyComponent.health}");
                 buttonClick = true;
                 yield return StartCoroutine(enemy.Attack());
                 var damage = ChooseRandomDamage(enemyComponent.power - 2, enemyComponent.power + 2);
