@@ -252,8 +252,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 371becbc79a9436b9361de21070d1367, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 30
+  maxHealth: 30
   dexterity: 0
   power: 7
+  prefabHpCanvas: {fileID: 6293539288352924261, guid: 0cabf2a8909af6a4c9e41b05641bd402, type: 3}
+  health: 30
   SkillsList: []
   InventoryList: []
