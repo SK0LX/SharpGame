@@ -8,12 +8,11 @@ namespace C__scripts.Enemies
         private Animator animator;
         private new GameObject gameObject;
         private new Transform transform;
-        private GameObject prefab;
         private Transform spawnPosition;
         private GameObject player;
-        private Canvas canvas;
+        private Canvas canvasForFight;
+        private Entity entity;
         private Fight fight;
-        
         
         private float radius;
         private float speed;
@@ -38,8 +37,9 @@ namespace C__scripts.Enemies
             transform = gameObject.transform;
             transform.position = spawnPosition.transform.position;
             State = EnemyState.Born;
-            this.canvas = canvas;
+            canvasForFight = canvas;
             this.fight = fight;
+            entity = gameObject.GetComponent<Entity>();
         }
         
         public void FixedUpdate()
@@ -122,10 +122,12 @@ namespace C__scripts.Enemies
             if (other.CompareTag("Player") && State is EnemyState.Move)
             {
                 transform.position += new Vector3(1f, 0);
+                transform.eulerAngles = new Vector3(0, -180, 0);
                 State = EnemyState.Fight;
                 player.GetComponent<Player>().speed = 0;
                 player.GetComponent<Player>().fight = true;
-                Instantiate(fight).Init(player, canvas, gameObject);
+                Instantiate(fight).Init(player, canvasForFight, gameObject);
+                entity.ShowCanvas();
             }
         }
     }
