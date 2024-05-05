@@ -9,8 +9,13 @@ using UnityEngine.UI;
 public class PlayerInventory : MonoBehaviour
 {
     public Health hp;
-    
+    public int dexterity;
     public int coins;
+    
+    public Image decorationFirst;
+    public bool decorationFirstBool;
+    public Image decorationSecond;
+    public bool decorationSecondBool;
     
     
     public Button buttonHpSmall;
@@ -21,15 +26,26 @@ public class PlayerInventory : MonoBehaviour
     public Button buttonForHpBig;
     public TextMeshProUGUI textHpBig;
     public int hpBigBottel;    
-
-    public string nameKnife = "Старый меч";
-    public int knifeDamage; 
+    
+    public TextMeshProUGUI textDexterity;
+    public TextMeshProUGUI textCoins;
 
     private void Update()
     {
-        
         textHpBig.text = hpBigBottel.ToString();
         textHpSmall.text = hpSmallBottel.ToString();
+        textDexterity.text = $"Ловкость:{dexterity}";
+        textCoins.text = $"Деньги:{coins}";
+
+        if (decorationFirstBool)
+        {
+            decorationFirst.enabled = true;
+        }
+        
+        if (decorationSecondBool)
+        {
+            decorationSecond.enabled = true;
+        }
     }
 
     void Start()
@@ -37,8 +53,8 @@ public class PlayerInventory : MonoBehaviour
         buttonHpSmall.GetComponent<Button>().onClick.AddListener(HpSmall);
         
         buttonForHpBig.GetComponent<Button>().onClick.AddListener(HpBig);
-        
-        
+
+        dexterity = 2;
     }
     
 

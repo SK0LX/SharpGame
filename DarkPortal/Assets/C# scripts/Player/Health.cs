@@ -9,6 +9,7 @@ public class Health : MonoBehaviour
 {
     public int health;
     public int maxHealth;
+    
     public Animator Animator;
     public TextMeshProUGUI hpBar;
     public TextMeshProUGUI hpBarDefault;
@@ -43,7 +44,6 @@ public class Health : MonoBehaviour
         gameObject.GetComponent<HealthBar>().fill = (float)health / maxHealth;
     }
 
-
     IEnumerator Death()
     {
         Animator.SetTrigger("death");
@@ -51,5 +51,14 @@ public class Health : MonoBehaviour
         screamDeath.Play();
         yield return new WaitForSeconds(1f);
         deathYourHeroIsDead.Play();
+    }
+    
+    public void DecorationBoost(int bonusHealth)
+    {
+        health += bonusHealth;
+        maxHealth += bonusHealth;
+        hpBar.text = $"{health}/{maxHealth}";
+        hpBarDefault.text = $"{health}/{maxHealth}";
+        gameObject.GetComponent<HealthBar>().fill = (float)health / maxHealth;
     }
 }

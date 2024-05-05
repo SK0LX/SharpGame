@@ -69,11 +69,11 @@ public class Fight : MonoBehaviour
             {
                 buttonClick = true;
                 yield return StartCoroutine(player.Attack());
-                enemyComponent.TakeDamage(ChooseRandomDamage(10 + player.inventory.knifeDamage, 15 + player.inventory.knifeDamage));
+                enemyComponent.TakeDamage(ChooseRandomDamage(10, 15));
                 if (enemyComponent.IsDead())
                 {
                     yield return StartCoroutine(enemy.Die());
-                    yield return 1f;
+                    yield return new WaitForSeconds(1f);
                     player.EndFight();
                     canvas.enabled = false;
                     Destroy(gameObject);
@@ -98,17 +98,17 @@ public class Fight : MonoBehaviour
                 buttonClick = true;
                 yield return StartCoroutine(enemy.Attack());
                 var damage = ChooseRandomDamage(enemyComponent.power - 2, enemyComponent.power + 2);
-                playerHealth.TakeHit(damage); 
+                playerHealth.TakeHit(damage * ChooseDamageSkip(player.inventory.dexterity)); 
                 isPlayerTurn = true;
                 buttonClick = false;
             }
         } 
     }
     
-    void ProtectionFromAttack()
+    private int ChooseDamageSkip(int dexterity) // поможет ли ловкость уйти от урона, хммм
     {
-        if (critDamage)
-            player.Animator.SetTrigger("CritDamage");
+        var rnd = new Random();
+        return rnd.Next(0, 100) <= dexterity ? 0 : 1;
     }
 }
     
