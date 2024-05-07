@@ -11,7 +11,6 @@ public class Health : MonoBehaviour
     public int maxHealth;
     
     public Animator Animator;
-    public TextMeshProUGUI hpBar;
     public TextMeshProUGUI hpBarDefault;
     [SerializeField] private AudioSource hit;
     [SerializeField] private AudioSource deathYourHeroIsDead;
@@ -28,7 +27,6 @@ public class Health : MonoBehaviour
             StartCoroutine(Death());
             health = 0;
         }
-        hpBar.text = $"{health}/{maxHealth}";
         hpBarDefault.text = $"{health}/{maxHealth}";
     }
 
@@ -39,7 +37,6 @@ public class Health : MonoBehaviour
         {
             health = maxHealth;
         }
-        hpBar.text = $"{health}/{maxHealth}";
         hpBarDefault.text = $"{health}/{maxHealth}";
         gameObject.GetComponent<HealthBar>().fill = (float)health / maxHealth;
     }
@@ -57,7 +54,6 @@ public class Health : MonoBehaviour
     {
         health += bonusHealth;
         maxHealth += bonusHealth;
-        hpBar.text = $"{health}/{maxHealth}";
         hpBarDefault.text = $"{health}/{maxHealth}";
         gameObject.GetComponent<HealthBar>().fill = (float)health / maxHealth;
     }

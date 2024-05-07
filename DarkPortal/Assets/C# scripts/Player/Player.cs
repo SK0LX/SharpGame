@@ -3,6 +3,7 @@ using System.Collections;
 using System.Threading;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = System.Random;
 
 public class Player : MonoBehaviour
@@ -19,21 +20,35 @@ public class Player : MonoBehaviour
     public bool fight;
     public Canvas canvasDefault;
     public PlayerInventory inventory;
+    public Button buttonForAttack;
+    public bool activateButtonForAttack;
+    public Button buttonForHealth;
+    public bool activateButtonForHealth;
+    public bool isPlayerTorn; 
     [SerializeField] private AudioSource step;
     [SerializeField] private AudioSource damageMob;
     [SerializeField] private AudioSource heal;
+
+    public Canvas canvasForDead;
     
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        buttonForAttack.GetComponent<Button>().onClick.AddListener(ButtonAttack);
+        buttonForHealth.GetComponent<Button>().onClick.AddListener(ButtonHealth);
         canvasDefault.enabled = true;
+        canvasForDead.enabled = false;
     }
         
     void FixedUpdate()
     {
         movementPlayer();
         step.Play();
+        if (HP.health == 0)
+        {
+            StartCoroutine(Dead());
+        }
     }
     
 
@@ -61,12 +76,6 @@ public class Player : MonoBehaviour
             Animator.SetFloat("HorizontalMove", 0);
         }
     }
-
-    public void OnButtonClick() //кнопка на интерфейсе(TODO настроить)
-    {
-        StartCoroutine(Attack());
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Enemy"))
@@ -138,5 +147,23 @@ public class Player : MonoBehaviour
         fight = false;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         speed = 5f;
+    }
+    
+    private void ButtonAttack()
+    {
+        if (isPlayerTorn)
+            activateButtonForAttack = true;
+    }
+    
+    private void ButtonHealth()
+    {
+        if (isPlayerTorn)
+            activateButtonForHealth = true;
+    }
+
+    private IEnumerator Dead()
+    {
+        yield return new WaitForSeconds(3f);
+        canvasForDead.enabled = true;
     }
 }

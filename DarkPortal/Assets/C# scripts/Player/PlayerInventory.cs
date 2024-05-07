@@ -35,7 +35,7 @@ public class PlayerInventory : MonoBehaviour
         textHpBig.text = hpBigBottel.ToString();
         textHpSmall.text = hpSmallBottel.ToString();
         textDexterity.text = $"Ловкость:{dexterity}";
-        textCoins.text = $"Деньги:{coins}";
+        textCoins.text = coins.ToString();
 
         if (decorationFirstBool)
         {

@@ -4,6 +4,7 @@ using C__scripts.Enemies;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 using Random = System.Random;
 
 
@@ -15,7 +16,7 @@ public class Fight : MonoBehaviour
     private Entity enemyComponent;
     
     private bool facingRight;
-    private bool isPlayerTurn;
+    public bool isPlayerTurn;
     private bool buttonClick;
     public Canvas canvas;
     public bool critDamage;
@@ -29,7 +30,7 @@ public class Fight : MonoBehaviour
         playerHealth = this.player.GetComponent<Health>();
         ChooseRandomMove();
     }
-    
+
     void Update()
     {
         if (player.fight)
@@ -44,6 +45,7 @@ public class Fight : MonoBehaviour
     {
         var rnd = new Random();
         isPlayerTurn = rnd.Next(1, 3) == 1;
+        player.isPlayerTorn = isPlayerTurn;
     }
 
     private int ChooseRandomDamage(int downDamage, int upDamage) // машина по рандомизированному урона(крит 20%)
@@ -65,7 +67,7 @@ public class Fight : MonoBehaviour
     {
         if (isPlayerTurn)
         {
-            if (!buttonClick && Input.GetKeyDown(KeyCode.Z))
+            if (!buttonClick && (Input.GetKeyDown(KeyCode.Z) || player.activateButtonForAttack))
             {
                 buttonClick = true;
                 yield return StartCoroutine(player.Attack());
@@ -79,15 +81,19 @@ public class Fight : MonoBehaviour
                     Destroy(gameObject);
                 }
                 isPlayerTurn = false;
+                player.isPlayerTorn = false;
                 buttonClick = false;
+                player.activateButtonForAttack = false;
             }
             
-            if (!buttonClick && Input.GetKeyDown(KeyCode.X))
+            if (!buttonClick && (Input.GetKeyDown(KeyCode.X) || player.activateButtonForHealth))
             {
                 buttonClick = true;
                 yield return StartCoroutine(player.HealingPlayer());
                 isPlayerTurn = false;
+                player.isPlayerTorn = false;
                 buttonClick = false;
+                player.activateButtonForHealth = false;
             }
         }   
         else
@@ -99,6 +105,7 @@ public class Fight : MonoBehaviour
                 var damage = ChooseRandomDamage(enemyComponent.power - 2, enemyComponent.power + 2);
                 playerHealth.TakeHit(damage * ChooseDamageSkip(player.inventory.dexterity)); 
                 isPlayerTurn = true;
+                player.isPlayerTorn = true;
                 buttonClick = false;
             }
         } 
