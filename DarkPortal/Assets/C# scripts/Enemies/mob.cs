@@ -1,10 +1,12 @@
 using System.Collections;
 using UnityEngine;
+using Random = System.Random;
 
 namespace C__scripts.Enemies
 {
     public class Enemy : MonoBehaviour
     {
+        [SerializeField] public int cost;
         private Animator animator;
         private new GameObject gameObject;
         private new Transform transform;
@@ -22,6 +24,7 @@ namespace C__scripts.Enemies
         private static readonly int Go = Animator.StringToHash("go");
         private static readonly int AttackAnimation = Animator.StringToHash("attack");
         private static readonly int Idle = Animator.StringToHash("idle");
+        private static readonly int CriticalDamage = Animator.StringToHash("criticalDamage");
 
         public EnemyState State { get; private set; }
 
@@ -82,10 +85,12 @@ namespace C__scripts.Enemies
 
         public IEnumerator Attack()
         {
+            if (new Random().Next(0, 101) < 20)
+                entity.UseSkills();
             var geolocationNow = transform.position.x;
             var geolocationPlayer = player.transform.position.x;
             
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.3f);
             
             animator.SetTrigger(Go);
             transform.eulerAngles = new Vector3(0, -180, 0);
@@ -94,11 +99,10 @@ namespace C__scripts.Enemies
                 transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);
                 yield return null;
             }
+
+            animator.SetTrigger(!fight.critDamage ? AttackAnimation : CriticalDamage);
+            yield return new WaitForSeconds(0.8f);
             
-            animator.SetTrigger(AttackAnimation);
-            yield return new WaitForSeconds(0.6f);
-            
-            animator.SetTrigger(Go);
             transform.eulerAngles = new Vector3(0, 0, 0);
             while (transform.position.x < geolocationNow)
             {
@@ -126,8 +130,10 @@ namespace C__scripts.Enemies
                 State = EnemyState.Fight;
                 player.GetComponent<Player>().speed = 0;
                 player.GetComponent<Player>().fight = true;
-                Instantiate(fight).Init(player, canvasForFight, gameObject);
+                fight = Instantiate(fight);
+                fight.Init(player, canvasForFight, gameObject);
                 entity.ShowCanvas();
+                animator.SetTrigger(Idle);
             }
         }
     }

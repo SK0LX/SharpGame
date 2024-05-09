@@ -153,10 +153,6 @@ public class Player : MonoBehaviour
         fight = false;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         speed = 5f;
-        
-        //TODO Катя, добавь сюда кол-во монет выпавших с моба
-        
-        inventory.coins += 10;
     }
     
     private void ButtonAttack()

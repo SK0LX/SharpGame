@@ -19,12 +19,13 @@ public class Skills : MonoBehaviour
 
     void Power(Entity entity, int quantity)
     {
-        entity.power -= quantity;
+        entity.power += quantity;
     }
 
     public void BuffHeal(Entity entity, int quantity)
     {
         entity.health += quantity;
+        entity.maxHealth += quantity;
     }
     
     public void BuffDexterity(Entity entity, int quantity)
@@ -34,7 +35,7 @@ public class Skills : MonoBehaviour
     
     public void BuffPower(Entity entity, int quantity)
     {
-        entity.power -= quantity;
+        entity.power += quantity;
     }
     
     public void AllDamage(Entity entity)

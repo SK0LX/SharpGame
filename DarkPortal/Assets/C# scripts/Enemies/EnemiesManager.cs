@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace C__scripts.Enemies
 {
     public class EnemiesManager : MonoBehaviour
     {
-        [SerializeField] private GameObject enemyPrefab;
         [SerializeField] private GameObject player;
+        [SerializeField] private GameObject[] enemyPrefab;
         [SerializeField] private Transform[] spawnPoints;
         [SerializeField] private Canvas canvasFight;
         [SerializeField] private Fight fight;
@@ -30,7 +28,7 @@ namespace C__scripts.Enemies
         {
             if (Vector3.Distance(spawnPoints[currentSpawnPoint].position, player.transform.position) < 20f)
             {
-                var e = Instantiate(enemyPrefab);
+                var e = Instantiate(enemyPrefab[currentSpawnPoint]);
                 e.GetComponent<Enemy>()
                     .Init(e, radius, speed, spawnPoints[currentSpawnPoint], player, canvasFight, fight);
                 enemies[currentSpawnPoint++] = e;

@@ -1,10 +1,7 @@
 using System;
 using System.Collections;
 using C__scripts.Enemies;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 using Random = System.Random;
 
 
@@ -50,12 +47,14 @@ public class Fight : MonoBehaviour
 
     private int ChooseRandomDamage(int downDamage, int upDamage) // машина по рандомизированному урона(крит 20%)
     {
+        critDamage = false;
         if (upDamage - downDamage < 0)
             throw new ArgumentException("Верхний предел урона не может быть ниже нижнего предела урона");
         var rnd = new Random();
         var damage = rnd.Next(downDamage,upDamage + 1);
         if (rnd.Next(0, 101) < 20)
         {
+            Debug.Log($"CRIT mob={!isPlayerTurn}");
             damage += (upDamage-downDamage) / 2;
             critDamage = true;
         }
@@ -77,6 +76,7 @@ public class Fight : MonoBehaviour
                     yield return StartCoroutine(enemy.Die());
                     yield return new WaitForSeconds(1f);
                     player.canvasWin.enabled = true;
+                    player.inventory.coins += enemy.cost;
                     canvas.enabled = false;
                     Destroy(gameObject);
                 }
@@ -101,14 +101,14 @@ public class Fight : MonoBehaviour
             if (!buttonClick)
             {
                 buttonClick = true;
-                yield return StartCoroutine(enemy.Attack());
                 var damage = ChooseRandomDamage(enemyComponent.power - 2, enemyComponent.power + 2);
+                yield return StartCoroutine(enemy.Attack());
                 playerHealth.TakeHit(damage * ChooseDamageSkip(player.inventory.dexterity)); 
                 isPlayerTurn = true;
                 player.isPlayerTorn = true;
                 buttonClick = false;
             }
-        } 
+        }
     }
     
     private int ChooseDamageSkip(int dexterity) // поможет ли ловкость уйти от урона, хммм

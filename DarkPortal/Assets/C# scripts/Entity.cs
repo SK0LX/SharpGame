@@ -4,6 +4,7 @@ using System.Net.Mime;
 using TMPro;
 using UnityEngine;
 using Image = UnityEngine.UI.Image;
+using Random = System.Random;
 
 public class Entity: MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class Entity: MonoBehaviour
     private Bounds colliderForm;
     private RectTransform positionCanvas;
     // public List<int> InventoryForWeapons;
-    public List<Skills> SkillsList;
+    private Skills skill;
     public List<PlayerInventory> InventoryList; 
 
     public void Start()
@@ -27,7 +28,7 @@ public class Entity: MonoBehaviour
         InitCanvas();
         health = maxHealth;
         // InventoryForWeapons = new List<int>();
-        SkillsList = new List<Skills>(); // через .GetComponent
+        skill = gameObject.GetComponent<Skills>();
         InventoryList = new List<PlayerInventory>();
     }
 
@@ -46,13 +47,21 @@ public class Entity: MonoBehaviour
     public bool IsDead => health <= 0;
 
     
-    public void UseSkills(Skills skill, Entity entity)
+    public void UseSkills()
     {
-        skill.BuffHeal(entity, 20); // 
-        skill.BuffDexterity(entity, 10);
-        skill.BuffPower(entity, 10);
-        skill.SomeDamage(entity, entity.power);
-        skill.AllDamage(entity);
+        switch (new Random().Next(0, 3))
+        {
+            case 0:
+                skill.BuffHeal(this, maxHealth / 6);
+                text.text = $"{health}/{maxHealth}";
+                break;
+            case 1:
+                skill.BuffDexterity(this, dexterity / 5);
+                break;
+            case 2:
+                skill.BuffPower(this, 1);
+                break;
+        }
     }
 
     public void AddToInventory(PlayerInventory item)
@@ -89,5 +98,6 @@ public class Entity: MonoBehaviour
         positionCanvas.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, colliderForm.max.x);
         bar1 = canvasHp.gameObject.transform.GetChild(0).GetChild(1).GetComponent<Image>();
         text = canvasHp.gameObject.transform.GetChild(0).GetChild(2).GetComponent<TextMeshProUGUI>();
+        text.text = $"{health}/{maxHealth}";
     }
 }
