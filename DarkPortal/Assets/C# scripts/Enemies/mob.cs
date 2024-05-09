@@ -6,7 +6,7 @@ namespace C__scripts.Enemies
 {
     public class Enemy : MonoBehaviour
     {
-        [SerializeField] private int cost;
+        [SerializeField] public int cost;
         private Animator animator;
         private new GameObject gameObject;
         private new Transform transform;
@@ -101,7 +101,6 @@ namespace C__scripts.Enemies
             }
 
             animator.SetTrigger(!fight.critDamage ? AttackAnimation : CriticalDamage);
-            Debug.Log($"{fight.critDamage}");
             yield return new WaitForSeconds(0.8f);
             
             transform.eulerAngles = new Vector3(0, 0, 0);
