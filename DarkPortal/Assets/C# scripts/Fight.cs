@@ -20,7 +20,7 @@ public class Fight : MonoBehaviour
     private bool buttonClick;
     public Canvas canvas;
     public bool critDamage;
-
+    
     public void Init(GameObject player, Canvas canvas, GameObject enemy)
     {
         this.player = player.GetComponent<Player>();
@@ -76,7 +76,7 @@ public class Fight : MonoBehaviour
                 {
                     yield return StartCoroutine(enemy.Die());
                     yield return new WaitForSeconds(1f);
-                    player.EndFight();
+                    player.canvasWin.enabled = true;
                     canvas.enabled = false;
                     Destroy(gameObject);
                 }

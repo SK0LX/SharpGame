@@ -24,7 +24,10 @@ public class Player : MonoBehaviour
     public bool activateButtonForAttack;
     public Button buttonForHealth;
     public bool activateButtonForHealth;
-    public bool isPlayerTorn; 
+    public bool isPlayerTorn;
+
+    public Button win;
+    public Canvas canvasWin;
     [SerializeField] private AudioSource step;
     [SerializeField] private AudioSource damageMob;
     [SerializeField] private AudioSource heal;
@@ -37,8 +40,10 @@ public class Player : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         buttonForAttack.GetComponent<Button>().onClick.AddListener(ButtonAttack);
         buttonForHealth.GetComponent<Button>().onClick.AddListener(ButtonHealth);
+        win.GetComponent<Button>().onClick.AddListener(EndFight);
         canvasDefault.enabled = true;
         canvasForDead.enabled = false;
+        canvasWin.enabled = false;
     }
         
     void FixedUpdate()
@@ -142,11 +147,16 @@ public class Player : MonoBehaviour
         return health;
     }
     
-    public void EndFight()
+    private void EndFight()
     {
+        canvasWin.enabled = false;
         fight = false;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         speed = 5f;
+        
+        //TODO Катя, добавь сюда кол-во монет выпавших с моба
+        
+        inventory.coins += 10;
     }
     
     private void ButtonAttack()
@@ -166,4 +176,5 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(3f);
         canvasForDead.enabled = true;
     }
+    
 }
