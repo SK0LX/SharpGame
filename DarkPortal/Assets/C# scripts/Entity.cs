@@ -45,7 +45,11 @@ public class Entity: MonoBehaviour
     }
 
     public bool IsDead => health <= 0;
-
+    
+    public bool HasHealthDecreased()
+    {
+        return health < maxHealth;
+    }
     
     public void UseSkills()
     {
@@ -63,7 +67,7 @@ public class Entity: MonoBehaviour
                 break;
         }
     }
-
+    
     public void AddToInventory(PlayerInventory item)
     {
         InventoryList.Add(item);
