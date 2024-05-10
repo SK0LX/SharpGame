@@ -15,6 +15,7 @@ namespace C__scripts.Enemies
         private Canvas canvasForFight;
         private Entity entity;
         private Fight fight;
+        private SpriteRenderer spriteRenderer;
         
         private float radius;
         private float speed;
@@ -30,6 +31,7 @@ namespace C__scripts.Enemies
 
         public void Init(GameObject gameObject, float radius, float speed, Transform spawnPosition, GameObject player, Canvas canvas, Fight fight)
         {
+            spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
             this.gameObject = gameObject;
             position = spawnPosition.position.x;
             animator = gameObject.GetComponent<Animator>();
@@ -85,6 +87,7 @@ namespace C__scripts.Enemies
 
         public IEnumerator Attack()
         {
+            var originalColor = spriteRenderer.color;
             if (new Random().Next(0, 101) < 20)
                 entity.UseSkills();
             var geolocationNow = transform.position.x;
@@ -99,6 +102,13 @@ namespace C__scripts.Enemies
                 transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);
                 yield return null;
             }
+            var component = GetComponent<Entity>(); 
+            if (component.HasHealthDecreased())
+            {
+                spriteRenderer.color = Color.red; 
+                yield return new WaitForSeconds(0.5f); 
+            }
+
 
             animator.SetTrigger(!fight.critDamage ? AttackAnimation : CriticalDamage);
             yield return new WaitForSeconds(0.8f);
@@ -110,7 +120,9 @@ namespace C__scripts.Enemies
                 yield return null;
             }
             transform.eulerAngles = new Vector3(0, -180, 0);
-            
+            yield return new WaitForSeconds(1f);
+            spriteRenderer.color = originalColor;
+            yield return null;
             animator.SetTrigger(Idle);
         }
 

@@ -14,6 +14,7 @@ public class NPC : MonoBehaviour
     private bool shopEnabled;
     public Canvas canvasForButtonShop;
     public Canvas canvasShop;
+    [SerializeField] private AudioSource buysmth;
 
     void Start()
     {
@@ -56,5 +57,6 @@ public class NPC : MonoBehaviour
     {
         shopEnabled = !shopEnabled;
         player.speed = shopEnabled ? 0 : 5f;
+        buysmth.Play();
     }
 }

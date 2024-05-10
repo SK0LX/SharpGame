@@ -13,6 +13,7 @@ namespace C__scripts.Enemies
         [SerializeField] private float radius;
         [SerializeField] private float speed;
         
+        
         private GameObject[] enemies;
 
         private int currentSpawnPoint;

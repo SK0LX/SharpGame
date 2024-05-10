@@ -31,7 +31,9 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioSource step;
     [SerializeField] private AudioSource damageMob;
     [SerializeField] private AudioSource heal;
-
+    [SerializeField] private AudioSource choice;
+    [SerializeField] private AudioSource winSound;
+    
     public Canvas canvasForDead;
     
     void Start()
@@ -153,18 +155,21 @@ public class Player : MonoBehaviour
         fight = false;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         speed = 5f;
+        winSound.Play();
     }
     
     private void ButtonAttack()
     {
         if (isPlayerTorn)
             activateButtonForAttack = true;
+        choice.Play();
     }
     
     private void ButtonHealth()
     {
         if (isPlayerTorn)
             activateButtonForHealth = true;
+        choice.Play();
     }
 
     private IEnumerator Dead()
