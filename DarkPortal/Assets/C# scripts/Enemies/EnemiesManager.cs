@@ -29,10 +29,10 @@ namespace C__scripts.Enemies
         {
             if (Vector3.Distance(spawnPoints[currentSpawnPoint].position, player.transform.position) < 20f)
             {
-                var e = Instantiate(enemyPrefab[currentSpawnPoint]);
+                var e = Instantiate(enemyPrefab[currentSpawnPoint++]);
                 e.GetComponent<Enemy>()
-                    .Init(e, radius, speed, spawnPoints[currentSpawnPoint], player, canvasFight, fight);
-                enemies[currentSpawnPoint++] = e;
+                    .Init(e, radius, speed, spawnPoints[currentSpawnPoint-1], player, canvasFight, fight);
+                enemies[currentSpawnPoint-1] = e;
                 
                 if (currentSpawnPoint >= size) 
                     Destroy(gameObject);

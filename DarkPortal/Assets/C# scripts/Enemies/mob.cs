@@ -7,6 +7,15 @@ namespace C__scripts.Enemies
     public class Enemy : MonoBehaviour
     {
         [SerializeField] public int cost;
+        
+        private EnemyState State { get; set; }
+        public Transform SpawnPoint => spawnPosition;
+        public float Speed => speed;
+        public float Radius => radius;
+        public Transform Transform => transform;
+        public Rigidbody2D Rigidbody2D => gameObject.GetComponent<Rigidbody2D>();
+        
+        
         private Animator animator;
         private new GameObject gameObject;
         private new Transform transform;
@@ -19,32 +28,29 @@ namespace C__scripts.Enemies
         
         private float radius;
         private float speed;
-
-        private float position;
-        private bool isMoveRight = true;
+        private bool isBoss;
+        
         private static readonly int Go = Animator.StringToHash("go");
         private static readonly int AttackAnimation = Animator.StringToHash("attack");
         private static readonly int Idle = Animator.StringToHash("idle");
         private static readonly int CriticalDamage = Animator.StringToHash("criticalDamage");
 
-        public EnemyState State { get; private set; }
-
         public void Init(GameObject gameObject, float radius, float speed, Transform spawnPosition, GameObject player, Canvas canvas, Fight fight)
         {
-            spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
             this.gameObject = gameObject;
-            position = spawnPosition.position.x;
-            animator = gameObject.GetComponent<Animator>();
             this.radius = radius;
             this.speed = speed;
             this.spawnPosition = spawnPosition;
             this.player = player;
+            this.fight = fight;
             transform = gameObject.transform;
             transform.position = spawnPosition.transform.position;
-            State = EnemyState.Born;
             canvasForFight = canvas;
-            this.fight = fight;
+            State = EnemyState.Born;
+            animator = GetComponent<Animator>();
+            spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
             entity = gameObject.GetComponent<Entity>();
+            isBoss = gameObject.GetComponent<Boss>() is not null;
         }
         
         public void FixedUpdate()
@@ -56,38 +62,18 @@ namespace C__scripts.Enemies
                     State = EnemyState.Move;
                     return;
                 case EnemyState.Move:
-                    Move();
                     return;
             }
         }
 
-        private void Move()
+        public void SetAngle(Vector3 vector)
         {
-            position = transform.position.x;
-            var vector = Vector2.right * (speed * Time.deltaTime);
-            
-            if (position + vector.x < spawnPosition.position.x + radius && isMoveRight)
-            {
-                transform.Translate(vector);
-            }
-            else if (position - vector.x > spawnPosition.position.x - radius)
-            {
-                isMoveRight = false;
-                transform.eulerAngles = new Vector3(0, -180, 0);
-                transform.Translate(vector);
-            }
-            else
-            {
-                isMoveRight = true;
-                transform.eulerAngles = new Vector3(0, 0, 0);
-            }
-            
-            animator.SetTrigger(Go);
+            transform.eulerAngles = vector;
         }
 
         public IEnumerator Attack()
         {
-            var originalColor = spriteRenderer.color;
+            //var originalColor = spriteRenderer.color;
             if (new Random().Next(0, 101) < 20)
                 entity.UseSkills();
             var geolocationNow = transform.position.x;
@@ -97,17 +83,18 @@ namespace C__scripts.Enemies
             
             animator.SetTrigger(Go);
             transform.eulerAngles = new Vector3(0, -180, 0);
-            while (transform.position.x > geolocationPlayer + 2)
+            while (transform.position.x > geolocationPlayer + 1.75)
             {
                 transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);
                 yield return null;
             }
-            var component = GetComponent<Entity>(); 
+            
+            /*var component = GetComponent<Entity>(); 
             if (component.HasHealthDecreased())
             {
                 spriteRenderer.color = Color.red; 
                 yield return new WaitForSeconds(0.5f); 
-            }
+            }*/
 
 
             animator.SetTrigger(!fight.critDamage ? AttackAnimation : CriticalDamage);
@@ -120,9 +107,8 @@ namespace C__scripts.Enemies
                 yield return null;
             }
             transform.eulerAngles = new Vector3(0, -180, 0);
-            yield return new WaitForSeconds(1f);
-            spriteRenderer.color = originalColor;
-            yield return null;
+            yield return new WaitForSeconds(0.1f);
+            //spriteRenderer.color = originalColor;
             animator.SetTrigger(Idle);
         }
 
@@ -130,23 +116,50 @@ namespace C__scripts.Enemies
         {
             animator.SetTrigger("die");
             yield return new WaitForSeconds(0.35f);
-            Destroy(gameObject);
+            if (!isBoss)
+                Destroy(gameObject);
         }
 
         public void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.CompareTag("Player") && State is EnemyState.Move)
+            if (other.CompareTag("Player") && State is EnemyState.Move && !isBoss)
             {
-                transform.position += new Vector3(1f, 0);
+                transform.position += new Vector3(2f, 0);
                 transform.eulerAngles = new Vector3(0, -180, 0);
+                Destroy(GetComponent<BoxCollider2D>());
                 State = EnemyState.Fight;
                 player.GetComponent<Player>().speed = 0;
                 player.GetComponent<Player>().fight = true;
+                
                 fight = Instantiate(fight);
                 fight.Init(player, canvasForFight, gameObject);
                 entity.ShowCanvas();
                 animator.SetTrigger(Idle);
             }
+            else if (other.CompareTag("Player") && State is EnemyState.Move)
+            {
+                StartCoroutine(PrepareToFight());
+            }
+        }
+
+        private IEnumerator PrepareToFight()
+        {
+            player.GetComponent<Player>().speed = 0;
+            yield return new WaitForSeconds(1.5f);
+            animator.SetTrigger("teleport");
+            yield return new WaitForSeconds(1f);
+            transform.position += new Vector3(2f, 0);
+            transform.eulerAngles = new Vector3(0, -180, 0);
+            Destroy(GetComponent<BoxCollider2D>());
+            State = EnemyState.Fight;
+            
+            player.GetComponent<Player>().fight = true;
+                
+            fight = Instantiate(fight);
+            fight.Init(player, canvasForFight, gameObject);
+            entity.ShowCanvas();
+            animator.SetTrigger(Idle);
+            yield return null;
         }
     }
 }
