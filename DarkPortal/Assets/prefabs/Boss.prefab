@@ -150,7 +150,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0021494292, y: 0}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -161,7 +161,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.21807903, y: 0.28}
+  m_Size: {x: 0.17748979, y: 0.28}
   m_EdgeRadius: 0
 --- !u!61 &4971071103686628492
 BoxCollider2D:
@@ -195,7 +195,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.002149429, y: 0}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -206,7 +206,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.218079, y: 0.28}
+  m_Size: {x: 0.1774898, y: 0.28}
   m_EdgeRadius: 0
 --- !u!50 &4786144221724021404
 Rigidbody2D:
@@ -247,11 +247,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 371becbc79a9436b9361de21070d1367, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1
+  maxHealth: 50
   dexterity: 0
-  power: 1
+  power: 10
   prefabHpCanvas: {fileID: 6293539288352924261, guid: 0cabf2a8909af6a4c9e41b05641bd402, type: 3}
-  health: 1
+  health: 50
   InventoryList: []
 --- !u!114 &6902492979236917084
 MonoBehaviour:
