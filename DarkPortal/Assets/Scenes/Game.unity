@@ -8146,6 +8146,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1610796031}
   m_CullTransparentMesh: 1
+--- !u!1 &1643613519
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1643613520}
+  m_Layer: 0
+  m_Name: spawn point Mob (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1643613520
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643613519}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 31.96, y: -28.95, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1651204657
 GameObject:
   m_ObjectHideFlags: 0
@@ -9054,17 +9085,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 808264148}
   enemyPrefab:
+  - {fileID: 5949907954492607103, guid: 5af2a03ce2086c344ad58bc25fee7c87, type: 3}
   - {fileID: 6359945531233908887, guid: 04afa5c07f4969c459ed03a983a0992f, type: 3}
   - {fileID: 6143239771940851377, guid: 2278bce99a91a9547b9ff821cbe785b3, type: 3}
   - {fileID: 3216118361855694689, guid: f22da463c42fd264d909c7364b730d55, type: 3}
   spawnPoints:
   - {fileID: 118430566}
   - {fileID: 117210108}
+  - {fileID: 1643613520}
   - {fileID: 1220990291}
   canvasFight: {fileID: 1407398964}
   fight: {fileID: 6845988446645271178, guid: 71489cf453a14f743ad42e2361dd72f3, type: 3}
-  radius: 3
-  speed: 3
 --- !u!1 &1794591272
 GameObject:
   m_ObjectHideFlags: 0
@@ -35848,6 +35879,7 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 118430566}
   - {fileID: 117210108}
+  - {fileID: 1643613520}
   - {fileID: 1220990291}
   - {fileID: 808264149}
   - {fileID: 592542967}
