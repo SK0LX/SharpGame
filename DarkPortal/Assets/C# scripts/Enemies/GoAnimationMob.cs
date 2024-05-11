@@ -39,17 +39,17 @@ public class GoAnimationMob : StateMachineBehaviour
         }
         
         var target = new Vector2(x, rb.position.y);
-        var newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
+        var newPos = Vector2.MoveTowards(rb.position, target, speed * Time.deltaTime);
         rb.MovePosition(newPos);
         if (Vector2.Distance(target, rb.position) <= 0.1f)
             isMoveRight = !isMoveRight;
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        transform.eulerAngles = new Vector3(0, -180, 0);
+    }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

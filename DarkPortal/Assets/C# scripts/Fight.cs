@@ -54,7 +54,7 @@ public class Fight : MonoBehaviour
         var damage = rnd.Next(downDamage,upDamage + 1);
         if (rnd.Next(0, 101) < 20)
         {
-            Debug.Log($"CRIT mob={!isPlayerTurn}");
+            Debug.Log(!isPlayerTurn ? $"CRIT mob={enemy.name}" : $"CRIT player");
             damage += (upDamage-downDamage) / 2;
             critDamage = true;
         }

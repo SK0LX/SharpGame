@@ -7,6 +7,8 @@ namespace C__scripts.Enemies
     public class Enemy : MonoBehaviour
     {
         [SerializeField] public int cost;
+        [SerializeField] private float speed;
+        [SerializeField] private float radius;
         
         private EnemyState State { get; set; }
         public Transform SpawnPoint => spawnPosition;
@@ -25,21 +27,20 @@ namespace C__scripts.Enemies
         private Entity entity;
         private Fight fight;
         private SpriteRenderer spriteRenderer;
-        
-        private float radius;
-        private float speed;
+            
+        private float boxRadius;
+        private float playerBox;
         private bool isBoss;
         
         private static readonly int Go = Animator.StringToHash("go");
         private static readonly int AttackAnimation = Animator.StringToHash("attack");
         private static readonly int Idle = Animator.StringToHash("idle");
         private static readonly int CriticalDamage = Animator.StringToHash("criticalDamage");
+        private static readonly int Die1 = Animator.StringToHash("die");
 
-        public void Init(GameObject gameObject, float radius, float speed, Transform spawnPosition, GameObject player, Canvas canvas, Fight fight)
+        public void Init(GameObject gameObject, Transform spawnPosition, GameObject player, Canvas canvas, Fight fight)
         {
             this.gameObject = gameObject;
-            this.radius = radius;
-            this.speed = speed;
             this.spawnPosition = spawnPosition;
             this.player = player;
             this.fight = fight;
@@ -51,6 +52,8 @@ namespace C__scripts.Enemies
             spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
             entity = gameObject.GetComponent<Entity>();
             isBoss = gameObject.GetComponent<Boss>() is not null;
+            boxRadius = animator.GetComponent<BoxCollider2D>().bounds.extents.x;
+            playerBox = player.GetComponent<BoxCollider2D>().bounds.extents.x;
         }
         
         public void FixedUpdate()
@@ -66,40 +69,36 @@ namespace C__scripts.Enemies
             }
         }
 
-        public void SetAngle(Vector3 vector)
-        {
-            transform.eulerAngles = vector;
-        }
-
         public IEnumerator Attack()
         {
             //var originalColor = spriteRenderer.color;
             if (new Random().Next(0, 101) < 20)
                 entity.UseSkills();
             var geolocationNow = transform.position.x;
-            var geolocationPlayer = player.transform.position.x;
+            var geolocationPlayer = player.transform.position.x + boxRadius + playerBox;
             
             yield return new WaitForSeconds(0.3f);
             
             animator.SetTrigger(Go);
             transform.eulerAngles = new Vector3(0, -180, 0);
-            while (transform.position.x > geolocationPlayer + 1.75)
+            Debug.Log($"{transform.position.x} t={geolocationPlayer}");
+            while (transform.position.x  > geolocationPlayer)
             {
                 transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);
                 yield return null;
             }
-            
+            Debug.Log("!");
             /*var component = GetComponent<Entity>(); 
             if (component.HasHealthDecreased())
             {
                 spriteRenderer.color = Color.red; 
                 yield return new WaitForSeconds(0.5f); 
             }*/
-
-
+            
             animator.SetTrigger(!fight.critDamage ? AttackAnimation : CriticalDamage);
             yield return new WaitForSeconds(0.8f);
             
+            animator.SetTrigger(Go);
             transform.eulerAngles = new Vector3(0, 0, 0);
             while (transform.position.x < geolocationNow)
             {
@@ -114,7 +113,7 @@ namespace C__scripts.Enemies
 
         public IEnumerator Die()
         {
-            animator.SetTrigger("die");
+            animator.SetTrigger(Die1);
             yield return new WaitForSeconds(0.35f);
             if (!isBoss)
                 Destroy(gameObject);
@@ -124,8 +123,6 @@ namespace C__scripts.Enemies
         {
             if (other.CompareTag("Player") && State is EnemyState.Move && !isBoss)
             {
-                transform.position += new Vector3(2f, 0);
-                transform.eulerAngles = new Vector3(0, -180, 0);
                 Destroy(GetComponent<BoxCollider2D>());
                 State = EnemyState.Fight;
                 player.GetComponent<Player>().speed = 0;
@@ -134,7 +131,10 @@ namespace C__scripts.Enemies
                 fight = Instantiate(fight);
                 fight.Init(player, canvasForFight, gameObject);
                 entity.ShowCanvas();
+                animator.ResetTrigger(Go);
                 animator.SetTrigger(Idle);
+                
+                transform.position += new Vector3(2f, 0);
             }
             else if (other.CompareTag("Player") && State is EnemyState.Move)
             {
@@ -145,21 +145,22 @@ namespace C__scripts.Enemies
         private IEnumerator PrepareToFight()
         {
             player.GetComponent<Player>().speed = 0;
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(0.5f);
             animator.SetTrigger("teleport");
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1.1f);
             transform.position += new Vector3(2f, 0);
             transform.eulerAngles = new Vector3(0, -180, 0);
             Destroy(GetComponent<BoxCollider2D>());
-            State = EnemyState.Fight;
             
             player.GetComponent<Player>().fight = true;
-                
+            State = EnemyState.Fight;
+            
+            animator.SetBool("isFight", true);
+            
             fight = Instantiate(fight);
             fight.Init(player, canvasForFight, gameObject);
             entity.ShowCanvas();
             animator.SetTrigger(Idle);
-            yield return null;
         }
     }
 }

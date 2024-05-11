@@ -11,6 +11,8 @@ public class GoAnimation : StateMachineBehaviour
     private Vector3 spawnPoint;
     private Rigidbody2D rb;
     private float speed;
+    private float boxRadius;
+    private float playerBox;
     private static readonly int Idle = Animator.StringToHash("idle");
     private static readonly int Attack = Animator.StringToHash("attack");
 
@@ -21,6 +23,8 @@ public class GoAnimation : StateMachineBehaviour
         spawnPoint = animator.GetComponent<Boss>().SpawnPosition + Vector3.left * 1.5f;
         speed = animator.GetComponent<Boss>().speed;
         rb = animator.GetComponent<Rigidbody2D>();
+        boxRadius = animator.GetComponent<BoxCollider2D>().bounds.extents.x;
+        playerBox = player.GetComponent<BoxCollider2D>().bounds.extents.x;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -32,7 +36,8 @@ public class GoAnimation : StateMachineBehaviour
             var target = new Vector2(player.position.x, rb.position.y);
             var newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
             rb.MovePosition(newPos);
-            if (!(Vector2.Distance(player.position, rb.position) <= 2f)) return;
+            var geolocationPlayer = player.transform.position.x + boxRadius + playerBox;
+            if (animator.transform.position.x >= geolocationPlayer) return;
             MoveLeft = false;
             animator.SetTrigger(Attack);
         }
