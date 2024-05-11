@@ -39,7 +39,7 @@ public class GoAnimationMob : StateMachineBehaviour
         }
         
         var target = new Vector2(x, rb.position.y);
-        var newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
+        var newPos = Vector2.MoveTowards(rb.position, target, speed * Time.deltaTime);
         rb.MovePosition(newPos);
         if (Vector2.Distance(target, rb.position) <= 0.1f)
             isMoveRight = !isMoveRight;

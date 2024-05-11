@@ -25,8 +25,8 @@ public class Entity: MonoBehaviour
 
     public void Start()
     {
-        InitCanvas();
         health = maxHealth;
+        InitCanvas();
         // InventoryForWeapons = new List<int>();
         skill = gameObject.GetComponent<Skills>();
         InventoryList = new List<PlayerInventory>();

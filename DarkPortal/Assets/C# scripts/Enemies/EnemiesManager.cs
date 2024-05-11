@@ -10,10 +10,6 @@ namespace C__scripts.Enemies
         [SerializeField] private Canvas canvasFight;
         [SerializeField] private Fight fight;
         
-        [SerializeField] private float radius;
-        [SerializeField] private float speed;
-        
-        
         private GameObject[] enemies;
 
         private int currentSpawnPoint;
@@ -31,7 +27,7 @@ namespace C__scripts.Enemies
             {
                 var e = Instantiate(enemyPrefab[currentSpawnPoint++]);
                 e.GetComponent<Enemy>()
-                    .Init(e, radius, speed, spawnPoints[currentSpawnPoint-1], player, canvasFight, fight);
+                    .Init(e, spawnPoints[currentSpawnPoint-1], player, canvasFight, fight);
                 enemies[currentSpawnPoint-1] = e;
                 
                 if (currentSpawnPoint >= size) 

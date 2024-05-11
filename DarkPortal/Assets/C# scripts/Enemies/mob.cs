@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using Random = System.Random;
@@ -8,6 +7,8 @@ namespace C__scripts.Enemies
     public class Enemy : MonoBehaviour
     {
         [SerializeField] public int cost;
+        [SerializeField] private float speed;
+        [SerializeField] private float radius;
         
         private EnemyState State { get; set; }
         public Transform SpawnPoint => spawnPosition;
@@ -26,9 +27,7 @@ namespace C__scripts.Enemies
         private Entity entity;
         private Fight fight;
         private SpriteRenderer spriteRenderer;
-        
-        private float radius;
-        private float speed;
+            
         private float boxRadius;
         private float playerBox;
         private bool isBoss;
@@ -39,11 +38,9 @@ namespace C__scripts.Enemies
         private static readonly int CriticalDamage = Animator.StringToHash("criticalDamage");
         private static readonly int Die1 = Animator.StringToHash("die");
 
-        public void Init(GameObject gameObject, float radius, float speed, Transform spawnPosition, GameObject player, Canvas canvas, Fight fight)
+        public void Init(GameObject gameObject, Transform spawnPosition, GameObject player, Canvas canvas, Fight fight)
         {
             this.gameObject = gameObject;
-            this.radius = radius;
-            this.speed = speed;
             this.spawnPosition = spawnPosition;
             this.player = player;
             this.fight = fight;
@@ -84,12 +81,13 @@ namespace C__scripts.Enemies
             
             animator.SetTrigger(Go);
             transform.eulerAngles = new Vector3(0, -180, 0);
+            Debug.Log($"{transform.position.x} t={geolocationPlayer}");
             while (transform.position.x  > geolocationPlayer)
             {
                 transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);
                 yield return null;
             }
-            
+            Debug.Log("!");
             /*var component = GetComponent<Entity>(); 
             if (component.HasHealthDecreased())
             {
@@ -153,16 +151,16 @@ namespace C__scripts.Enemies
             transform.position += new Vector3(2f, 0);
             transform.eulerAngles = new Vector3(0, -180, 0);
             Destroy(GetComponent<BoxCollider2D>());
-            State = EnemyState.Fight;
-            animator.SetBool("isFight", true);
             
             player.GetComponent<Player>().fight = true;
-                
+            State = EnemyState.Fight;
+            
+            animator.SetBool("isFight", true);
+            
             fight = Instantiate(fight);
             fight.Init(player, canvasForFight, gameObject);
             entity.ShowCanvas();
             animator.SetTrigger(Idle);
-            yield return null;
         }
     }
 }

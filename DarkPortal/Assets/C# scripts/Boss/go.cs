@@ -20,7 +20,6 @@ public class GoAnimation : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         player = GameObject.FindWithTag("Player").transform;
-        player.GetComponent<Player>().speed = 0;
         spawnPoint = animator.GetComponent<Boss>().SpawnPosition + Vector3.left * 1.5f;
         speed = animator.GetComponent<Boss>().speed;
         rb = animator.GetComponent<Rigidbody2D>();

@@ -26,7 +26,7 @@ namespace C__scripts.Enemies
 
         public void OnBecameVisible()
         {
-            player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            player.GetComponent<Player>().speed = 0;
             transform.eulerAngles = new Vector3(0, -180, 0);
             animator.SetTrigger(Go);
         }

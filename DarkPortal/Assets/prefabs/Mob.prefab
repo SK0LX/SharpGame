@@ -242,6 +242,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 10
+  speed: 4
+  radius: 5
 --- !u!114 &-4179027327033133032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,7 +260,7 @@ MonoBehaviour:
   dexterity: 0
   power: 5
   prefabHpCanvas: {fileID: 6293539288352924261, guid: 0cabf2a8909af6a4c9e41b05641bd402, type: 3}
-  health: 25
+  health: 20
   InventoryList: []
 --- !u!114 &-8802818252091498684
 MonoBehaviour:

@@ -266,6 +266,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 100
+  speed: 5
+  radius: 0
 --- !u!61 &4314533043702285099
 BoxCollider2D:
   m_ObjectHideFlags: 0
