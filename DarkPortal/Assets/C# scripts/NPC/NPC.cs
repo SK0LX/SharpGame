@@ -14,7 +14,10 @@ public class NPC : MonoBehaviour
     private bool shopEnabled;
     public Canvas canvasForButtonShop;
     public Canvas canvasShop;
+    public Canvas CanvasForDialog;
     [SerializeField] private AudioSource buysmth;
+    public triggetText triggetDialogue;
+    private bool beginDilogue;
 
     void Start()
     {
@@ -28,8 +31,7 @@ public class NPC : MonoBehaviour
     {
         if (shopEnabled)
         {
-            canvasShop.enabled = true;
-            canvasForButtonShop.enabled = true;
+            
         }
         else
         {
@@ -55,6 +57,12 @@ public class NPC : MonoBehaviour
 
     public void TaskOnClick()
     {
+        if (!beginDilogue)
+        {
+            canvasShop.enabled = true;
+            canvasForButtonShop.enabled = true;
+        }
+        beginDilogue = !beginDilogue;
         shopEnabled = !shopEnabled;
         player.speed = shopEnabled ? 0 : 5f;
         buysmth.Play();
