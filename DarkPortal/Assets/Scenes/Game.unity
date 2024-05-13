@@ -6567,6 +6567,53 @@ RectTransform:
   m_AnchoredPosition: {x: -7.5, y: -0.5}
   m_SizeDelta: {x: -35, y: -13}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1148564599
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1148564601}
+  - component: {fileID: 1148564600}
+  m_Layer: 0
+  m_Name: DialogManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1148564600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148564599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d64086a2c8d5154498599a9227b2419b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogText: {fileID: 0}
+  nameText: {fileID: 0}
+  canvasForDialog: {fileID: 0}
+--- !u!4 &1148564601
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148564599}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1220990290
 GameObject:
   m_ObjectHideFlags: 0
@@ -8146,6 +8193,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1610796031}
   m_CullTransparentMesh: 1
+--- !u!1 &1643613519
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1643613520}
+  m_Layer: 0
+  m_Name: spawn point Mob (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1643613520
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643613519}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 31.96, y: -28.95, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1651204657
 GameObject:
   m_ObjectHideFlags: 0
@@ -8494,7 +8572,9 @@ MonoBehaviour:
   player: {fileID: 808264152}
   canvasForButtonShop: {fileID: 1245500004}
   canvasShop: {fileID: 22840097}
+  CanvasForDialog: {fileID: 0}
   buysmth: {fileID: 1692297127}
+  triggetDialogue: {fileID: 0}
 --- !u!4 &1692297123
 Transform:
   m_ObjectHideFlags: 0
@@ -9054,17 +9134,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 808264148}
   enemyPrefab:
+  - {fileID: 5949907954492607103, guid: 5af2a03ce2086c344ad58bc25fee7c87, type: 3}
   - {fileID: 6359945531233908887, guid: 04afa5c07f4969c459ed03a983a0992f, type: 3}
   - {fileID: 6143239771940851377, guid: 2278bce99a91a9547b9ff821cbe785b3, type: 3}
   - {fileID: 3216118361855694689, guid: f22da463c42fd264d909c7364b730d55, type: 3}
   spawnPoints:
   - {fileID: 118430566}
   - {fileID: 117210108}
+  - {fileID: 1643613520}
   - {fileID: 1220990291}
   canvasFight: {fileID: 1407398964}
   fight: {fileID: 6845988446645271178, guid: 71489cf453a14f743ad42e2361dd72f3, type: 3}
-  radius: 3
-  speed: 3
 --- !u!1 &1794591272
 GameObject:
   m_ObjectHideFlags: 0
@@ -35848,6 +35928,7 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 118430566}
   - {fileID: 117210108}
+  - {fileID: 1643613520}
   - {fileID: 1220990291}
   - {fileID: 808264149}
   - {fileID: 592542967}
@@ -35860,3 +35941,4 @@ SceneRoots:
   - {fileID: 405823314}
   - {fileID: 245199481}
   - {fileID: 94069576}
+  - {fileID: 1148564601}
