@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,9 +15,9 @@ public class triggetText : MonoBehaviour
         next.onClick.AddListener(Next);
     }
 
-    public void TriggerDialog()
+    public void TriggerDialog(Canvas canvas, TextMeshProUGUI name, TextMeshProUGUI text)
     {
-        FindObjectOfType<DialogManager>().StartDialogue(dialog);
+        FindObjectOfType<DialogManager>().StartDialogue(dialog, canvas, name, text);
     }
 
     private void Next()
