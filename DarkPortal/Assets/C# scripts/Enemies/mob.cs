@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.Rendering;
 using UnityEngine;
 using Random = System.Random;
 
@@ -117,6 +118,11 @@ namespace C__scripts.Enemies
             yield return new WaitForSeconds(0.35f);
             if (!isBoss)
                 Destroy(gameObject);
+            else
+            {
+                yield return new WaitForSeconds(1f);
+                var canvas = Instantiate(gameObject.GetComponent<Boss>().canvasWIN);
+            }
         }
 
         public void OnTriggerEnter2D(Collider2D other)
