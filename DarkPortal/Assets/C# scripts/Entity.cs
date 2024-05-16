@@ -1,6 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Net.Mime;
+using C__scripts.Enemies;
 using TMPro;
 using UnityEngine;
 using Image = UnityEngine.UI.Image;
@@ -14,6 +13,7 @@ public class Entity: MonoBehaviour
     [SerializeField] private Canvas prefabHpCanvas;
     
     private Canvas canvasHp;
+    private bool isBoss;
     private Image bar1;
     private TextMeshProUGUI text;
     public int health;
@@ -30,6 +30,7 @@ public class Entity: MonoBehaviour
         // InventoryForWeapons = new List<int>();
         skill = gameObject.GetComponent<Skills>();
         InventoryList = new List<PlayerInventory>();
+        isBoss = gameObject.GetComponent<Boss>() is not null;
     }
 
     public void Update()
@@ -81,6 +82,11 @@ public class Entity: MonoBehaviour
     public void ShowCanvas()
     {
         canvasHp.enabled = true;
+    }
+
+    public void MoveCanvas(Vector2 position)
+    {
+        positionCanvas.position = position;
     }
     
     private void UpdateCanvasHp()

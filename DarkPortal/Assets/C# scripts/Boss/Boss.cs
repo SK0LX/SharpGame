@@ -5,6 +5,7 @@ namespace C__scripts.Enemies
     public class Boss : MonoBehaviour
     {
         [SerializeField] public float speed;
+        [SerializeField] public GameObject canvasWIN;
 
         public Vector3 SpawnPosition => spawnPosition;
         

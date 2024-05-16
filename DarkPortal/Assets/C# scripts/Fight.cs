@@ -14,6 +14,7 @@ public class Fight : MonoBehaviour
     
     private bool facingRight;
     public bool isPlayerTurn;
+    private bool isBossFight;
     private bool buttonClick;
     public Canvas canvas;
     public bool critDamage;
@@ -23,6 +24,7 @@ public class Fight : MonoBehaviour
         this.player = player.GetComponent<Player>();
         this.canvas = canvas;
         this.enemy = enemy.GetComponent<Enemy>();
+        isBossFight = enemy.GetComponent<Boss>() is not null;
         enemyComponent = enemy.GetComponent<Entity>();
         playerHealth = this.player.GetComponent<Health>();
         ChooseRandomMove();
@@ -75,7 +77,9 @@ public class Fight : MonoBehaviour
                 {
                     yield return StartCoroutine(enemy.Die());
                     yield return new WaitForSeconds(1f);
-                    player.canvasWin.enabled = true;
+                    Debug.Log($"{isBossFight}");
+                    if (!isBossFight)
+                        player.canvasWin.enabled = true;
                     player.inventory.coins += enemy.cost;
                     canvas.enabled = false;
                     Destroy(gameObject);

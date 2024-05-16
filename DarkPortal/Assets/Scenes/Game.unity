@@ -343,7 +343,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 12894148}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -7101,9 +7101,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d64086a2c8d5154498599a9227b2419b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogText: {fileID: 0}
-  nameText: {fileID: 0}
-  canvasForDialog: {fileID: 0}
+  dialogText: {fileID: 79042604}
+  nameText: {fileID: 52367900}
+  canvasForDialog: {fileID: 12894152}
 --- !u!4 &1148564601
 Transform:
   m_ObjectHideFlags: 0
@@ -9798,7 +9798,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 808264148}
   enemyPrefab:
-  - {fileID: 5949907954492607103, guid: 5af2a03ce2086c344ad58bc25fee7c87, type: 3}
+  - {fileID: 3216118361855694689, guid: f22da463c42fd264d909c7364b730d55, type: 3}
   - {fileID: 6359945531233908887, guid: 04afa5c07f4969c459ed03a983a0992f, type: 3}
   - {fileID: 6143239771940851377, guid: 2278bce99a91a9547b9ff821cbe785b3, type: 3}
   - {fileID: 3216118361855694689, guid: f22da463c42fd264d909c7364b730d55, type: 3}

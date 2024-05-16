@@ -49,7 +49,7 @@ public class DialogManager : MonoBehaviour
         foreach (var letter in sentence.ToCharArray())
         {
             dialogText.text += letter;
-            yield return null;
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }

@@ -250,7 +250,7 @@ MonoBehaviour:
   maxHealth: 50
   dexterity: 0
   power: 10
-  prefabHpCanvas: {fileID: 6293539288352924261, guid: 0cabf2a8909af6a4c9e41b05641bd402, type: 3}
+  prefabHpCanvas: {fileID: 6893066346394054064, guid: 0d8b94f092845e4458605c4b69bcfaab, type: 3}
   health: 50
   InventoryList: []
 --- !u!114 &6902492979236917084
@@ -473,6 +473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 7
+  canvasWIN: {fileID: 7048681202222433328, guid: 2383bfed88d2f2b478a085fd64343f54, type: 3}
 --- !u!114 &-5642778082796389413
 MonoBehaviour:
   m_ObjectHideFlags: 0
