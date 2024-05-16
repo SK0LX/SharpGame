@@ -10675,7 +10675,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 808264148}
   enemyPrefab:
-  - {fileID: 3216118361855694689, guid: f22da463c42fd264d909c7364b730d55, type: 3}
+  - {fileID: 5949907954492607103, guid: 5af2a03ce2086c344ad58bc25fee7c87, type: 3}
   - {fileID: 6359945531233908887, guid: 04afa5c07f4969c459ed03a983a0992f, type: 3}
   - {fileID: 6143239771940851377, guid: 2278bce99a91a9547b9ff821cbe785b3, type: 3}
   - {fileID: 3216118361855694689, guid: f22da463c42fd264d909c7364b730d55, type: 3}
