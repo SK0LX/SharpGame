@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,15 +9,19 @@ using UnityEngine.UI;
 public class DialogManager : MonoBehaviour
 {
     private Queue<string> sentences;
-    public Text dialogText;
-    public Text nameText;
+    public TextMeshProUGUI dialogText;
+    public TextMeshProUGUI nameText;
     public Canvas canvasForDialog;
+
+    private void Start()
+    {
+        sentences = new Queue<string>();
+    }
+
     public void StartDialogue(Dialog dialog)
     {
         canvasForDialog.enabled = true;
         nameText.text = dialog.name;
-        Debug.Log("Starting conversation" + dialog.name);
-        sentences.Clear();
         foreach (var sentence in dialog.sentences)
         {
             sentences.Enqueue(sentence);
@@ -26,17 +31,16 @@ public class DialogManager : MonoBehaviour
 
     }
 
-    private void DisplayNextSentence()
+    public bool DisplayNextSentence()
     {
         if (sentences.Count == 0)
         {
-            EndDialog();
-            return;
+            return true;
         }
         var sentence = sentences.Dequeue();
-        Debug.Log(sentence);
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
+        return false;
     }
 
     IEnumerator TypeSentence(string sentence)
@@ -47,10 +51,5 @@ public class DialogManager : MonoBehaviour
             dialogText.text += letter;
             yield return null;
         }
-    }
-
-    public void EndDialog()
-    {
-        canvasForDialog.enabled = false;
     }
 }
