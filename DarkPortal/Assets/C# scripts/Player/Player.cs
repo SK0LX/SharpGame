@@ -1,7 +1,5 @@
 using System;
 using System.Collections;
-using System.Threading;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = System.Random;
@@ -43,7 +41,6 @@ public class Player : MonoBehaviour
         buttonForAttack.GetComponent<Button>().onClick.AddListener(ButtonAttack);
         buttonForHealth.GetComponent<Button>().onClick.AddListener(ButtonHealth);
         win.GetComponent<Button>().onClick.AddListener(EndFight);
-        canvasDefault.enabled = true;
         canvasForDead.enabled = false;
         canvasWin.enabled = false;
     }
