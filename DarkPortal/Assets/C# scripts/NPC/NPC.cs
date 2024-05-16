@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -18,6 +19,9 @@ public class NPC : MonoBehaviour
     [SerializeField] private AudioSource buysmth;
     public triggetText triggetDialogue;
     private int beginDilogue;
+    
+    public TextMeshProUGUI name;
+    public TextMeshProUGUI text;
 
     void Start()
     {
@@ -71,7 +75,7 @@ public class NPC : MonoBehaviour
 
     private void TaskOnClick()
     {
-        triggetDialogue.TriggerDialog();
+        triggetDialogue.TriggerDialog(CanvasForDialog, name, text);
         beginDilogue = 0;
         CanvasForDialog.enabled = true;
         canvasForButtonShop.enabled = false;
