@@ -8,13 +8,14 @@ using UnityEngine.UI;
 
 public class DialogManager : MonoBehaviour
 {
-    private Queue<string> sentences;
+    private Queue<Message> sentences;
     private TextMeshProUGUI dialogText;
     private TextMeshProUGUI nameText;
+    private Image image;
 
     private void Start()
     {
-        sentences = new Queue<string>();
+        sentences = new Queue<Message>();
     }
 
     public void StartDialogue(Dialog dialog, Canvas canvas, TextMeshProUGUI name, TextMeshProUGUI text)
@@ -22,9 +23,8 @@ public class DialogManager : MonoBehaviour
         canvas.enabled = true;
         nameText = name;
         dialogText = text;
-        nameText.text = dialog.name;
         sentences.Clear();
-        foreach (var sentence in dialog.sentences)
+        foreach (var sentence in dialog.message)
         {
             sentences.Enqueue(sentence);
         }
@@ -39,18 +39,29 @@ public class DialogManager : MonoBehaviour
         {
             return true;
         }
-        var sentence = sentences.Dequeue();
-        print(sentence);
+        var message = sentences.Dequeue();
+        if (image is null)
+        {
+            image = message.imagePerson;
+        }
+        else
+        {
+            image.enabled = false;
+            image = message.imagePerson;
+        }
         StopAllCoroutines();
-        StartCoroutine(TypeSentence(sentence));
+        StartCoroutine(TypeSentence(message));
         return false;
     }
 
-    IEnumerator TypeSentence(string sentence)
+    IEnumerator TypeSentence(Message sentence)
     {
         dialogText.text = "";
-        foreach (var letter in sentence.ToCharArray())
+        foreach (var letter in sentence.sentence)
         {
+            nameText.text = sentence.name;
+            if (image is not null)
+                image.enabled = true;
             dialogText.text += letter;
             yield return new WaitForSeconds(0.1f);
         }

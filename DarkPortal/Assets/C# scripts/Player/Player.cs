@@ -100,7 +100,7 @@ public class Player : MonoBehaviour
         var moveSpeed = 3f; // Скорость движения
         
         Animator.SetTrigger("runForAttack1");
-        while (transform.position.x < geolocationNow + 1)
+        while (transform.position.x < geolocationNow + 3)
         {
             transform.position += new Vector3(moveSpeed * Time.deltaTime, 0, 0);
             yield return null;
