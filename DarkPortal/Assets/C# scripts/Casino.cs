@@ -9,9 +9,12 @@ public class Casino : MonoBehaviour
     public Canvas canvasForBTNToCasino;
     public Canvas canvasForCasino;
     public Button btnEnableCasino;
+    public Button btnExit;
+    public Player player;
 
     private void Start()
     {
+        btnExit.onClick.AddListener(PressExit);
         canvasForCasino.enabled = false;
         canvasForBTNToCasino.enabled = false;
         btnEnableCasino.onClick.AddListener(TaskOnClick);
@@ -36,5 +39,12 @@ public class Casino : MonoBehaviour
     private void TaskOnClick()
     {
         canvasForCasino.enabled = true;
+        player.speed = 0f;
+    }
+    
+    private void PressExit()
+    {
+        canvasForCasino.enabled = false;
+        player.speed = 5f;
     }
 }
