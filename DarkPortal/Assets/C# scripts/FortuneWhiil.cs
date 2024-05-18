@@ -37,6 +37,12 @@ public class FortuneWhheel : MonoBehaviour
     public TextMeshProUGUI winOrLose;
     public TextMeshProUGUI totalWin;
 
+    [SerializeField] private AudioSource melstroi;
+    [SerializeField] private AudioSource fail;
+    [SerializeField] private AudioSource win;
+    [SerializeField] private AudioSource million;
+    [SerializeField] private AudioSource noMonie;
+
     private void Start()
     {
         btnRed.onClick.AddListener(PressRed);
@@ -63,9 +69,9 @@ public class FortuneWhheel : MonoBehaviour
     private IEnumerator TurnTheWheel()
     {
         canWeTurn = false;
-        numberOfTurnes = Random.Range(70, 100);
+        numberOfTurnes = Random.Range(200, 300);
         speed = 0.01f;
-
+        melstroi.Play();
         for (var i = 0; i < numberOfTurnes; i++)
         {
             transform.Rotate(0, 0, 12f);
@@ -87,7 +93,7 @@ public class FortuneWhheel : MonoBehaviour
             yield return new WaitForSeconds(speed);
         }
         
-
+        melstroi.Stop();
         WhatWeWin = Mathf.RoundToInt(transform.rotation.eulerAngles.z) / 12;
 
         switch (WhatWeWin)
@@ -194,13 +200,20 @@ public class FortuneWhheel : MonoBehaviour
     {
         if (totalChoiseText == winningText)
         {
+            if (winningText == "Зеленое")
+                million.Play();
+            else
+                win.Play();
             winOrLose.text = $"Ты Выйграл {totalBet * (currentMultiplier - 1)} монет!";
             player.inventory.coins += totalBet * (currentMultiplier - 1);
+            
         }
         else
         {
+            fail.Play();
             winOrLose.text = $"Ты проиграл {totalBet} монет!";
             player.inventory.coins -= totalBet;
+            
         }
     }
 
@@ -262,9 +275,10 @@ public class FortuneWhheel : MonoBehaviour
             //вращаем
             StartCoroutine(TurnTheWheel());
         }
-        else
+
+        if (player.inventory.coins < totalBet)
         {
-            print("Недостаточно средств");
+            noMonie.Play();
         }
     }
 }

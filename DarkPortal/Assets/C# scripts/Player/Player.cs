@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 {
     public float speed = 5f;
     private Rigidbody2D rb;
-    private SpriteRenderer sr;
+    public SpriteRenderer sr;
     public Animator Animator;
     public Health HP;
     private bool facingRight = true;
@@ -152,7 +152,7 @@ public class Player : MonoBehaviour
         fight = false;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         speed = 5f;
-        winSound.Play();
+        winSound.Stop();
     }
     
     private void ButtonAttack()
@@ -174,5 +174,10 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(3f);
         canvasForDead.enabled = true;
     }
-    
+
+    public void WinCanvas()
+    {
+        canvasWin.enabled = true;
+        winSound.Play();
+    }
 }

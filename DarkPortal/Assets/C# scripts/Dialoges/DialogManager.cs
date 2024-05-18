@@ -12,6 +12,7 @@ public class DialogManager : MonoBehaviour
     private TextMeshProUGUI dialogText;
     private TextMeshProUGUI nameText;
     private Image image;
+    [SerializeField] private AudioSource text;
 
     private void Start()
     {
@@ -62,8 +63,10 @@ public class DialogManager : MonoBehaviour
             nameText.text = sentence.name;
             if (image is not null)
                 image.enabled = true;
+            text.Play();
             dialogText.text += letter;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.11f);
+            text.Stop();
         }
     }
 }

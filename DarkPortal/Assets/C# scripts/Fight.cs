@@ -35,6 +35,8 @@ public class Fight : MonoBehaviour
         if (player.fight)
         {
             canvas.enabled = true;
+            if (player.sr.flipX)
+                player.sr.flipX = false;
             StartCoroutine(CoreFight());
         }
     }
@@ -79,7 +81,7 @@ public class Fight : MonoBehaviour
                     yield return new WaitForSeconds(1f);
                     Debug.Log($"{isBossFight}");
                     if (!isBossFight)
-                        player.canvasWin.enabled = true;
+                        player.WinCanvas();
                     player.inventory.coins += enemy.cost;
                     canvas.enabled = false;
                     Destroy(gameObject);
