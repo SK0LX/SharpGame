@@ -16,6 +16,7 @@ public class ShopController : MonoBehaviour
     public bool buy1HP;
     public Button buttonForDecorationDeterity;
     public bool buy2Deterity;
+    [SerializeField] private AudioSource noMonie;
     void Start()
     {
         buttonForSmallHP.GetComponent<Button>().onClick.AddListener(HpSmall);
@@ -51,7 +52,7 @@ public class ShopController : MonoBehaviour
         }
         else
         {
-            print("Недостаточно средств");
+            noMonie.Play();
         }
     }
 
@@ -64,7 +65,7 @@ public class ShopController : MonoBehaviour
         }
         else
         {
-            print("Недостаточно средств");
+            noMonie.Play();
         }
     }
 
@@ -79,7 +80,7 @@ public class ShopController : MonoBehaviour
         }
         else
         {
-            print("Недостаточно средств");
+            noMonie.Play();
         }
     }
     
@@ -94,7 +95,7 @@ public class ShopController : MonoBehaviour
         }
         else
         {
-            print("Недостаточно средств");
+            noMonie.Play();
         }
     }
 }
