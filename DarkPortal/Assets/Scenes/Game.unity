@@ -8634,6 +8634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e4700ca32b7315459d4ef3ce97426ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 808264152}
   knight1: {fileID: 808264171}
   knight2: {fileID: 808264170}
   knight3: {fileID: 808264169}

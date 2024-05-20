@@ -6,6 +6,7 @@ using Random = System.Random;
 public class audioSpeach : MonoBehaviour
 {
     private bool speak = true;
+    public Player player;
     [SerializeField] private AudioSource knight1;
     [SerializeField] private AudioSource knight2;
     [SerializeField] private AudioSource knight3;
@@ -15,7 +16,7 @@ public class audioSpeach : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (speak)
+        if (speak && player.speed >= 1e-6)
         {
             StartCoroutine(SpeakKnight());
         }
