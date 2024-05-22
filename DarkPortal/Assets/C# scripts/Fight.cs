@@ -18,6 +18,9 @@ public class Fight : MonoBehaviour
     private bool buttonClick;
     public Canvas canvas;
     public bool critDamage;
+
+    private bool inDialogue;
+    private bool goFight;
     
     public void Init(GameObject player, Canvas canvas, GameObject enemy)
     {
@@ -28,12 +31,22 @@ public class Fight : MonoBehaviour
         enemyComponent = enemy.GetComponent<Entity>();
         playerHealth = this.player.GetComponent<Health>();
         ChooseRandomMove();
+        goFight = false;
+        inDialogue = false;
     }
 
     void Update()
     {
-        if (player.fight)
+        if (!inDialogue)
         {
+            inDialogue = true;
+            player.dialogForMobs.StartMessage();
+        }
+
+// После завершения диалога проверяем, можно ли начинать бой
+        if (inDialogue && (player.dialogForMobs.EndDialog() || goFight))
+        {
+            goFight = true;
             canvas.enabled = true;
             if (player.sr.flipX)
                 player.sr.flipX = false;

@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     public Button buttonForHealth;
     public bool activateButtonForHealth;
     public bool isPlayerTorn;
+    public DialogForMobs dialogForMobs;
 
     public Button win;
     public Canvas canvasWin;
