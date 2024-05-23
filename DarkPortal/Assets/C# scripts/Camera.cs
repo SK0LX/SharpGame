@@ -16,6 +16,9 @@ public class FollowPlayer : MonoBehaviour
     
     public Transform leftLimit3;
     public Transform rightLimit3;
+    
+    public Transform TavernaLeft;
+    public Transform TavernaRight;
     private int location;
 
     private void Start()
@@ -31,6 +34,8 @@ public class FollowPlayer : MonoBehaviour
             location = 2;
         if (player.position.x < rightLimit3.position.x && player.position.x > leftLimit3.position.x)
             location = 3;
+        if (player.position.x < TavernaRight.position.x && player.position.x > TavernaLeft.position.x)
+            location = 4;
         
         if (fight == false)
         {
@@ -44,6 +49,9 @@ public class FollowPlayer : MonoBehaviour
                     break;
                 case 3:
                     transform.position = CameraLocate(leftLimit3.position.x, rightLimit3.position.x);
+                    break;
+                case 4:
+                    transform.position = CameraLocate(TavernaLeft.position.x, TavernaRight.position.x);
                     break;
             }
         }
