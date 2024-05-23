@@ -37,7 +37,6 @@ public class Quests : MonoBehaviour
         {
             text += $"{i + 1}. {textForAllInformation[i]}\n";
         }
-        print(text);
         firstQuestTextAll.text = text;
     }
     
