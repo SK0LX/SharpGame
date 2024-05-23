@@ -14,10 +14,14 @@ public class Quests : MonoBehaviour
     public Canvas firstQuestCanvas;
     public TextMeshProUGUI firstQuestTextAll;
     
+    public GameObject ded;
+    
     public Button secondQuest;
     public TextMeshProUGUI secondQuestTextForButton;
     public Canvas secondQuestCanvas;
     public TextMeshProUGUI secondQuestTextAll;
+
+    public GameObject bottle;
 
     private void Start()
     {
@@ -32,6 +36,7 @@ public class Quests : MonoBehaviour
     {
         firstQuestTextForButton.text = textForButton;
         firstQuest.gameObject.SetActive(true);
+        ded.SetActive(true);
         var text = "";
         for (var i = 0; i < textForAllInformation.Length; i++)
         {
@@ -44,6 +49,7 @@ public class Quests : MonoBehaviour
     {
         secondQuestTextForButton.text = textForButton;
         secondQuest.gameObject.SetActive(true);
+        bottle.SetActive(true);
         var text = "";
         for (var i = 1; i < textForAllInformation.Length - 1; i++)
         {

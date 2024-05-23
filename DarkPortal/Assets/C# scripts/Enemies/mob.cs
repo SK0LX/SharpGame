@@ -82,13 +82,11 @@ namespace C__scripts.Enemies
             
             animator.SetTrigger(Go);
             transform.eulerAngles = new Vector3(0, -180, 0);
-            Debug.Log($"{transform.position.x} t={geolocationPlayer}");
             while (transform.position.x  > geolocationPlayer)
             {
                 transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);
                 yield return null;
             }
-            Debug.Log("!");
             /*var component = GetComponent<Entity>(); 
             if (component.HasHealthDecreased())
             {
