@@ -8,17 +8,19 @@ using UnityEngine.UI;
 public class ShopController : MonoBehaviour
 {
     public Player player;
-    private int coinsPLayer;
-    
+    private int coinsPLayer; // review(24.05.2024): Переменная как будто не используется
+
+    // review(24.05.2024): Поля точно должны быть публичными?
     public Button buttonForSmallHP;
     public Button buttonForBigHP;
     public Button buttonForDecorationHP;
     public bool buy1HP;
     public Button buttonForDecorationDeterity;
     public bool buy2Deterity;
-    [SerializeField] private AudioSource noMonie;
+    [SerializeField] private AudioSource noMonie; // review(24.05.2024): noMoneyAudioSource
     void Start()
     {
+        // review(24.05.2024): Вы берете компоненту кнопки, потому что в кнопке кнопка?
         buttonForSmallHP.GetComponent<Button>().onClick.AddListener(HpSmall);
         
         buttonForBigHP.GetComponent<Button>().onClick.AddListener(HpBig);
@@ -30,6 +32,7 @@ public class ShopController : MonoBehaviour
 
     private void Update()
     {
+        // review(24.05.2024): не совсем понятна логика. Это нужно, чтобы игрок не мог купить много HP?
         if (buy1HP)
         {
             
@@ -43,6 +46,11 @@ public class ShopController : MonoBehaviour
         }
     }
 
+    // review(24.05.2024): Повторяется логика
+    // 1. Если у игрока не хватает денег, просто проиграй звук
+    // 2. Иначе уменьши количество денег игрока и сделай что-то
+    // Предлагаю все, кроме "сделай что-то" вынести в общий код. Например, можно использовать структуру
+    // public record ShopItem(int Price, Action OnBuyAction);
     void HpSmall()
     {
         if (player.inventory.coins >= 7)

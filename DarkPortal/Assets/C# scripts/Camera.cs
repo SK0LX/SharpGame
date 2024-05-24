@@ -6,8 +6,10 @@ using UnityEngine;
 public class FollowPlayer : MonoBehaviour
 {
     public Transform player;
-    private bool fight;
-    
+    private bool fight; // review(24.05.2024): Поле вроде никогда не меняется
+
+    // review(24.05.2024): Было бы здорово выделить структуру record CameraLimits(Transform Left, Transform Right);
+    // review(24.05.2024): Тогда будет удобно определять локацию
     public Transform leftLimit1;
     public Transform rightLimit1;
     
@@ -28,6 +30,8 @@ public class FollowPlayer : MonoBehaviour
 
     private void LateUpdate()
     {
+        // review(24.05.2024): Это все можно заметно упростить
+        // if (player.position.IsBetweenX(leftLimit1, rightLimit1)) transform.position = CameraLocate(leftLimit1, rightLimit1); и т.д.
         if (player.position.x < rightLimit1.position.x && player.position.x > leftLimit1.position.x)
             location = 1;
         if (player.position.x < rightLimit2.position.x && player.position.x > leftLimit2.position.x)
@@ -67,7 +71,7 @@ public class FollowPlayer : MonoBehaviour
     private Vector3 CameraLocate(float min, float max)
     {
         return new Vector3(
-            Mathf.Clamp(player.position.x, min + 7, max - 7),
+            Mathf.Clamp(player.position.x, min + 7, max - 7), // review(24.05.2024): Давайте избавимся от магических констант
             player.position.y,
             -5);
     }

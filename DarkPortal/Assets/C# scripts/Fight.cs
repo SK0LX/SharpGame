@@ -13,7 +13,7 @@ public class Fight : MonoBehaviour
     private Entity enemyComponent;
     
     private bool facingRight;
-    public bool isPlayerTurn;
+    public bool isPlayerTurn; // review(24.05.2024): Это поле дублирует поле игрока
     private bool isBossFight;
     private bool buttonClick;
     public Canvas canvas;
@@ -54,7 +54,7 @@ public class Fight : MonoBehaviour
         }
     }
 
-
+    // review(24.05.2024): Choose first step fighter 
     private void ChooseRandomMove() // типо монетку подбрасываем в начале файта
     {
         var rnd = new Random();
@@ -67,9 +67,9 @@ public class Fight : MonoBehaviour
         critDamage = false;
         if (upDamage - downDamage < 0)
             throw new ArgumentException("Верхний предел урона не может быть ниже нижнего предела урона");
-        var rnd = new Random();
+        var rnd = new Random(); // review(24.05.2024): Может, создать один Random и поместить его в поле?
         var damage = rnd.Next(downDamage,upDamage + 1);
-        if (rnd.Next(0, 101) < 20)
+        if (rnd.Next(0, 101) < 20) // review(24.05.2024): Как будто не хватает exntension-метода rnd.FlipCoin(int percent)
         {
             Debug.Log(!isPlayerTurn ? $"CRIT mob={enemy.name}" : $"CRIT player");
             damage += (upDamage-downDamage) / 2;
@@ -81,10 +81,21 @@ public class Fight : MonoBehaviour
     
     private IEnumerator CoreFight() //сам весь процесс файта (очереди)
     {
+        // review(24.05.2024): Было бы круто выделить методы RunPlayerStep/RunEnemyStep
         if (isPlayerTurn)
         {
+            // review(24.05.2024): Долго пытался понять, что такое buttonClick. Потом осознал, что это clickGuard (типа того). Стоит переименовать, чтобы было понятно.
+            // А еще лучше, наверное, вынести эту проверку вне if-ов, чтобы было так:
+            // if (!clickGuard)
+            // {
+            //    clickGuard = true;
+            //    // logic
+            //    clickGuard = false;
+            // }
+            // Но мне кажется, что есть менее костыльные способы реализовать эту логику
             if (!buttonClick && (Input.GetKeyDown(KeyCode.Z) || player.activateButtonForAttack))
             {
+                // review(24.05.2024): Стоит выделить методы PlayPlayerAttackStep/PlayPlayerHealingStep
                 buttonClick = true;
                 yield return StartCoroutine(player.Attack());
                 enemyComponent.TakeDamage(ChooseRandomDamage(10, 15));
@@ -129,7 +140,8 @@ public class Fight : MonoBehaviour
             }
         }
     }
-    
+
+    // review(24.05.2024): Почему не bool?
     private int ChooseDamageSkip(int dexterity) // поможет ли ловкость уйти от урона, хммм
     {
         var rnd = new Random();
