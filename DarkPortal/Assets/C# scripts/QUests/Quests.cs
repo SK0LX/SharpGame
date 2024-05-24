@@ -32,14 +32,15 @@ public class Quests : MonoBehaviour
     {
         firstQuestTextForButton.text = textForButton;
         firstQuest.gameObject.SetActive(true);
-        var text = "";
+        var text = ""; // review(24.05.2024): StringBuilder
         for (var i = 0; i < textForAllInformation.Length; i++)
         {
             text += $"{i + 1}. {textForAllInformation[i]}\n";
         }
         firstQuestTextAll.text = text;
     }
-    
+
+    // review(24.05.2024): Метод почти полностью дублирует StartFirstQuest
     public void StartSecondQuest(string textForButton, string[] textForAllInformation)
     {
         secondQuestTextForButton.text = textForButton;

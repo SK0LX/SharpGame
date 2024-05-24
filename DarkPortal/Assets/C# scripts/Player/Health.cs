@@ -18,8 +18,9 @@ public class Health : MonoBehaviour
 
     public void TakeHit(int damage)
     {
-        health -= damage;
+        health -= damage; // review(24.05.2024): Сюда стоит вставить Math.Max(0, health - damage);
         hit.Play();
+        // review(24.05.2024): Компонент HealthBar стоит захватить в void Awake() и поместить в поле
         gameObject.GetComponent<HealthBar>().fill = (float)health / maxHealth;
         
         if (health <= 0)

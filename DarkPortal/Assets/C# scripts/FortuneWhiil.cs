@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-
+// review(24.05.2024): FortuneWheel
 public class FortuneWhheel : MonoBehaviour
 {
     private int numberOfTurnes; //кол-во оборотов
@@ -17,7 +17,7 @@ public class FortuneWhheel : MonoBehaviour
     private bool canWeTurn;
 
     private string winningText;
-    private string totalChoiseText;
+    private string totalChoiseText; // review(24.05.2024): choice
 
     
     public Player player;
@@ -72,6 +72,7 @@ public class FortuneWhheel : MonoBehaviour
         numberOfTurnes = Random.Range(200, 300);
         speed = 0.01f;
         melstroi.Play();
+        // review(24.05.2024): Я бы вращение выделил в метод
         for (var i = 0; i < numberOfTurnes; i++)
         {
             transform.Rotate(0, 0, 12f);
@@ -90,12 +91,16 @@ public class FortuneWhheel : MonoBehaviour
                 speed = 0.09f;
             }
 
+            // review(24.05.2024): Создается много одинаковых объектов. Я бы рекомендовал предсоздать WaitForSeconds для всех кейсов (либо забить)
             yield return new WaitForSeconds(speed);
         }
         
         melstroi.Stop();
         WhatWeWin = Mathf.RoundToInt(transform.rotation.eulerAngles.z) / 12;
 
+        // review(24.05.2024): Давай выделим enum, либо константы для строк.
+        // review(24.05.2024): А еще можно значительно сократить код, если сделаем, например, Dictionary<int, string>,
+        // но я бы лучше сделал Dictionary<string, int[]>, а потом его инвертировал в Dictionary<int, string>. Так будет легче настроить
         switch (WhatWeWin)
         {
             case 0:
@@ -219,6 +224,7 @@ public class FortuneWhheel : MonoBehaviour
 
     private void PressBtnUp()
     {
+        // review(24.05.2024): Еще можно так totalBet = Math.Min(totalBet + 10, MaxBet);
         totalBet += 10;
         if (totalBet > 100)
             totalBet = 100;
@@ -228,13 +234,15 @@ public class FortuneWhheel : MonoBehaviour
     
     private void PressBtnDown()
     {
+        // review(24.05.2024): Еще можно так totalBet = Math.Max(totalBet - 10, MinBet);
+        // Кстати, это норм, что ставка может быть 0?
         totalBet -= 10;
         if (totalBet < 0)
             totalBet = 0;
         totalBetText.text = totalBet.ToString();
     }
 
-
+    // review(24.05.2024): Я бы попробовал избавиться от дублирования за счет выделения структуры PlayerChoice(string Text, int Multiplier);
     private void PressGreen()
     {
         if (canWeTurn)

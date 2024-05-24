@@ -16,7 +16,7 @@ public class audioSpeach : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (speak && player.speed >= 1e-6)
+        if (speak && player.speed >= 1e-6) // review(24.05.2024): Почему не >= 0?
         {
             StartCoroutine(SpeakKnight());
         }
@@ -26,6 +26,7 @@ public class audioSpeach : MonoBehaviour
     {
         speak = false;
         yield return new WaitForSeconds(30);
+        // review(24.05.2024): Можно все knightN положить в массив и сделать так: knights[rnd.Next(knights.Length)].Play();
         var rnd = new Random();
         switch (rnd.Next(0, 5))
         {

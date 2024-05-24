@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
+// review(24.05.2024): Стои все классы называть с заглавной буквы
 public class door : MonoBehaviour
 {
     public Canvas canvasForTavernaBtn;

@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     public bool fight;
     public Canvas canvasDefault;
     public PlayerInventory inventory;
+
+    // review(24.05.2024): Кнопки можно выделить в отдельную компоненту PlayerGui
     public Button buttonForAttack;
     public bool activateButtonForAttack;
     public Button buttonForHealth;
@@ -132,7 +134,8 @@ public class Player : MonoBehaviour
         Animator.SetTrigger("default");
         heal.Play();
     }
-    
+
+    // review(24.05.2024): Код дублируется в Fight
     private int ChooseRandomHealth(int downHealth, int upHealth) // машина по рандомизированному хп(крит 20%)
     {
         if (upHealth - downHealth < 0)

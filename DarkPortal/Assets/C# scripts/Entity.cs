@@ -21,7 +21,7 @@ public class Entity: MonoBehaviour
     private RectTransform positionCanvas;
     // public List<int> InventoryForWeapons;
     private Skills skill;
-    public List<PlayerInventory> InventoryList; 
+    public List<PlayerInventory> InventoryList; // review(24.05.2024): Это поле точно нужно?
 
     public void Start()
     {
@@ -41,7 +41,7 @@ public class Entity: MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
+        health -= damage; // review(24.05.2024): Тут хорошо бы сделать Math.Max(0, health - damage);
         UpdateCanvasHp();
     }
 
