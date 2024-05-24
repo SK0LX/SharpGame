@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,6 +18,28 @@ public class CanvasControllerQuests : MonoBehaviour
         firstQuest.onClick.AddListener(ActivateFirstQuest);
         secondQuest.onClick.AddListener(ActivateSecondQuest);
         back.onClick.AddListener(ExitQuest);
+    }
+    
+    public void FinishQuest(int number)
+    {
+        if (number == 1)
+            UpdateButton(firstQuestTextForButton, firstQuest);
+        else if (number == 2)
+            UpdateButton(secondQuestTextForButton, secondQuest);
+    }
+
+    private void UpdateButton(TextMeshProUGUI text, Button button)
+    {
+        button.enabled = true;
+        text.text = "Сдать квест";
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(GetReward);
+        button.onClick.AddListener(() => button.enabled = false);
+    }
+
+    private void GetReward()
+    {
+        player.GetComponent<PlayerInventory>().coins += 15;
     }
     
     private void ActivateFirstQuest()

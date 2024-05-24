@@ -14,6 +14,7 @@ public class quest2 : MonoBehaviour
     
     private void TaskOnClick()
     {
+        FindObjectOfType<Quests>().FinishQuest(2);
         Destroy(gameObject);
     }
     

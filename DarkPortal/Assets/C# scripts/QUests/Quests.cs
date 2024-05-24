@@ -71,4 +71,14 @@ public class Quests : MonoBehaviour
     {
         secondQuestCanvas.enabled = !secondQuestCanvas.enabled; 
     }
+
+    public void FinishQuest(int number)
+    {
+        var text = "Выполнено";
+        if (number == 1)
+            firstQuestTextForButton.text = text;
+        else if (number == 2)
+            secondQuestTextForButton.text = text;
+        FindObjectOfType<CanvasControllerQuests>().FinishQuest(number);
+    }
 }
