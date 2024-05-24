@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using C__scripts.Enemies;
+using System;
 using TMPro;
 using UnityEngine;
 using Image = UnityEngine.UI.Image;
@@ -13,44 +12,34 @@ public class Entity: MonoBehaviour
     [SerializeField] private Canvas prefabHpCanvas;
     
     private Canvas canvasHp;
-    private bool isBoss;
     private Image bar1;
     private TextMeshProUGUI text;
     public int health;
     private Bounds colliderForm;
     private RectTransform positionCanvas;
-    // public List<int> InventoryForWeapons;
     private Skills skill;
-    public List<PlayerInventory> InventoryList; 
 
     public void Start()
     {
         health = maxHealth;
         InitCanvas();
-        // InventoryForWeapons = new List<int>();
         skill = gameObject.GetComponent<Skills>();
-        InventoryList = new List<PlayerInventory>();
-        isBoss = gameObject.GetComponent<Boss>() is not null;
     }
 
     public void Update()
     {
-        if (!IsDead && canvasHp.enabled)
-            positionCanvas.position = new Vector3(transform.position.x, positionCanvas.position.y, 0);
+        if (IsDead || !canvasHp.enabled) return;
+        positionCanvas.position = new Vector3(transform.position.x, positionCanvas.position.y, 0);
+        UpdateCanvasHp();
     }
-
+    
     public void TakeDamage(int damage)
     {
-        health -= damage;
+        health = Math.Max(0, health - damage);
         UpdateCanvasHp();
     }
 
     public bool IsDead => health <= 0;
-    
-    public bool HasHealthDecreased()
-    {
-        return health < maxHealth;
-    }
     
     public void UseSkills()
     {
@@ -68,25 +57,10 @@ public class Entity: MonoBehaviour
                 break;
         }
     }
-    
-    public void AddToInventory(PlayerInventory item)
-    {
-        InventoryList.Add(item);
-    }
-
-    public void RemoveFromInventory(PlayerInventory item)
-    {
-        InventoryList.Remove(item);
-    }
 
     public void ShowCanvas()
     {
         canvasHp.enabled = true;
-    }
-
-    public void MoveCanvas(Vector2 position)
-    {
-        positionCanvas.position = position;
     }
     
     private void UpdateCanvasHp()

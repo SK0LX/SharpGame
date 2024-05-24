@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,10 +20,34 @@ public class CanvasControllerQuests : MonoBehaviour
         back.onClick.AddListener(ExitQuest);
     }
     
+    public void FinishQuest(int number)
+    {
+        if (number == 1)
+            UpdateButton(firstQuestTextForButton, firstQuest);
+        else if (number == 2)
+            UpdateButton(secondQuestTextForButton, secondQuest);
+    }
+
+    private void UpdateButton(TextMeshProUGUI text, Button button)
+    {
+        button.enabled = true;
+        text.text = "Сдать квест";
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(GetReward);
+        button.onClick.AddListener(() => button.enabled = false);
+    }
+
+    private void GetReward()
+    {
+        player.GetComponent<PlayerInventory>().coins += 15;
+    }
+    
     private void ActivateFirstQuest()
     {
         var quest = player.GetComponent<Quests>();
-        quest.StartFirstQuest("none", new string[0]); //TODO Кать, тут ты должна вставить название квеста и массив задач(без нумерации)
+        quest.StartFirstQuest("Спасти деда", new []{"Бедный дедушка потерялся в этом странном и непонятном мире. Нужно его найти",
+            "Он мог попасть в беду, к монстрам. Нужно победить мобов",
+            "Спасите деда"}); 
         firstQuestTextForButton.text = "Квест взят";
         firstQuest.enabled = false;
     }
@@ -33,7 +55,7 @@ public class CanvasControllerQuests : MonoBehaviour
     private void ActivateSecondQuest()
     {
         var quest = player.GetComponent<Quests>();
-        quest.StartSecondQuest("none", new string[0]); //TODO Кать, тут ты должна вставить название квеста и массив задач(без нумерации)
+        quest.StartSecondQuest("Найти пропавшую бутылку", new []{"Найти бутылку"});
         secondQuestTextForButton.text = "Квест взят";
         secondQuest.enabled = false;
     }

@@ -20,7 +20,7 @@ public class door : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !other.gameObject.GetComponent<Player>().fight)
         {
             canvasForTavernaBtn.enabled = true;
         }
