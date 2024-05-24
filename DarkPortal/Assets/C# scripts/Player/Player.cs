@@ -34,6 +34,8 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioSource winSound;
     
     public Canvas canvasForDead;
+    public Fight fightObject;
+    private float playerBox;
     
     void Start()
     {
@@ -44,6 +46,7 @@ public class Player : MonoBehaviour
         win.GetComponent<Button>().onClick.AddListener(EndFight);
         canvasForDead.enabled = false;
         canvasWin.enabled = false;
+        playerBox = GetComponent<BoxCollider2D>().bounds.extents.x;
     }
         
     void FixedUpdate()
@@ -85,6 +88,7 @@ public class Player : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        fightObject = FindObjectOfType<Fight>();
     }
     
     void FlipForFight()
@@ -97,11 +101,16 @@ public class Player : MonoBehaviour
 
     public IEnumerator Attack()
     {
+        if (fightObject is null)
+            fightObject = FindObjectOfType<Fight>();
         var geolocationNow = transform.position.x;
         var moveSpeed = 3f; // Скорость движения
+
+        var enemy = fightObject.enemy;
+        var geolocationEnemy = enemy.transform.position.x - enemy.BoxRadius - playerBox;
         
         Animator.SetTrigger("runForAttack1");
-        while (transform.position.x < geolocationNow + 3)
+        while (transform.position.x < geolocationEnemy)
         {
             transform.position += new Vector3(moveSpeed * Time.deltaTime, 0, 0);
             yield return null;
@@ -180,5 +189,10 @@ public class Player : MonoBehaviour
     {
         canvasWin.enabled = true;
         winSound.Play();
+    }
+
+    public void MobGetDamage()
+    {
+        fightObject.enemy.GetComponent<Animator>().SetTrigger("takeDamage");
     }
 }

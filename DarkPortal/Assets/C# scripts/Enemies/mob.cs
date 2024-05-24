@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor.Rendering;
 using UnityEngine;
 using Random = System.Random;
 
@@ -23,15 +22,16 @@ namespace C__scripts.Enemies
         private new GameObject gameObject;
         private new Transform transform;
         private Transform spawnPosition;
-        private GameObject player;
+        private Player player;
         private Canvas canvasForFight;
         private Entity entity;
         private Fight fight;
-        private SpriteRenderer spriteRenderer;
             
         private float boxRadius;
         private float playerBox;
         private bool isBoss;
+
+        public float BoxRadius => boxRadius;
         
         private static readonly int Go = Animator.StringToHash("go");
         private static readonly int AttackAnimation = Animator.StringToHash("attack");
@@ -43,14 +43,13 @@ namespace C__scripts.Enemies
         {
             this.gameObject = gameObject;
             this.spawnPosition = spawnPosition;
-            this.player = player;
+            this.player = player.GetComponent<Player>();
             this.fight = fight;
             transform = gameObject.transform;
             transform.position = spawnPosition.transform.position;
             canvasForFight = canvas;
             State = EnemyState.Born;
             animator = GetComponent<Animator>();
-            spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
             entity = gameObject.GetComponent<Entity>();
             isBoss = gameObject.GetComponent<Boss>() is not null;
             boxRadius = animator.GetComponent<BoxCollider2D>().bounds.extents.x;
@@ -72,7 +71,6 @@ namespace C__scripts.Enemies
 
         public IEnumerator Attack()
         {
-            //var originalColor = spriteRenderer.color;
             if (new Random().Next(0, 101) < 20)
                 entity.UseSkills();
             var geolocationNow = transform.position.x;
@@ -87,12 +85,6 @@ namespace C__scripts.Enemies
                 transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);
                 yield return null;
             }
-            /*var component = GetComponent<Entity>(); 
-            if (component.HasHealthDecreased())
-            {
-                spriteRenderer.color = Color.red; 
-                yield return new WaitForSeconds(0.5f); 
-            }*/
             
             animator.SetTrigger(!fight.critDamage ? AttackAnimation : CriticalDamage);
             yield return new WaitForSeconds(0.8f);
@@ -106,7 +98,6 @@ namespace C__scripts.Enemies
             }
             transform.eulerAngles = new Vector3(0, -180, 0);
             yield return new WaitForSeconds(0.1f);
-            //spriteRenderer.color = originalColor;
             animator.SetTrigger(Idle);
         }
 
@@ -129,11 +120,11 @@ namespace C__scripts.Enemies
             {
                 Destroy(GetComponent<BoxCollider2D>());
                 State = EnemyState.Fight;
-                player.GetComponent<Player>().speed = 0;
-                player.GetComponent<Player>().fight = true;
+                player.speed = 0;
+                player.fight = true;
                 
                 fight = Instantiate(fight);
-                fight.Init(player, canvasForFight, gameObject);
+                fight.Init(player.gameObject, canvasForFight, gameObject);
                 entity.ShowCanvas();
                 animator.ResetTrigger(Go);
                 animator.SetTrigger(Idle);
@@ -148,7 +139,7 @@ namespace C__scripts.Enemies
 
         private IEnumerator PrepareToFight()
         {
-            player.GetComponent<Player>().speed = 0;
+            player.speed = 0;
             yield return new WaitForSeconds(0.5f);
             animator.SetTrigger("teleport");
             yield return new WaitForSeconds(1.1f);
@@ -156,13 +147,14 @@ namespace C__scripts.Enemies
             transform.eulerAngles = new Vector3(0, -180, 0);
             Destroy(GetComponent<BoxCollider2D>());
             
-            player.GetComponent<Player>().fight = true;
+            player.fight = true;
             State = EnemyState.Fight;
             
             animator.SetBool("isFight", true);
             
             fight = Instantiate(fight);
-            fight.Init(player, canvasForFight, gameObject);
+            fight.Init(player.gameObject, canvasForFight, gameObject);
+            player.fightObject = fight;
             entity.ShowCanvas();
             animator.SetTrigger(Idle);
         }

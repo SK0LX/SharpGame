@@ -9,7 +9,7 @@ public class Fight : MonoBehaviour
 {
     public Player player;
     private Health playerHealth;
-    private Enemy enemy;
+    public Enemy enemy;
     private Entity enemyComponent;
     
     private bool facingRight;
