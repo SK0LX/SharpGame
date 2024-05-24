@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using C__scripts.Enemies;
+using TMPro;
 using UnityEngine;
 using Random = System.Random;
 
@@ -21,6 +22,7 @@ public class Fight : MonoBehaviour
 
     private bool inDialogue;
     private bool goFight;
+    private TextMeshProUGUI critText;
     
     public void Init(GameObject player, Canvas canvas, GameObject enemy)
     {
@@ -33,6 +35,7 @@ public class Fight : MonoBehaviour
         ChooseRandomMove();
         goFight = false;
         inDialogue = false;
+        critText = canvas.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     void Update()
@@ -71,6 +74,7 @@ public class Fight : MonoBehaviour
         var damage = rnd.Next(downDamage,upDamage + 1);
         if (rnd.Next(0, 101) < 20)
         {
+            critText.enabled = true;
             Debug.Log(!isPlayerTurn ? $"CRIT mob={enemy.name}" : $"CRIT player");
             damage += (upDamage-downDamage) / 2;
             critDamage = true;
@@ -86,8 +90,10 @@ public class Fight : MonoBehaviour
             if (!buttonClick && (Input.GetKeyDown(KeyCode.Z) || player.activateButtonForAttack))
             {
                 buttonClick = true;
+                var damage = ChooseRandomDamage(10, 15);
                 yield return StartCoroutine(player.Attack());
-                enemyComponent.TakeDamage(ChooseRandomDamage(10, 15));
+                critText.enabled = false;
+                enemyComponent.TakeDamage(damage);
                 if (enemyComponent.IsDead)
                 {
                     yield return StartCoroutine(enemy.Die());
@@ -122,6 +128,7 @@ public class Fight : MonoBehaviour
                 buttonClick = true;
                 var damage = ChooseRandomDamage(enemyComponent.power - 2, enemyComponent.power + 2);
                 yield return StartCoroutine(enemy.Attack());
+                critText.enabled = false;
                 playerHealth.TakeHit(damage * ChooseDamageSkip(player.inventory.dexterity)); 
                 isPlayerTurn = true;
                 player.isPlayerTorn = true;
