@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -15,6 +16,13 @@ public class Health : MonoBehaviour
     [SerializeField] private AudioSource hit;
     [SerializeField] private AudioSource deathYourHeroIsDead;
     [SerializeField] private AudioSource screamDeath;
+
+    private void Start()
+    {
+        health = DataHolder.health;
+        maxHealth = DataHolder.maxHealth;
+        hpBarDefault.text = $"{health}/{maxHealth}";
+    }
 
     public void TakeHit(int damage)
     {
