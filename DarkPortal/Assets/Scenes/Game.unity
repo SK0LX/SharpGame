@@ -10557,6 +10557,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 30
   maxHealth: 30
+  healthBar: {fileID: 808264156}
   Animator: {fileID: 808264150}
   hpBarDefault: {fileID: 1086203589}
   hit: {fileID: 808264163}
@@ -22380,10 +22381,8 @@ MonoBehaviour:
   buttonForSmallHP: {fileID: 411307159}
   buttonForBigHP: {fileID: 756263091}
   buttonForDecorationHP: {fileID: 1651204659}
-  buy1HP: 0
   buttonForDecorationDeterity: {fileID: 610395526}
-  buy2Deterity: 0
-  noMonie: {fileID: 1692297131}
+  noMoneyAudioSource: {fileID: 0}
 --- !u!82 &1692297127
 AudioSource:
   m_ObjectHideFlags: 0

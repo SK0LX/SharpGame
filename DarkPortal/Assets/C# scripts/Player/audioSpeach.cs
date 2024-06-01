@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
 
-public class audioSpeach : MonoBehaviour
+public class AudioSpeach : MonoBehaviour
 {
     private bool speak = true;
     public Player player;
@@ -13,12 +14,22 @@ public class audioSpeach : MonoBehaviour
     [SerializeField] private AudioSource knight4;
     [SerializeField] private AudioSource knight5;
 
-    // Update is called once per frame
+    private AudioSource[] knightsSpeak;
+
+    private void Start()
+    {
+        knightsSpeak = new[] { knight1, knight2, knight3, knight4, knight5 };
+    }
+
     private void Update()
     {
-        if (speak && player.speed >= 1e-6)
+        if (speak && player.speed > 0)
         {
             StartCoroutine(SpeakKnight());
+        }
+        else
+        {
+            StopAllCoroutines();
         }
     }
 
@@ -27,24 +38,7 @@ public class audioSpeach : MonoBehaviour
         speak = false;
         yield return new WaitForSeconds(30);
         var rnd = new Random();
-        switch (rnd.Next(0, 5))
-        {
-            case 0:
-                knight1.Play();
-                break;
-            case 1:
-                knight2.Play();
-                break;
-            case 2:
-                knight3.Play();
-                break;
-            case 3:
-                knight4.Play();
-                break;
-            case 4:
-                knight5.Play();
-                break;
-        }
+        knightsSpeak[rnd.Next(knightsSpeak.Length)].Play();
         yield return new WaitForSeconds(30);
         speak = true;
     }

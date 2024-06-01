@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using Button = UnityEngine.UI.Button;
 
-public class quest1 : MonoBehaviour
+public class Quest1 : MonoBehaviour
 {
     [SerializeField] private Canvas CanvasForDialog;
     [SerializeField] private TextMeshProUGUI name;
@@ -11,7 +11,7 @@ public class quest1 : MonoBehaviour
     [SerializeField] private int speed;
     
     private Player player;
-    private triggetText triggetDialogue;
+    private TriggetText triggetDialogue;
     private Animator animator;
     
     private int beginDilogue;

@@ -8,11 +8,6 @@ public class GodMode : MonoBehaviour
 {
     public Toggle myToggle;
 
-    private void Start()
-    {
-        myToggle.isOn = false;
-    }
-
     private void Update()
     {
         GodModeStatus();

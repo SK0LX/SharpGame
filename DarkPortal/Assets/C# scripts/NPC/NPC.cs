@@ -17,7 +17,7 @@ public class NPC : MonoBehaviour
     public Canvas canvasShop;
     public Canvas CanvasForDialog;
     [SerializeField] private AudioSource buysmth;
-    public triggetText triggetDialogue;
+    public TriggetText triggetDialogue;
     private int beginDilogue;
     
     public TextMeshProUGUI name;

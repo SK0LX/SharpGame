@@ -6,7 +6,7 @@ using UnityEngine;
 public class FollowPlayer : MonoBehaviour
 {
     public Transform player;
-    private bool fight;
+
     
     public Transform leftLimit1;
     public Transform rightLimit1;
@@ -37,23 +37,20 @@ public class FollowPlayer : MonoBehaviour
         if (player.position.x < TavernaRight.position.x && player.position.x > TavernaLeft.position.x)
             location = 4;
         
-        if (fight == false)
+        switch (location)
         {
-            switch (location)
-            {
-                case 1:
-                    transform.position = CameraLocate(leftLimit1.position.x, rightLimit1.position.x);
-                    break;
-                case 2:
-                    transform.position = CameraLocate(leftLimit2.position.x, rightLimit2.position.x);
-                    break;
-                case 3:
-                    transform.position = CameraLocate(leftLimit3.position.x, rightLimit3.position.x);
-                    break;
-                case 4:
-                    transform.position = CameraLocate(TavernaLeft.position.x, TavernaRight.position.x);
-                    break;
-            }
+            case 1:
+                transform.position = CameraLocate(leftLimit1.position.x, rightLimit1.position.x);
+                break;
+            case 2:
+                transform.position = CameraLocate(leftLimit2.position.x, rightLimit2.position.x);
+                break;
+            case 3:
+                transform.position = CameraLocate(leftLimit3.position.x, rightLimit3.position.x);
+                break;
+            case 4:
+                transform.position = CameraLocate(TavernaLeft.position.x, TavernaRight.position.x);
+                break;
         }
     }
 

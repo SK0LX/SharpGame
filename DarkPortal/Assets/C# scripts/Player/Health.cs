@@ -10,30 +10,32 @@ public class Health : MonoBehaviour
 {
     public int health;
     public int maxHealth;
+    public HealthBar healthBar;
     
     public Animator Animator;
     public TextMeshProUGUI hpBarDefault;
     [SerializeField] private AudioSource hit;
     [SerializeField] private AudioSource deathYourHeroIsDead;
     [SerializeField] private AudioSource screamDeath;
+    
 
-    private void Start()
+    private void Awake()
     {
         health = DataHolder.health;
         maxHealth = DataHolder.maxHealth;
         hpBarDefault.text = $"{health}/{maxHealth}";
+        healthBar.fill = (float)health / maxHealth;
     }
 
     public void TakeHit(int damage)
     {
-        health -= damage;
+        health = Math.Max(0, health - damage);;
         hit.Play();
-        gameObject.GetComponent<HealthBar>().fill = (float)health / maxHealth;
+        healthBar.fill = (float)health / maxHealth;
         
-        if (health <= 0)
+        if (health == 0)
         {
             StartCoroutine(Death());
-            health = 0;
         }
         hpBarDefault.text = $"{health}/{maxHealth}";
     }
@@ -46,7 +48,7 @@ public class Health : MonoBehaviour
             health = maxHealth;
         }
         hpBarDefault.text = $"{health}/{maxHealth}";
-        gameObject.GetComponent<HealthBar>().fill = (float)health / maxHealth;
+        healthBar.fill = (float)health / maxHealth;
     }
 
     IEnumerator Death()
@@ -63,6 +65,6 @@ public class Health : MonoBehaviour
         health += bonusHealth;
         maxHealth += bonusHealth;
         hpBarDefault.text = $"{health}/{maxHealth}";
-        gameObject.GetComponent<HealthBar>().fill = (float)health / maxHealth;
+        healthBar.fill = (float)health / maxHealth;
     }
 }

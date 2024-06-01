@@ -20,10 +20,10 @@ public class DialogForMobs : MonoBehaviour
     public Canvas CanvasForMob2;
     public Canvas CanvasForMob3;
     public Canvas boss;
-    public triggetText triggetDialogue1;
-    public triggetText triggetDialogue2;
-    public triggetText triggetDialogue3;
-    public triggetText bossDialog;
+    public TriggetText triggetDialogue1;
+    public TriggetText triggetDialogue2;
+    public TriggetText triggetDialogue3;
+    public TriggetText bossDialog;
     private int countDialog;
 
     public Player player;
