@@ -40,14 +40,14 @@ public class Fight : MonoBehaviour
 
     void Update()
     {
-        if (!inDialogue)
+        if (!inDialogue && !enemy.isFullTimeSpawn)
         {
             inDialogue = true;
             player.dialogForMobs.StartMessage();
         }
 
 // После завершения диалога проверяем, можно ли начинать бой
-        if (inDialogue && (player.dialogForMobs.EndDialog() || goFight))
+        if (inDialogue && (player.dialogForMobs.EndDialog() || goFight) || enemy.isFullTimeSpawn)
         {
             goFight = true;
             canvas.enabled = true;
