@@ -13,7 +13,6 @@ namespace C__scripts.Enemies
         [SerializeField] private bool isFullTimeSpawn;
         
         private GameObject[] enemies;
-        private bool[] isSpawnEnemy;
 
         private int currentSpawnPoint;
         private int size;
@@ -24,7 +23,6 @@ namespace C__scripts.Enemies
             size = spawnPoints.Length;
             enemies = new GameObject[size];
             random = new Random();
-            isSpawnEnemy = new bool[size];
         }
 
         public void Update()
@@ -40,8 +38,8 @@ namespace C__scripts.Enemies
                 }
                 else
                 {
-                    if (spawnPoints[currentSpawnPoint].position.x - player.transform.position.x - 7f < 1e-5
-                        && spawnPoints[currentSpawnPoint].position.x - player.transform.position.x > 0
+                    if (Vector3.Distance(spawnPoints[currentSpawnPoint].position, player.transform.position) > 5f
+                        && player.transform.position.x < spawnPoints[currentSpawnPoint].position.x
                         && enemies[currentSpawnPoint] == null)
                         SpawnWithTime();
                 }
@@ -53,7 +51,6 @@ namespace C__scripts.Enemies
         {
             enemies[currentSpawnPoint] = SpawnEnemy(spawnPoints[currentSpawnPoint],
                 enemyPrefab[random.Next(0, enemyPrefab.Length)]);
-            isSpawnEnemy[currentSpawnPoint] = true;
             currentSpawnPoint++;
             if (currentSpawnPoint == spawnPoints.Length)
                 currentSpawnPoint = 0;

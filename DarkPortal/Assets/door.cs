@@ -12,6 +12,7 @@ public class Door : MonoBehaviour
     private void Start()
     {
         goToTaverna.onClick.AddListener(GoToTaverna);
+        canvasForTavernaBtn.enabled = false;
     }
 
     public void OnTriggerEnter2D(Collider2D other)
