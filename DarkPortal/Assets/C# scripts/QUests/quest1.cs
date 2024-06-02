@@ -31,18 +31,24 @@ public class Quest1 : MonoBehaviour
 
     private void Update()
     {
-        if (isInDialog && triggetDialogue.end)
+        if (isInDialog)
         {
-            triggetDialogue.end = false;
             animator.SetTrigger(Go);
             transform.eulerAngles = new Vector3(0, 0, 0);
             if (transform.position.x  > -70)
                 transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);
             else
             {
-                player.canvasDefault.enabled = true;
                 Destroy(gameObject);
             }
+        }
+
+        if (triggetDialogue.end)
+        {
+            triggetDialogue.end = false;
+            player.canvasDefault.enabled = true;
+            player.speed = 5f;
+            CanvasForDialog.enabled = false;
         }
     }
 
