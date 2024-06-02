@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: attack
+  m_Name: getDamage
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,13 +21,13 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 1146910530, guid: 592d696630d37a440a0645226464abfc, type: 3}
-    - time: 0.28333333
-      value: {fileID: -1386036034, guid: 592d696630d37a440a0645226464abfc, type: 3}
-    - time: 0.55
-      value: {fileID: -1229697447, guid: 592d696630d37a440a0645226464abfc, type: 3}
-    - time: 0.8333333
-      value: {fileID: -1229697447, guid: 592d696630d37a440a0645226464abfc, type: 3}
+      value: {fileID: 1157020591, guid: cd836a17d41b97f48b68390f7c072dd2, type: 3}
+    - time: 0.25
+      value: {fileID: 1000484946, guid: 5578c9ec28b45c34fa79fab4b87d11fc, type: 3}
+    - time: 0.5
+      value: {fileID: -469761399, guid: 5578c9ec28b45c34fa79fab4b87d11fc, type: 3}
+    - time: 0.75
+      value: {fileID: 127624587, guid: cd836a17d41b97f48b68390f7c072dd2, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -50,16 +50,16 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 1146910530, guid: 592d696630d37a440a0645226464abfc, type: 3}
-    - {fileID: -1386036034, guid: 592d696630d37a440a0645226464abfc, type: 3}
-    - {fileID: -1229697447, guid: 592d696630d37a440a0645226464abfc, type: 3}
-    - {fileID: -1229697447, guid: 592d696630d37a440a0645226464abfc, type: 3}
+    - {fileID: 1157020591, guid: cd836a17d41b97f48b68390f7c072dd2, type: 3}
+    - {fileID: 1000484946, guid: 5578c9ec28b45c34fa79fab4b87d11fc, type: 3}
+    - {fileID: -469761399, guid: 5578c9ec28b45c34fa79fab4b87d11fc, type: 3}
+    - {fileID: 127624587, guid: cd836a17d41b97f48b68390f7c072dd2, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.84999996
+    m_StopTime: 0.76666665
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -78,11 +78,4 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events:
-  - time: 0.28333333
-    functionName: DamagePlayer
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
+  m_Events: []

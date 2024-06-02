@@ -95,7 +95,6 @@ public class Fight : MonoBehaviour
                 {
                     yield return StartCoroutine(enemy.Die());
                     yield return new WaitForSeconds(1f);
-                    Debug.Log($"{isBossFight}");
                     if (!isBossFight)
                         player.WinCanvas();
                     player.inventory.coins += enemy.cost;

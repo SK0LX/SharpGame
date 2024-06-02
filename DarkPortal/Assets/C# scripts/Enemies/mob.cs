@@ -160,5 +160,11 @@ namespace C__scripts.Enemies
             entity.ShowCanvas();
             animator.SetTrigger(Idle);
         }
+
+        public void DamagePlayer()
+        {
+            player.gameObject.GetComponent<Animator>().SetTrigger("GetDamage");
+            player.gameObject.GetComponent<Health>().TakeHitSound();
+        }
     }
 }
