@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class MenuInGame : MonoBehaviour
@@ -14,8 +13,6 @@ public class MenuInGame : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-        {
             menuCanvas.enabled = !menuCanvas.enabled;
-        }
     }
 }

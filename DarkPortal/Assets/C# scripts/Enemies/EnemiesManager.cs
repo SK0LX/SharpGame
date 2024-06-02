@@ -27,7 +27,7 @@ namespace C__scripts.Enemies
 
         public void Update()
         {
-            if (Vector3.Distance(spawnPoints[currentSpawnPoint].position, player.transform.position) < 20f)
+            if (Vector3.Distance(spawnPoints[currentSpawnPoint].position, player.transform.position) < 10f)
             {
                 if (!isFullTimeSpawn)
                 {

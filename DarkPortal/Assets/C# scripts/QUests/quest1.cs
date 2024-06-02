@@ -62,6 +62,7 @@ public class Quest1 : MonoBehaviour
     {
         if (other.CompareTag("Player"))
             canvasForBtn.enabled = false;
+        
     }
     
     private void TaskOnClick()
@@ -71,5 +72,6 @@ public class Quest1 : MonoBehaviour
         player.canvasDefault.enabled = false;
         player.speed = 0f;
         isInDialog = true;
+        FindObjectOfType<Quests>().FinishQuest(1);
     }
 }

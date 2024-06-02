@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Image = Microsoft.Unity.VisualStudio.Editor.Image;
 
 public class CanvasControllerQuests : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class CanvasControllerQuests : MonoBehaviour
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(GetReward);
         button.onClick.AddListener(() => button.enabled = false);
+        button.onClick.AddListener(() => button.gameObject.SetActive(false));
     }
 
     private void GetReward()
