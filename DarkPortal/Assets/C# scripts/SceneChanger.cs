@@ -9,6 +9,11 @@ namespace C__scripts
         {
             SceneManager.LoadScene("Game");
         }
+        
+        public void ExitToMenuPressed()
+        {
+            SceneManager.LoadScene("_Menu");
+        }
 
         public void ExitPressed()
         {
