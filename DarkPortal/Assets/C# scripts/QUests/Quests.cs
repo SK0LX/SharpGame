@@ -37,7 +37,7 @@ public class Quests : MonoBehaviour
         firstQuestTextForButton.text = textForButton;
         firstQuest.gameObject.SetActive(true);
         ded.SetActive(true);
-        FillQuest(textForAllInformation);
+        FillQuest1(textForAllInformation);
     }
     
 
@@ -46,7 +46,7 @@ public class Quests : MonoBehaviour
         secondQuestTextForButton.text = textForButton;
         secondQuest.gameObject.SetActive(true);
         bottle.SetActive(true);
-        FillQuest(textForAllInformation);
+        FillQuest2(textForAllInformation);
     }
     
     
@@ -72,7 +72,7 @@ public class Quests : MonoBehaviour
         FindObjectOfType<CanvasControllerQuests>().FinishQuest(number);
     }
     
-    private void FillQuest(string[] textForAllInformation)
+    private void FillQuest1(string[] textForAllInformation)
     {
         var text = new StringBuilder();
         for (var i = 0; i < textForAllInformation.Length; i++)
@@ -80,5 +80,15 @@ public class Quests : MonoBehaviour
             text.Append($"{i + 1}. {textForAllInformation[i]}\n");
         }
         firstQuestTextAll.text = text.ToString();
+    }
+    
+    private void FillQuest2(string[] textForAllInformation)
+    {
+        var text = new StringBuilder();
+        for (var i = 0; i < textForAllInformation.Length; i++)
+        {
+            text.Append($"{i + 1}. {textForAllInformation[i]}\n");
+        }
+        secondQuestTextAll.text = text.ToString();
     }
 }
