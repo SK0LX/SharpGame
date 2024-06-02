@@ -19,6 +19,9 @@ public class FollowPlayer : MonoBehaviour
     
     public Transform TavernaLeft;
     public Transform TavernaRight;
+    
+    public Transform farm1;
+    public Transform farm2;
     private int location;
 
     private void Start()
@@ -37,6 +40,9 @@ public class FollowPlayer : MonoBehaviour
         if (player.position.x < TavernaRight.position.x && player.position.x > TavernaLeft.position.x)
             location = 4;
         
+        if (player.position.x < farm2.position.x && player.position.x > farm1.position.x)
+            location = 5;
+        
         switch (location)
         {
             case 1:
@@ -50,6 +56,9 @@ public class FollowPlayer : MonoBehaviour
                 break;
             case 4:
                 transform.position = CameraLocate(TavernaLeft.position.x, TavernaRight.position.x);
+                break;
+            case 5:
+                transform.position = CameraLocate(farm1.position.x, farm2.position.x);
                 break;
         }
     }
