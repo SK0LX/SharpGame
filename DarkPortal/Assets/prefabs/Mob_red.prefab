@@ -196,9 +196,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e2e2fde09e9824099c12ad37427b7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 7
+  cost: 17
   speed: 4
   radius: 6
+  isFullTimeSpawn: 0
 --- !u!114 &925894998452602253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,7 +217,6 @@ MonoBehaviour:
   power: 7
   prefabHpCanvas: {fileID: 6293539288352924261, guid: 0cabf2a8909af6a4c9e41b05641bd402, type: 3}
   health: 15
-  InventoryList: []
 --- !u!61 &-859012323096679383
 BoxCollider2D:
   m_ObjectHideFlags: 0
