@@ -4,7 +4,6 @@ using UnityEngine;
 public class MenuInGame : MonoBehaviour
 {
     [SerializeField] private Canvas menuCanvas;
-    private bool keyPressed;
 
     private void Start()
     {
@@ -14,11 +13,9 @@ public class MenuInGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !keyPressed)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            keyPressed = true;
             menuCanvas.enabled = !menuCanvas.enabled;
-            keyPressed = false;
         }
     }
 }
