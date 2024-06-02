@@ -53,6 +53,7 @@ public class FortuneWheel : MonoBehaviour
         canWeTurn = true;
         winOrLose.text = "Проверим твою удачу!";
         totalBetText.text = "10";
+        totalBet = 10;
     }
 
     private void Update()
