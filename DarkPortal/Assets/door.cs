@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-public class door : MonoBehaviour
+public class Door : MonoBehaviour
 {
     public Canvas canvasForTavernaBtn;
     public Button goToTaverna;

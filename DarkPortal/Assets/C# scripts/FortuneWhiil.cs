@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 
-public class FortuneWhheel : MonoBehaviour
+public class FortuneWheel : MonoBehaviour
 {
     private int numberOfTurnes; //кол-во оборотов
     private int WhatWeWin;
@@ -17,7 +17,7 @@ public class FortuneWhheel : MonoBehaviour
     private bool canWeTurn;
 
     private string winningText;
-    private string totalChoiseText;
+    private string choice;
 
     
     public Player player;
@@ -52,7 +52,7 @@ public class FortuneWhheel : MonoBehaviour
         btnDown.onClick.AddListener(PressBtnDown);
         canWeTurn = true;
         winOrLose.text = "Проверим твою удачу!";
-        totalBetText.text = "0";
+        totalBetText.text = "10";
     }
 
     private void Update()
@@ -96,99 +96,18 @@ public class FortuneWhheel : MonoBehaviour
         melstroi.Stop();
         WhatWeWin = Mathf.RoundToInt(transform.rotation.eulerAngles.z) / 12;
 
-        switch (WhatWeWin)
+        if (WhatWeWin == 0)
+            winningText = "Зеленое";
+        else switch (WhatWeWin % 2)
         {
-            case 0:
-                winningText = "Зеленое";
-                break;
             case 1:
                 winningText = "Черное";
                 break;
-            case 2:
+            case 0 when WhatWeWin != 0:
                 winningText = "Красное";
-                break;
-            case 3:
-                winningText = "Черное";
-                break;
-            case 4:
-                winningText = "Красное";
-                break;
-            case 5:
-                winningText = "Черное";
-                break;
-            case 6:
-                winningText = "Красное";
-                break;
-            case 7:
-                winningText = "Черное";
-                break;
-            case 8:
-                winningText = "Красное";
-                break;
-            case 9:
-                winningText = "Черное";
-                break;
-            case 10:
-                winningText = "Красное";
-                break;
-            case 11:
-                winningText = "Черное";
-                break;
-            case 12:
-                winningText = "Красное";
-                break;
-            case 13:
-                winningText = "Черное";
-                break;
-            case 14:
-                winningText = "Красное";
-                break;
-            case 15:
-                winningText = "Черное";
-                break;
-            case 16:
-                winningText = "Красное";
-                break;
-            case 17:
-                winningText = "Черное";
-                break;
-            case 18:
-                winningText = "Красное";
-                break;
-            case 19:
-                winningText = "Черное";
-                break;
-            case 20:
-                winningText = "Красное";
-                break;
-            case 21:
-                winningText = "Черное";
-                break;
-            case 22:
-                winningText = "Красное";
-                break;
-            case 23:
-                winningText = "Черное";
-                break;
-            case 24:
-                winningText = "Красное";
-                break;
-            case 25:
-                winningText = "Черное";
-                break;
-            case 26:
-                winningText = "Красное";
-                break;
-            case 27:
-                winningText = "Черное";
-                break;
-            case 28:
-                winningText = "Красное";
-                break;
-            case 29:
-                winningText = "Черное";
                 break;
         }
+
         totalWin.text = $"Выпало: {winningText}"; 
         CheckWinOrLose();
         
@@ -198,7 +117,7 @@ public class FortuneWhheel : MonoBehaviour
 
     private void CheckWinOrLose()
     {
-        if (totalChoiseText == winningText)
+        if (choice == winningText)
         {
             if (winningText == "Зеленое")
                 million.Play();
@@ -219,18 +138,14 @@ public class FortuneWhheel : MonoBehaviour
 
     private void PressBtnUp()
     {
-        totalBet += 10;
-        if (totalBet > 100)
-            totalBet = 100;
+        totalBet = Math.Min(totalBet + 10, 100);
         totalBetText.text = totalBet.ToString();
 
     }
     
     private void PressBtnDown()
     {
-        totalBet -= 10;
-        if (totalBet < 0)
-            totalBet = 0;
+        totalBet = Math.Max(totalBet - 10, 10);
         totalBetText.text = totalBet.ToString();
     }
 
@@ -239,34 +154,36 @@ public class FortuneWhheel : MonoBehaviour
     {
         if (canWeTurn)
         {
-            totalChoiseText = "Зеленое";
-            currentMultiplier = 40;
+            BetChoice bet = new BetChoice("Зеленое", 40);
+            MakeBet(bet);
         }
-
-        RollWheel();
     }
-    
+
     private void PressBlack()
     {
         if (canWeTurn)
         {
-            totalChoiseText = "Черное";
-            currentMultiplier = 2;
+            BetChoice bet = new BetChoice("Черное", 2);
+            MakeBet(bet);
         }
-
-        RollWheel();
     }
-    
+
     private void PressRed()
     {
         if (canWeTurn)
         {
-            totalChoiseText = "Красное";
-            currentMultiplier = 2;
+            BetChoice bet = new BetChoice("Красное", 2);
+            MakeBet(bet);
         }
+    }
 
+    private void MakeBet(BetChoice bet)
+    {
+        choice = bet.choice;
+        currentMultiplier = bet.currentMultiplier;
         RollWheel();
     }
+
     
     private void RollWheel()
     {
@@ -281,4 +198,17 @@ public class FortuneWhheel : MonoBehaviour
             noMonie.Play();
         }
     }
+
+    private struct BetChoice
+    {
+        public string choice;
+        public int currentMultiplier;
+
+        public BetChoice(string choice, int multiplier)
+        {
+            this.choice = choice;
+            currentMultiplier = multiplier;
+        }
+    }
+
 }

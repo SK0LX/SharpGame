@@ -3,99 +3,86 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class ShopController : MonoBehaviour
 {
     public Player player;
-    private int coinsPLayer;
     
     public Button buttonForSmallHP;
     public Button buttonForBigHP;
     public Button buttonForDecorationHP;
-    public bool buy1HP;
+    private bool buyBoostForHp;
     public Button buttonForDecorationDeterity;
-    public bool buy2Deterity;
-    [SerializeField] private AudioSource noMonie;
+    private bool buyBoostForDexterity; 
+    [SerializeField] private AudioSource noMoneyAudioSource;
     void Start()
     {
-        buttonForSmallHP.GetComponent<Button>().onClick.AddListener(HpSmall);
+        buttonForSmallHP.onClick.AddListener(HpSmall);
         
-        buttonForBigHP.GetComponent<Button>().onClick.AddListener(HpBig);
+        buttonForBigHP.onClick.AddListener(HpBig);
         
-        buttonForDecorationHP.GetComponent<Button>().onClick.AddListener(DecorationHP);
+        buttonForDecorationHP.onClick.AddListener(DecorationHP);
         
-        buttonForDecorationDeterity.GetComponent<Button>().onClick.AddListener(DecorationDexterity);
+        buttonForDecorationDeterity.onClick.AddListener(DecorationDexterity);
     }
 
     private void Update()
     {
-        if (buy1HP)
+        if (buyBoostForHp)
         {
             
             buttonForDecorationHP.enabled = false;
         }
 
-        if (buy2Deterity)
+        if (buyBoostForDexterity)
         {
 
             buttonForDecorationDeterity.enabled = false;
         }
     }
 
-    void HpSmall()
+    private void HpSmall()
     {
-        if (player.inventory.coins >= 7)
-        {
-            player.inventory.coins -= 7;
+        if (BuyItem(7));
             player.inventory.hpSmallBottel += 1;
-        }
-        else
-        {
-            noMonie.Play();
-        }
     }
 
-    void HpBig()
+    private bool BuyItem(int totalPrice)
     {
-        if (player.inventory.coins >= 25)
+        if (player.inventory.coins >= totalPrice)
         {
-            player.inventory.coins -= 25;
+            player.inventory.coins -= totalPrice;
+            return true;
+        }
+        noMoneyAudioSource.Play();
+        return false;
+    }
+
+    private void HpBig()
+    {
+        if (BuyItem(25))
             player.inventory.hpBigBottel += 1;
-        }
-        else
-        {
-            noMonie.Play();
-        }
     }
 
     void DecorationHP()
     {
-        if (player.inventory.coins >= 25)
+        if (BuyItem(25))
         {
-            player.inventory.coins -= 25;
             player.HP.DecorationBoost(10);
-            buy1HP = true;
+            buyBoostForHp = true;
             player.inventory.decorationFirstBool = true;
-        }
-        else
-        {
-            noMonie.Play();
         }
     }
     
     void DecorationDexterity()
     {
-        if (player.inventory.coins >= 25)
+        if (BuyItem(25))
         {
-            player.inventory.coins -= 25;
             player.inventory.dexterity += 5;
-            buy2Deterity = true;
+            buyBoostForDexterity = true;
             player.inventory.decorationSecondBool = true;
-        }
-        else
-        {
-            noMonie.Play();
         }
     }
 }

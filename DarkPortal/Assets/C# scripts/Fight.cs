@@ -14,14 +14,14 @@ public class Fight : MonoBehaviour
     private Entity enemyComponent;
     
     private bool facingRight;
-    public bool isPlayerTurn;
     private bool isBossFight;
-    private bool buttonClick;
+    private bool clickGuardButtonClick;
     public Canvas canvas;
     public bool critDamage;
 
     private bool inDialogue;
     private bool goFight;
+    private Random rnd = new ();
     private TextMeshProUGUI critText;
     
     public void Init(GameObject player, Canvas canvas, GameObject enemy)
@@ -60,9 +60,7 @@ public class Fight : MonoBehaviour
 
     private void ChooseRandomMove() // типо монетку подбрасываем в начале файта
     {
-        var rnd = new Random();
-        isPlayerTurn = rnd.Next(1, 3) == 1;
-        player.isPlayerTorn = isPlayerTurn;
+        player.isPlayerTorn = rnd.Next(1, 3) == 1;
     }
 
     private int ChooseRandomDamage(int downDamage, int upDamage) // машина по рандомизированному урона(крит 20%)
@@ -70,12 +68,11 @@ public class Fight : MonoBehaviour
         critDamage = false;
         if (upDamage - downDamage < 0)
             throw new ArgumentException("Верхний предел урона не может быть ниже нижнего предела урона");
-        var rnd = new Random();
         var damage = rnd.Next(downDamage,upDamage + 1);
         if (rnd.Next(0, 101) < 20)
         {
             critText.enabled = true;
-            Debug.Log(!isPlayerTurn ? $"CRIT mob={enemy.name}" : $"CRIT player");
+            Debug.Log(!player.isPlayerTorn ? $"CRIT mob={enemy.name}" : $"CRIT player");
             damage += (upDamage-downDamage) / 2;
             critDamage = true;
         }
@@ -85,11 +82,11 @@ public class Fight : MonoBehaviour
     
     private IEnumerator CoreFight() //сам весь процесс файта (очереди)
     {
-        if (isPlayerTurn)
+        if (player.isPlayerTorn)
         {
-            if (!buttonClick && (Input.GetKeyDown(KeyCode.Z) || player.activateButtonForAttack))
+            if (!clickGuardButtonClick && (Input.GetKeyDown(KeyCode.Z) || player.activateButtonForAttack))
             {
-                buttonClick = true;
+                clickGuardButtonClick = true;
                 var damage = ChooseRandomDamage(10, 15);
                 yield return StartCoroutine(player.Attack());
                 critText.enabled = false;
@@ -105,34 +102,34 @@ public class Fight : MonoBehaviour
                     canvas.enabled = false;
                     Destroy(gameObject);
                 }
-                isPlayerTurn = false;
                 player.isPlayerTorn = false;
-                buttonClick = false;
+                player.isPlayerTorn = false;
+                clickGuardButtonClick = false;
                 player.activateButtonForAttack = false;
             }
             
-            if (!buttonClick && (Input.GetKeyDown(KeyCode.X) || player.activateButtonForHealth))
+            if (!clickGuardButtonClick && (Input.GetKeyDown(KeyCode.X) || player.activateButtonForHealth))
             {
-                buttonClick = true;
+                clickGuardButtonClick = true;
                 yield return StartCoroutine(player.HealingPlayer());
-                isPlayerTurn = false;
                 player.isPlayerTorn = false;
-                buttonClick = false;
+                player.isPlayerTorn = false;
+                clickGuardButtonClick = false;
                 player.activateButtonForHealth = false;
             }
         }   
         else
         {
-            if (!buttonClick)
+            if (!clickGuardButtonClick)
             {
-                buttonClick = true;
+                clickGuardButtonClick = true;
                 var damage = ChooseRandomDamage(enemyComponent.power - 2, enemyComponent.power + 2);
                 yield return StartCoroutine(enemy.Attack());
                 critText.enabled = false;
                 playerHealth.TakeHit(damage * ChooseDamageSkip(player.inventory.dexterity)); 
-                isPlayerTurn = true;
                 player.isPlayerTorn = true;
-                buttonClick = false;
+                player.isPlayerTorn = true;
+                clickGuardButtonClick = false;
             }
         }
     }

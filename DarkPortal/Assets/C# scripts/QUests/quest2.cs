@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class quest2 : MonoBehaviour
+public class Quest2 : MonoBehaviour
 {
     [SerializeField] private Canvas canvasForBtn;
     // Start is called before the first frame update

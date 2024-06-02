@@ -12,6 +12,7 @@ public class DialogManager : MonoBehaviour
     private TextMeshProUGUI dialogText;
     private TextMeshProUGUI nameText;
     private Image image;
+    private Coroutine typingCoroutine;
     [SerializeField] private AudioSource text;
 
     private void Start()
@@ -38,6 +39,11 @@ public class DialogManager : MonoBehaviour
     {
         if (sentences.Count == 0)
         {
+            if (typingCoroutine != null)
+            {
+                StopCoroutine(typingCoroutine);
+            }
+            text.Stop();
             return true;
         }
         var message = sentences.Dequeue();
@@ -50,8 +56,12 @@ public class DialogManager : MonoBehaviour
             image.enabled = false;
             image = message.imagePerson;
         }
-        StopAllCoroutines();
-        StartCoroutine(TypeSentence(message));
+        
+        if (typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
+        }
+        typingCoroutine = StartCoroutine(TypeSentence(message));
         return false;
     }
 

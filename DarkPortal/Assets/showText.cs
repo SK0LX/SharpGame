@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class showText : MonoBehaviour
+public class ShowText : MonoBehaviour
 {
     [SerializeField] private GameObject heart;
 

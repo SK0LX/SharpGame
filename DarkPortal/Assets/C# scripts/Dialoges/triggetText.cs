@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class triggetText : MonoBehaviour
+public class TriggetText : MonoBehaviour
 {
     public Dialog dialog;
     public Button next;

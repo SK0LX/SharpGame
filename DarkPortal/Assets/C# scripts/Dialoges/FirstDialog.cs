@@ -7,7 +7,7 @@ using UnityEngine;
 public class FirstDialog : MonoBehaviour
 {
     public Canvas canvasForFirstItteration;
-    public triggetText triggerDialogue;
+    public TriggetText triggerDialogue;
     public Player player;
     private bool dialogTriggered = true;
 
