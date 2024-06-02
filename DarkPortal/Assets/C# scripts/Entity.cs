@@ -77,7 +77,7 @@ public class Entity: MonoBehaviour
         canvasHp.enabled = false;
         positionCanvas = canvasHp.GetComponent<RectTransform>();
         colliderForm = gameObject.GetComponent<Collider2D>().bounds;
-        positionCanvas.position = colliderForm.max;
+        positionCanvas.position = new Vector3(transform.position.x, transform.position.y + colliderForm.extents.y, 0);
         
         positionCanvas.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, colliderForm.max.x);
         bar1 = canvasHp.gameObject.transform.GetChild(0).GetChild(1).GetComponent<Image>();

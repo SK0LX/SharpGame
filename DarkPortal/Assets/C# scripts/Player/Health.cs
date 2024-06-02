@@ -27,10 +27,14 @@ public class Health : MonoBehaviour
         healthBar.fill = (float)health / maxHealth;
     }
 
+    public void TakeHitSound()
+    {
+        hit.Play();
+    }
+
     public void TakeHit(int damage)
     {
         health = Math.Max(0, health - damage);;
-        hit.Play();
         healthBar.fill = (float)health / maxHealth;
         
         if (health == 0)

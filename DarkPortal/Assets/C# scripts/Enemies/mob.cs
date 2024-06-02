@@ -30,6 +30,7 @@ namespace C__scripts.Enemies
         private float boxRadius;
         private float playerBox;
         private bool isBoss;
+        public bool isFullTimeSpawn;
 
         public float BoxRadius => boxRadius;
         
@@ -39,7 +40,7 @@ namespace C__scripts.Enemies
         private static readonly int CriticalDamage = Animator.StringToHash("criticalDamage");
         private static readonly int Die1 = Animator.StringToHash("die");
 
-        public void Init(GameObject gameObject, Transform spawnPosition, GameObject player, Canvas canvas, Fight fight)
+        public void Init(GameObject gameObject, Transform spawnPosition, GameObject player, Canvas canvas, Fight fight, bool isFullTimeSpawn)
         {
             this.gameObject = gameObject;
             this.spawnPosition = spawnPosition;
@@ -54,6 +55,7 @@ namespace C__scripts.Enemies
             isBoss = gameObject.GetComponent<Boss>() is not null;
             boxRadius = animator.GetComponent<BoxCollider2D>().bounds.extents.x;
             playerBox = player.GetComponent<BoxCollider2D>().bounds.extents.x;
+            this.isFullTimeSpawn = isFullTimeSpawn;
         }
         
         public void FixedUpdate()
@@ -157,6 +159,12 @@ namespace C__scripts.Enemies
             player.fightObject = fight;
             entity.ShowCanvas();
             animator.SetTrigger(Idle);
+        }
+
+        public void DamagePlayer()
+        {
+            player.gameObject.GetComponent<Animator>().SetTrigger("GetDamage");
+            player.gameObject.GetComponent<Health>().TakeHitSound();
         }
     }
 }

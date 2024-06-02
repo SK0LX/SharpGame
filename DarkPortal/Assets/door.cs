@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class Door : MonoBehaviour
@@ -34,7 +30,7 @@ public class Door : MonoBehaviour
         }
     }
 
-    private void GoToTaverna()
+    public void GoToTaverna()
     {
         player.transform.position = positionInTaverna.transform.position;
     }

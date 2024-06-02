@@ -119,7 +119,6 @@ public class Player : MonoBehaviour
         Animator.SetTrigger("attack1");
         yield return new WaitForSeconds(1f);
         FlipForFight();
-        damageMob.Play();
         Animator.SetTrigger("runForAttack1");
         
         while (transform.position.x > geolocationNow)
@@ -194,5 +193,6 @@ public class Player : MonoBehaviour
     public void MobGetDamage()
     {
         fightObject.enemy.GetComponent<Animator>().SetTrigger("takeDamage");
+        damageMob.Play();
     }
 }
