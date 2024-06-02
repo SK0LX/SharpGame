@@ -37,7 +37,6 @@ public class DialogManager : MonoBehaviour
 
     public bool DisplayNextSentence()
     {
-        text.Play();
         if (sentences.Count == 0)
         {
             if (typingCoroutine != null)
@@ -68,6 +67,7 @@ public class DialogManager : MonoBehaviour
 
     IEnumerator TypeSentence(Message sentence)
     {
+        text.Play();
         dialogText.text = "";
         foreach (var letter in sentence.sentence)
         {
@@ -75,7 +75,7 @@ public class DialogManager : MonoBehaviour
             if (image is not null)
                 image.enabled = true;
             dialogText.text += letter;
-            yield return new WaitForSeconds(0.035f);
+            yield return new WaitForSeconds(0.04f);
         }
         text.Stop();
     }
