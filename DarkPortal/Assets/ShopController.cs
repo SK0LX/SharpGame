@@ -17,6 +17,7 @@ public class ShopController : MonoBehaviour
     public Button buttonForDecorationDeterity;
     private bool buyBoostForDexterity; 
     [SerializeField] private AudioSource noMoneyAudioSource;
+    [SerializeField] private AudioSource buyItem;
     void Start()
     {
         buttonForSmallHP.onClick.AddListener(HpSmall);
@@ -45,14 +46,17 @@ public class ShopController : MonoBehaviour
 
     private void HpSmall()
     {
-        if (BuyItem(7));
+        if (BuyItem(7))
+        {
             player.inventory.hpSmallBottel += 1;
+        }
     }
 
     private bool BuyItem(int totalPrice)
     {
         if (player.inventory.coins >= totalPrice)
         {
+            buyItem.Play();
             player.inventory.coins -= totalPrice;
             return true;
         }
