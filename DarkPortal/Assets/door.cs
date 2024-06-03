@@ -24,8 +24,7 @@ public class Door : MonoBehaviour
     {
         var enemy = GameObject.FindWithTag("Enemy");
         if (other.CompareTag("Player") 
-            && !other.gameObject.GetComponent<Player>().fight
-            && (enemy == null || Vector3.Distance(enemy.transform.position, transform.position)  > 15f))
+            && !other.gameObject.GetComponent<Player>().fight)
         {
             canvasForTavernaBtn.enabled = true;
         }
