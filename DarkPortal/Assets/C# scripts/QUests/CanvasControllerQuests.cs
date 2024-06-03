@@ -1,8 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Image = Microsoft.Unity.VisualStudio.Editor.Image;
-
 public class CanvasControllerQuests : MonoBehaviour
 {
     public Canvas canvasShopForQuests;
