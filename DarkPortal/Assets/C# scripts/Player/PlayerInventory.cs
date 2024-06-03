@@ -29,6 +29,7 @@ public class PlayerInventory : MonoBehaviour
     
     public TextMeshProUGUI textDexterity;
     public TextMeshProUGUI textCoins;
+    [SerializeField] private AudioSource drink;
 
     private void Update()
     {
@@ -62,7 +63,8 @@ public class PlayerInventory : MonoBehaviour
     {
         if (hpSmallBottel > 0)
         {
-            hp.SetHealth(2);
+            drink.Play();
+            hp.SetHealth(3);
             hpSmallBottel--;
         }
     }
@@ -71,7 +73,8 @@ public class PlayerInventory : MonoBehaviour
     {
         if (hpBigBottel > 0)
         {
-            hp.SetHealth(7);
+            drink.Play();
+            hp.SetHealth(8);
             hpBigBottel--;
         }
     }

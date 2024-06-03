@@ -7,6 +7,10 @@ public class Door : MonoBehaviour
     public Button goToTaverna;
     public GameObject positionInTaverna;
     public Player player;
+    public GameObject ShopAssistent;
+    public Transform localShopXYZ;
+    public Transform localShopXYZInTawerna;
+    private bool locateShop;
 
 
     private void Start()
@@ -34,5 +38,18 @@ public class Door : MonoBehaviour
     public void GoToTaverna()
     {
         player.transform.position = positionInTaverna.transform.position;
+        
+        if (!locateShop)
+        {
+            ShopAssistent.transform.position = localShopXYZInTawerna.position;
+            locateShop = false;
+            ShopAssistent.GetComponent<SpriteRenderer>().flipX = !ShopAssistent.GetComponent<SpriteRenderer>().flipX;
+        }
+        else
+        {
+            ShopAssistent.transform.position = localShopXYZ.position;
+            ShopAssistent.GetComponent<SpriteRenderer>().flipX = !ShopAssistent.GetComponent<SpriteRenderer>().flipX;
+            locateShop = true;
+        }
     }
 }

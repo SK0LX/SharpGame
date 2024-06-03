@@ -22,9 +22,14 @@ public class NPC : MonoBehaviour
     
     public TextMeshProUGUI name;
     public TextMeshProUGUI text;
+    
+    public TextMeshProUGUI totalCoins;
 
     void Start()
     {
+        canvasForButtonShop.enabled = false;
+        canvasShop.enabled = false;
+        CanvasForDialog.enabled = false;
         var btn = button.GetComponent<Button>();
         btn.onClick.AddListener(TaskOnClick);
         var btnInShop = buttonInShop.GetComponent<Button>();
@@ -33,6 +38,7 @@ public class NPC : MonoBehaviour
     
     void Update()
     {
+        totalCoins.text = player.inventory.coins.ToString();
         switch (beginDilogue)
         {
             case 0:
