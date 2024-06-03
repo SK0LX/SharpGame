@@ -9,6 +9,11 @@ namespace C__scripts
     {
         private bool isFullScreen;
         public AudioMixer am;
+
+        void Start()
+        {
+            isFullScreen = true;
+        }
     
         public void FullScreenToggle()
         {

@@ -35,12 +35,10 @@ public class Quest1 : MonoBehaviour
         {
             animator.SetTrigger(Go);
             transform.eulerAngles = new Vector3(0, 0, 0);
-            if (transform.position.x  > -70)
+            if (transform.position.x  > 125)
                 transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);
             else
-            {
                 Destroy(gameObject);
-            }
         }
 
         if (triggetDialogue.end)

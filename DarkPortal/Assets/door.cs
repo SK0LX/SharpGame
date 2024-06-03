@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,7 +22,10 @@ public class Door : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !other.gameObject.GetComponent<Player>().fight)
+        var enemy = GameObject.FindWithTag("Enemy");
+        if (other.CompareTag("Player") 
+            && !other.gameObject.GetComponent<Player>().fight
+            && (enemy == null || Vector3.Distance(enemy.transform.position, transform.position)  > 15f))
         {
             canvasForTavernaBtn.enabled = true;
         }
