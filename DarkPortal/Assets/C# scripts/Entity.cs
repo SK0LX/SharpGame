@@ -65,6 +65,7 @@ public class Entity: MonoBehaviour
     
     private void UpdateCanvasHp()
     {
+        // review(30.06.2024): Уже видел такой код в HealthBar. Кажется, тут его стоило переиспользовать
         bar1.fillAmount = (float)health / maxHealth;
         text.text = $"{health}/{maxHealth}";
         if (health <= 0)

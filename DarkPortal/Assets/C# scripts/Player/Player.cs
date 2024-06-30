@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
     }
     
 
-    private void movementPlayer() // хождение чубрика на AD
+    private void movementPlayer() // хождение чубрика на AD // review(30.06.2024): Такие комменты лучше удалять
     {
         var horizontalMove = Input.GetAxis("Horizontal") * speed;
         if (!fight)
@@ -102,13 +102,14 @@ public class Player : MonoBehaviour
     public IEnumerator Attack()
     {
         if (fightObject is null)
-            fightObject = FindObjectOfType<Fight>();
+            fightObject = FindObjectOfType<Fight>(); // review(30.06.2024): А если даже после этого не найдется fightObject?
         var geolocationNow = transform.position.x;
-        var moveSpeed = 3f; // Скорость движения
+        var moveSpeed = 3f; // Скорость движения // review(30.06.2024): Это понятно из названия переменной
 
         var enemy = fightObject.enemy;
         var geolocationEnemy = enemy.transform.position.x - enemy.BoxRadius - playerBox;
-        
+
+        // review(30.06.2024): По-моему, я уже видел идентичный код у мобов
         Animator.SetTrigger("runForAttack1");
         while (transform.position.x < geolocationEnemy)
         {
@@ -141,7 +142,7 @@ public class Player : MonoBehaviour
         heal.Play();
     }
     
-    private int ChooseRandomHealth(int downHealth, int upHealth) // машина по рандомизированному хп(крит 20%)
+    private int ChooseRandomHealth(int downHealth, int upHealth) // машина по рандомизированному хп(крит 20%) // review(30.06.2024): Тоже лучше удалить, особенно из-за магической константы
     {
         if (upHealth - downHealth < 0)
             throw new ArgumentException("Верхний предел урона не может быть ниже нижнего предела урона");
@@ -184,6 +185,7 @@ public class Player : MonoBehaviour
         canvasForDead.enabled = true;
     }
 
+    // review(30.06.2024): Есть ощущение, что это должно быть в отдельной компоненте, а не в игроке
     public void WinCanvas()
     {
         canvasWin.enabled = true;
@@ -192,7 +194,7 @@ public class Player : MonoBehaviour
 
     public void MobGetDamage()
     {
-        fightObject.enemy.GetComponent<Animator>().SetTrigger("takeDamage");
+        fightObject.enemy.GetComponent<Animator>().SetTrigger("takeDamage"); // review(30.06.2024): Лучше избегать такой цепочки вызовов и инкапсулировать логику в самом Fight
         damageMob.Play();
     }
 }

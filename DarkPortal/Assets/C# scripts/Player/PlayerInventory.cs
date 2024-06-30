@@ -6,12 +6,14 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
+
 public class PlayerInventory : MonoBehaviour
 {
     public Health hp;
     public int dexterity;
     public int coins;
-    
+
+    // review(30.06.2024): Мне кажется, что захардкоженные вещи - не очень крутой путь. Возможно, стоило подумать над инвентарной системой
     public Image decorationFirst;
     public bool decorationFirstBool;
     public Image decorationSecond;
@@ -64,7 +66,7 @@ public class PlayerInventory : MonoBehaviour
         if (hpSmallBottel > 0)
         {
             drink.Play();
-            hp.SetHealth(3);
+            hp.SetHealth(3); // review(30.06.2024): Очень много захардкоженных констант
             hpSmallBottel--;
         }
     }

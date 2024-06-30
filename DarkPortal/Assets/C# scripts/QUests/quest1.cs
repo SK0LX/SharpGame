@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using Button = UnityEngine.UI.Button;
 
+// review(30.06.2024): Просто суффикс в виде номера квеста - не лучший нейминг. Стоит уточнить, что за квест
 public class Quest1 : MonoBehaviour
 {
     public Canvas CanvasForDialog;
@@ -35,7 +36,7 @@ public class Quest1 : MonoBehaviour
         {
             animator.SetTrigger(Go);
             transform.eulerAngles = new Vector3(0, 0, 0);
-            if (transform.position.x  > 125)
+            if (transform.position.x  > 125) // review(30.06.2024): Что за магическая константа?
                 transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);
             else
                 Destroy(gameObject);
@@ -70,6 +71,6 @@ public class Quest1 : MonoBehaviour
         player.canvasDefault.enabled = false;
         player.speed = 0f;
         isInDialog = true;
-        FindObjectOfType<Quests>().FinishQuest(1);
+        FindObjectOfType<Quests>().FinishQuest(1); // review(30.06.2024): Магическая константа
     }
 }

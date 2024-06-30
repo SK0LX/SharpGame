@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+// review(29.06.2024): Разве не TriggerText?
 public class TriggetText : MonoBehaviour
 {
     public Dialog dialog;
@@ -17,6 +18,7 @@ public class TriggetText : MonoBehaviour
 
     public void TriggerDialog(Canvas canvas, TextMeshProUGUI name, TextMeshProUGUI text)
     {
+        // review(29.06.2024): Может, лучше найти DialogManager единожды при Start?
         FindObjectOfType<DialogManager>().StartDialogue(dialog, canvas, name, text);
     }
 

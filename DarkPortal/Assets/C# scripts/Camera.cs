@@ -31,6 +31,8 @@ public class FollowPlayer : MonoBehaviour
 
     private void LateUpdate()
     {
+        // review(30.06.2024): Кмк не самый лучший способ опеделять локацию. Для этого больше подойдет какое-то поле, которое бы изменялось при перемещении игрока в ту или иную локацию
+        // review(30.06.2024): А еще тут лучше было бы использовать enum вместо циферок
         if (player.position.x < rightLimit1.position.x && player.position.x > leftLimit1.position.x)
             location = 1;
         if (player.position.x < rightLimit2.position.x && player.position.x > leftLimit2.position.x)

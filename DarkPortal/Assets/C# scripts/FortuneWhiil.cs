@@ -95,16 +95,16 @@ public class FortuneWheel : MonoBehaviour
         }
         
         melstroi.Stop();
-        WhatWeWin = Mathf.RoundToInt(transform.rotation.eulerAngles.z) / 12;
+        WhatWeWin = Mathf.RoundToInt(transform.rotation.eulerAngles.z) / 12; // review(30.06.2024): Почему что мы выиграли, а не игрок?
 
         if (WhatWeWin == 0)
-            winningText = "Зеленое";
+            winningText = "Зеленое"; // review(30.06.2024): Плохо использовать строки вот так. Стоило предсоздать различные ставки и использовать choice из поля BetChoice
         else switch (WhatWeWin % 2)
         {
             case 1:
                 winningText = "Черное";
                 break;
-            case 0 when WhatWeWin != 0:
+            case 0 when WhatWeWin != 0: // review(30.06.2024): Проверка избыточна -- мы в else
                 winningText = "Красное";
                 break;
         }
@@ -150,6 +150,16 @@ public class FortuneWheel : MonoBehaviour
         totalBetText.text = totalBet.ToString();
     }
 
+
+    // review(30.06.2024): Во всех кнопках почти один и тот же код. Т.к. у них одно использование, я бы выделил просто один метод и переиспользовал бы его
+
+    private void Press(BetChoice betChoice)
+    {
+        if (canWeTurn)
+        {
+            MakeBet(betChoice);
+        }
+    }
 
     private void PressGreen()
     {
@@ -202,6 +212,13 @@ public class FortuneWheel : MonoBehaviour
 
     private struct BetChoice
     {
+        // review(30.06.2024): Количество Choice ограничено. Я бы еще добавил поля ниже
+
+        public static readonly BetChoice Green = new("Зеленый", 40);
+        public static readonly BetChoice Red = new("Зеленый", 40);
+        public static readonly BetChoice Black = new("Зеленый", 40);
+
+        // review(30.06.2024): Почему поля изменяемые?
         public string choice;
         public int currentMultiplier;
 

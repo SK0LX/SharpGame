@@ -15,10 +15,10 @@ public class NPC : MonoBehaviour
     private bool shopEnabled;
     public Canvas canvasForButtonShop;
     public Canvas canvasShop;
-    public Canvas CanvasForDialog;
-    [SerializeField] private AudioSource buysmth;
+    public Canvas CanvasForDialog;                // review(30.06.2024): Почему-то нейминг разных канвасов отличается
+    [SerializeField] private AudioSource buysmth; // review(30.06.2024): Интересное название
     public TriggetText triggetDialogue;
-    private int beginDilogue;
+    private int beginDilogue; // review(30.06.2024): Я бы переименвал в Stage, а вместо int использовал enum DialogStage, чтобы было более понятно
     
     public TextMeshProUGUI name;
     public TextMeshProUGUI text;
@@ -30,7 +30,7 @@ public class NPC : MonoBehaviour
         canvasForButtonShop.enabled = false;
         canvasShop.enabled = false;
         CanvasForDialog.enabled = false;
-        var btn = button.GetComponent<Button>();
+        var btn = button.GetComponent<Button>(); // review(30.06.2024): Не экономьте на символах
         btn.onClick.AddListener(TaskOnClick);
         var btnInShop = buttonInShop.GetComponent<Button>();
         btnInShop.onClick.AddListener(TaskOnClickEnd);
@@ -93,8 +93,8 @@ public class NPC : MonoBehaviour
     private void TaskOnClickEnd()
     {
         beginDilogue = 2;
-        canvasShop.enabled = false;
         canvasForButtonShop.enabled = false;
+        canvasShop.enabled = false;
         player.canvasDefault.enabled = true;
         buysmth.Play();
     }

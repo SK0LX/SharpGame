@@ -9,7 +9,8 @@ using UnityEngine.UI;
 public class ShopController : MonoBehaviour
 {
     public Player player;
-    
+
+    // review(30.06.2024): Почему бы не выделить для разных вещей общую логику и назвать это ShopItem, а уже внутри себя он как-то бы понимал, что нужно делать при нажатии кнопки?
     public Button buttonForSmallHP;
     public Button buttonForBigHP;
     public Button buttonForDecorationHP;
