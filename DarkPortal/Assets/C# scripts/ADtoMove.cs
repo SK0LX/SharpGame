@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+// review(30.06.2024): Долго пытался понять, что значит название класса. Логичнее было бы назвать его MovementTutorial
 public class ADtoMove : MonoBehaviour
 {
     // Start is called before the first frame update

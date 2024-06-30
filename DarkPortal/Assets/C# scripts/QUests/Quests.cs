@@ -31,7 +31,7 @@ public class Quests : MonoBehaviour
         secondQuestCanvas.enabled = false;
     }
 
-
+    // review(30.06.2024): Квесты просто захардкожены вплоть до методов, что очень плохо -- их будет сложно расширять
     public void StartFirstQuest(string textForButton, string[] textForAllInformation)
     {
         firstQuestTextForButton.text = textForButton;
@@ -81,7 +81,8 @@ public class Quests : MonoBehaviour
         }
         firstQuestTextAll.text = text.ToString();
     }
-    
+
+    // review(30.06.2024): Метод дублируется
     private void FillQuest2(string[] textForAllInformation)
     {
         var text = new StringBuilder();

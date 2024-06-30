@@ -3,6 +3,7 @@ using System.Linq;
 using C__scripts.Enemies;
 using UnityEngine;
 
+// review(29.06.2024): Как будто класс не используется. Стоит удалять такое
 public class GoAnimation : StateMachineBehaviour
 {
     [SerializeField] public bool MoveLeft;

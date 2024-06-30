@@ -3,6 +3,7 @@ using Random = System.Random;
 
 namespace C__scripts.Enemies
 {
+    // review(30.06.2024): Это больше похоже на EnemiesSpawner
     public class EnemiesManager : MonoBehaviour
     {
         [SerializeField] private GameObject player;
@@ -27,17 +28,19 @@ namespace C__scripts.Enemies
 
         public void Update()
         {
+            // review(30.06.2024): Если инвертировать условие, то уменьшится вложенность
             if (Vector3.Distance(spawnPoints[currentSpawnPoint].position, player.transform.position) < 10f)
             {
                 if (!isFullTimeSpawn)
                 {
                     enemies[currentSpawnPoint] = SpawnEnemy(spawnPoints[currentSpawnPoint], enemyPrefab[currentSpawnPoint]);
                     currentSpawnPoint++;
-                    if (currentSpawnPoint >= size) 
+                    if (currentSpawnPoint >= size)
                         Destroy(gameObject);
                 }
                 else
                 {
+                    // review(30.06.2024): Такие сложные условия я бы выносил в методы (в плане один метод ShouldSpawnWithTime()
                     if (Vector3.Distance(spawnPoints[currentSpawnPoint].position, player.transform.position) > 5f
                         && player.transform.position.x < spawnPoints[currentSpawnPoint].position.x
                         && enemies[currentSpawnPoint] == null)
@@ -50,7 +53,8 @@ namespace C__scripts.Enemies
         private void SpawnWithTime()
         {
             enemies[currentSpawnPoint] = SpawnEnemy(spawnPoints[currentSpawnPoint],
-                enemyPrefab[random.Next(0, enemyPrefab.Length)]);
+                enemyPrefab[random.Next(0, enemyPrefab.Length)]); // review(30.06.2024): Я бы вынес получение индекса в метод либо хотя бы в переменную, чтобы было проще читать
+            // review(30.06.2024): можно упростить до currentSpawnPoint = (currentSpawnPoint + 1) % spawnPoints.Length;
             currentSpawnPoint++;
             if (currentSpawnPoint == spawnPoints.Length)
                 currentSpawnPoint = 0;

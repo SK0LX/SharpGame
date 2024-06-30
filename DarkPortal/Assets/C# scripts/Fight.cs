@@ -112,7 +112,7 @@ public class Fight : MonoBehaviour
                 clickGuardButtonClick = true;
                 yield return StartCoroutine(player.HealingPlayer());
                 player.isPlayerTorn = false;
-                player.isPlayerTorn = false;
+                player.isPlayerTorn = false; // review(30.06.2024): зачем второй раз присваивать?
                 clickGuardButtonClick = false;
                 player.activateButtonForHealth = false;
             }
@@ -127,7 +127,7 @@ public class Fight : MonoBehaviour
                 critText.enabled = false;
                 playerHealth.TakeHit(damage * ChooseDamageSkip(player.inventory.dexterity)); 
                 player.isPlayerTorn = true;
-                player.isPlayerTorn = true;
+                player.isPlayerTorn = true; // review(30.06.2024): зачем второй раз присваивать?
                 clickGuardButtonClick = false;
             }
         }

@@ -9,6 +9,7 @@ public class Dialog
     public Message[] message;
 }
 
+// review(29.06.2024): Стоит вынести в отдельный файл
 [System.Serializable]
 public class Message
 {

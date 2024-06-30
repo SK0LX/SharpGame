@@ -14,7 +14,7 @@ public class Quest2 : MonoBehaviour
     
     private void TaskOnClick()
     {
-        FindObjectOfType<Quests>().FinishQuest(2);
+        FindObjectOfType<Quests>().FinishQuest(2); // review(30.06.2024): Магическая константа
         Destroy(gameObject);
     }
     

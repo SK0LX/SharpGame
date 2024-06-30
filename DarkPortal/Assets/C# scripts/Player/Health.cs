@@ -13,7 +13,7 @@ public class Health : MonoBehaviour
     public HealthBar healthBar;
     
     public Animator Animator;
-    public TextMeshProUGUI hpBarDefault;
+    public TextMeshProUGUI hpBarDefault; // review(30.06.2024): Разный нейминг у healthBar и hpBar, стоит остановиться на чем-то одном
     [SerializeField] private AudioSource hit;
     [SerializeField] private AudioSource deathYourHeroIsDead;
     [SerializeField] private AudioSource screamDeath;
@@ -46,6 +46,7 @@ public class Health : MonoBehaviour
 
     public void SetHealth(int bonusHealth)
     {
+        // review(30.06.2024): health = Math.Min(health + bonusHealth, maxHealth);
         health += bonusHealth;
         if (maxHealth < health)
         {
@@ -68,6 +69,7 @@ public class Health : MonoBehaviour
     {
         health += bonusHealth;
         maxHealth += bonusHealth;
+        // review(30.06.2024): Логика заполнения баров повторяется. Стоило выделить метод типа UpdateHealthView()
         hpBarDefault.text = $"{health}/{maxHealth}";
         healthBar.fill = (float)health / maxHealth;
     }

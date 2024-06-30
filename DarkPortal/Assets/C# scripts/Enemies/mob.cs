@@ -61,6 +61,7 @@ namespace C__scripts.Enemies
         public void FixedUpdate()
         {
             if (gameObject is null) return;
+            // review(30.06.2024): А зачем изменять состояние в цикле? Разве он не поменяется на Move и останется в этом состоянии постоянно?
             switch (State)
             {
                 case EnemyState.Born:
@@ -73,7 +74,7 @@ namespace C__scripts.Enemies
 
         public IEnumerator Attack()
         {
-            if (new Random().Next(0, 101) < 20)
+            if (new Random().Next(0, 101) < 20) // review(30.06.2024): Хорошо было бы добавить extension типа Random.FlipCoin (а еще от констант избавиться)
                 entity.UseSkills();
             var geolocationNow = transform.position.x;
             var geolocationPlayer = player.transform.position.x + boxRadius + playerBox;
@@ -98,7 +99,7 @@ namespace C__scripts.Enemies
                 transform.position += new Vector3(speed * Time.deltaTime, 0, 0);
                 yield return null;
             }
-            transform.eulerAngles = new Vector3(0, -180, 0);
+            transform.eulerAngles = new Vector3(0, -180, 0); // review(30.06.2024): Часто встречаю эту конструкцию. Я бы выделил extension-метод, который бы описывал, зачем изменяется ротация, а то сейчас не совсем понятно
             yield return new WaitForSeconds(0.1f);
             animator.SetTrigger(Idle);
         }
@@ -112,7 +113,7 @@ namespace C__scripts.Enemies
             else
             {
                 yield return new WaitForSeconds(1f);
-                var canvas = Instantiate(gameObject.GetComponent<Boss>().canvasWIN);
+                var canvas = Instantiate(gameObject.GetComponent<Boss>().canvasWIN); // review(30.06.2024): Подозреваю, что лучше сохранить ссылку на объект, иначе он может быть собран сборщиком мусора
             }
         }
 
@@ -133,9 +134,37 @@ namespace C__scripts.Enemies
                 
                 transform.position += new Vector3(2f, 0);
             }
-            else if (other.CompareTag("Player") && State is EnemyState.Move)
+            else if (other.CompareTag("Player") && State is EnemyState.Move) // review(30.06.2024): Условие частично дублируется, можно внутри предыдущего if сделать проверку
             {
                 StartCoroutine(PrepareToFight());
+            }
+
+            // review(30.06.2024): имею в виду такое
+
+            void Method()
+            {
+                if (!other.CompareTag("Player") || State is not EnemyState.Move)
+                    return;
+                
+                if (isBoss)
+                {
+                    StartCoroutine(PrepareToFight());
+                    return;
+                }
+
+                // review(30.06.2024): А почему это не выделили в метод, как PrepareToFight?
+                Destroy(GetComponent<BoxCollider2D>());
+                State = EnemyState.Fight;
+                player.speed = 0;
+                player.fight = true;
+                
+                fight = Instantiate(fight);
+                fight.Init(player.gameObject, canvasForFight, gameObject);
+                entity.ShowCanvas();
+                animator.ResetTrigger(Go);
+                animator.SetTrigger(Idle);
+                
+                transform.position += new Vector3(2f, 0);
             }
         }
 
@@ -153,7 +182,8 @@ namespace C__scripts.Enemies
             State = EnemyState.Fight;
             
             animator.SetBool("isFight", true);
-            
+
+            // review(30.06.2024): Дублируется логика
             fight = Instantiate(fight);
             fight.Init(player.gameObject, canvasForFight, gameObject);
             player.fightObject = fight;

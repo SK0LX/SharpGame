@@ -29,14 +29,14 @@ public class AudioSpeach : MonoBehaviour
         }
         else
         {
-            StopAllCoroutines();
+            StopAllCoroutines(); // review(30.06.2024): кмк не очень оптимально на каждый Update останавливать все корутины, не уверен, что вызов этого метода действительно дешевый
         }
     }
 
     private IEnumerator SpeakKnight()
     {
         speak = false;
-        yield return new WaitForSeconds(30);
+        yield return new WaitForSeconds(30); // review(30.06.2024): Почему именно 30 секунд? Может, стоило это выделить в поле? Возможно, время ожидания как-то связано с временем аудио?
         var rnd = new Random();
         knightsSpeak[rnd.Next(knightsSpeak.Length)].Play();
         yield return new WaitForSeconds(30);

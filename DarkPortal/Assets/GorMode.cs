@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GodMode : MonoBehaviour
 {
-    public Toggle myToggle;
+    public Toggle myToggle; // review(30.06.2024): Плохое название
 
     private void Update()
     {

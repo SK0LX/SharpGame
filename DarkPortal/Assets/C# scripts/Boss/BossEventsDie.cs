@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// review(29.06.2024): Класс используется? Если нет, то стоит удалить
 public class BossEvents : MonoBehaviour
 {
     private BoxCollider2D[] colliders;

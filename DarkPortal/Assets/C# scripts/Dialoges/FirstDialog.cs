@@ -18,7 +18,7 @@ public class FirstDialog : MonoBehaviour
         canvasForFirstItteration.enabled = true;
         player.canvasDefault.enabled = false;
         triggerDialogue.TriggerDialog(canvasForFirstItteration, name, text);
-        player.speed = 0f;
+        player.speed = 0f; // review(30.06.2024): Кажется, более описательным было бы использование метода player.Freeze()
     }
 
     private void Update()
@@ -27,7 +27,7 @@ public class FirstDialog : MonoBehaviour
         {
             canvasForFirstItteration.enabled = false;
             player.canvasDefault.enabled = true;
-            player.speed = 5f;
+            player.speed = 5f; // review(30.06.2024): Почему именно 5? Выглядит как магическая константа
             dialogTriggered = false;
             triggerDialogue.end = false;
         }

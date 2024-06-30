@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+// review(30.06.2024): Я обычно избегаю абстрактных названий типа Manager/Controller. Эта штука больше похожа на DialogPlayer
 public class DialogManager : MonoBehaviour
 {
     private Queue<Message> sentences;
@@ -13,7 +14,7 @@ public class DialogManager : MonoBehaviour
     private TextMeshProUGUI nameText;
     private Image image;
     private Coroutine typingCoroutine;
-    [SerializeField] private AudioSource text;
+    [SerializeField] private AudioSource text; // review(30.06.2024): Я бы назвал это textSound, а то текущее название как будто подразумевает, что это какая-то строка
 
     private void Start()
     {
@@ -35,6 +36,7 @@ public class DialogManager : MonoBehaviour
 
     }
 
+    // review(30.06.2024): Не очень понятно, что означает bool. Лучше было бы создать enum типа DialogStatus { NotStarted, Executing, Finished }, чтобы извне класса было понятно, что означает результат действия метода
     public bool DisplayNextSentence()
     {
         if (sentences.Count == 0)
@@ -46,21 +48,26 @@ public class DialogManager : MonoBehaviour
             text.Stop();
             return true;
         }
+
+        // review(30.06.2024): код бы чуть-чуть отформатировать, чтобы выделить блоки логики
         var message = sentences.Dequeue();
         if (image is null)
         {
-            image = message.imagePerson;
+            image = message.imagePerson; // review(30.06.2024): Эту строку можно вынести после блока if, тогда он сократится вообще до одного if, при котором будет image.enabled = false
         }
         else
         {
             image.enabled = false;
             image = message.imagePerson;
         }
-        
+
+        // review(30.06.2024): Код по Reset-у отображения диалога как будто стоит выделить в отдельный метод, а то он дублируется здесь и выше
         if (typingCoroutine != null)
         {
             StopCoroutine(typingCoroutine);
         }
+
+        // review(30.06.2024): Как будто тут еще надо выключить text на всякий случай
         typingCoroutine = StartCoroutine(TypeSentence(message));
         return false;
     }

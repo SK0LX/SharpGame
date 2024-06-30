@@ -2,6 +2,7 @@
 
 namespace C__scripts.Enemies
 {
+    // review(30.06.2024): Не совсем понятно, как используется класс
     public class GamePlay: MonoBehaviour
     {
         [SerializeField] private GameObject enemyPrefab;

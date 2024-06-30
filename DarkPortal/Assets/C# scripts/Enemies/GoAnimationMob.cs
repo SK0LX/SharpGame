@@ -13,8 +13,10 @@ public class GoAnimationMob : StateMachineBehaviour
     private float radius;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+    // review(30.06.2024): public override
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        // review(30.06.2024): Почему бы animator.GetComponent<Enemy>() не вынести в переменную?
         spawnPosition = animator.GetComponent<Enemy>().SpawnPoint.position;
         radius = animator.GetComponent<Enemy>().Radius;
         speed = animator.GetComponent<Enemy>().Speed;
@@ -26,7 +28,7 @@ public class GoAnimationMob : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        var x = default(float);
+        var x = default(float); // review(30.06.2024): var x = 0f; 
         if (isMoveRight)
         {
             x = spawnPosition.x + radius;
